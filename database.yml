@@ -1,0 +1,5 @@
+adapter:  mysql
+database: p_squared
+username: root
+password:
+host:     localhost
