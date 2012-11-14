@@ -12,8 +12,16 @@ class UserPresenter < Presenter
     view["test"] = "add user #{username.downcase}"
   end
 
+  def edit username
+    view["test"] = "add user #{username.downcase}"
+  end
+
   def create username
-    # create user
+    User.create(
+        username: username,
+        password: username,
+        mail: "ff026@hdm-stuttgart.de"
+    )
   end
 
   def update username

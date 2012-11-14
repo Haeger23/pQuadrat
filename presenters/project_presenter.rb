@@ -8,6 +8,10 @@ class ProjectPresenter < Presenter
     view["test"] = "add user #{title}"
   end
 
+  def edit title
+    view["test"] = "add user #{title}"
+  end
+
   def create title
     # create user
   end

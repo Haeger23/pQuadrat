@@ -7,13 +7,25 @@ module PSquared
   gem 'mysql'
   gem 'sinatra'
 
-  require 'active_record'
-  require 'mysql'
-  require 'yaml'
-  require_relative 'presenter'
-  require_relative 'resolver'
+  def self.initializeDatabase(file)
+    require 'active_record'
+    require 'mysql'
+    require 'yaml'
+
+    # initialize database
+    dbConfig = YAML::load(File.open(File.expand_path(file)))
+    ActiveRecord::Base.establish_connection(dbConfig)
+
+    # load models
+    Dir["core/models/*"].each do |f|
+      require_relative "../"+f
+    end
+    self
+  end
 
   def self.run!
+    require_relative 'resolver'
+
     Resolver.run!
   end
 end
