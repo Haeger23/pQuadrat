@@ -5,4 +5,8 @@ class Presenter
   def initialize
     @view = {}
   end
+
+  def stop
+    throw Exception.new "Stopped Presenter"
+  end
 end

@@ -30,7 +30,7 @@ class UserResolver < PSquaredResolver
     resolve("user", "delete", username)
   end
 
-  # update user, delete user workaround for HTML5 forms
+  # update user, delete user (workaround for HTML5 forms)
   post %r{^/user/(\w+)/(update|delete)/?$}i do |username, action|
     resolve("user", action, username)
   end

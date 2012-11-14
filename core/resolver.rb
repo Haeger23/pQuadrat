@@ -12,6 +12,7 @@ class Resolver < PSquaredResolver
 
   use UserResolver
   use ProjectResolver
+  use DebugResolver
 
   not_found do
     erb :not_found

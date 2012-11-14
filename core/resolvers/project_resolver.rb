@@ -24,7 +24,7 @@ class ProjectResolver < PSquaredResolver
     resolve("project", "delete", title)
   end
 
-  # update user, delete user workaround for HTML5 forms
+  # update user, delete user (workaround for HTML5 forms)
   post %r{^/project/(\w+)/(update|delete)/?$}i do |title, action|
     resolve("project", action, title)
   end

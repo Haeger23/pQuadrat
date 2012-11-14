@@ -5,11 +5,11 @@ class ProjectPresenter < Presenter
   end
 
   def add title
-    view["test"] = "add user #{title}"
+    view["test"] = "add project #{title}"
   end
 
   def edit title
-    view["test"] = "add user #{title}"
+    view["test"] = "add project #{title}"
   end
 
   def create title

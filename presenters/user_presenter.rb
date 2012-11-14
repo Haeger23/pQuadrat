@@ -5,7 +5,9 @@ class UserPresenter < Presenter
   end
 
   def show username
-    view["test"] = "show user #{username.downcase}"
+    user = User.find_by_username(username)
+    stop until user
+    view["test"] = "show user #{user.username}"
   end
 
   def add username
