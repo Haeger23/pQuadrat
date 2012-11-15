@@ -10,6 +10,7 @@ end
 
 class Resolver < PSquaredResolver
 
+  use LoginResolver
   use UserResolver
   use ProjectResolver
   use DebugResolver

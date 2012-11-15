@@ -7,7 +7,7 @@ class PSquaredResolver < Sinatra::Base
 
   protected
   def resolve(presenter, action, *args)
-    require_relative "../presenters/#{presenter}_presenter"
+    require_relative "../presenters/#{presenter}"
     presenterInstance = Object.const_get(presenter.capitalize+"Presenter").new
     method = presenterInstance.method(action.to_sym)
     begin
