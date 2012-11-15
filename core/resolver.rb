@@ -8,6 +8,9 @@ Dir["core/resolvers/*"].each do |file|
   require_relative "../"+file
 end
 
+class ResolverStoppedError < StandardError
+end
+
 class Resolver < PSquaredResolver
 
   use LoginResolver

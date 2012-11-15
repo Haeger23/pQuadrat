@@ -3,7 +3,8 @@
 class UserPresenter < Presenter
 
   def dashboard
-    view["test"] = "show dashboard"
+
+    view["test"] = "show #{"admin " if PSquared.user}dashboard"
   end
 
   def show username

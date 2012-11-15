@@ -5,10 +5,16 @@ class Presenter
   attr_reader :view
 
   def initialize
-    @view = {}
+    @view = {
+        title: "p squared"
+    }
   end
 
   def stop
-    throw Exception.new "Stopped Presenter"
+    raise ResolverStoppedError.new "Stopped Presenter"
+  end
+
+  def title str
+    @view["title"] = str
   end
 end

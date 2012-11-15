@@ -1,8 +1,13 @@
 # encoding: UTF-8
 
 module PSquared
-  @@DEBUG = false
-  PATH = File.expand_path('../', __FILE__)
+  class << self
+    attr_accessor :user, :debug, :path
+  end
+
+  self.user = false
+  self.debug = false
+  self.path = File.expand_path "..", __FILE__
 
   gem 'activerecord'
   gem 'mysql'
@@ -32,7 +37,7 @@ module PSquared
 
   def self.debug!
     require_relative 'resolver'
-    @@DEBUG = true
-    Resolver.run!
+    self.debug = true
+    self.run!
   end
 end
