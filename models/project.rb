@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Project < ActiveRecord::Base
   attr_accessor :title
 

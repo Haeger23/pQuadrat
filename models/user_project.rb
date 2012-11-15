@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class UserProject < ActiveRecord::Base
   belongs_to :project
   belongs_to :user

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class DebugPresenter < Presenter
 
   def user_add args

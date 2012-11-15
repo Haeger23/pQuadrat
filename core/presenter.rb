@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Presenter
 
   attr_reader :view

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class ProjectPresenter < Presenter
 
   def show title
