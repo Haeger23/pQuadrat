@@ -23,17 +23,43 @@ protected
     options = args.extract_options!
     require_relative "../presenters/#{presenter}"
     presenterInstance = Object.const_get(presenter.capitalize+"Presenter").new
-    method = presenterInstance.method(action.to_sym)
+    @presenter = presenter
+    @locals = presenterInstance.view
+
     begin
-      method.call(*args)
-      @presenter = presenter
-      @locals = presenterInstance.view
-      erb((@presenter+"/"+action).to_sym, :locals => @locals)
+      if presenterInstance.respond_to?(action.to_sym)
+        method = presenterInstance.method(action.to_sym)
+        method.call(*args)
+      end
     rescue ResolverStoppedError
       pass
+      return
+    end
+
+    begin
+      request.preferred_type(%w[text/html application/json application/x-json text/json text/x-json application/xml text/xml])
+      if request.accept? "text/html"
+        format = "html"
+      elsif request.accept? "application/json" or request.accept? "application/x-json" or request.accept? "text/json" or request.accept? "text/x-json"
+        format = "json"
+      elsif request.accept? "application/xml" or request.accept? "text/xml"
+        format = "xml"
+      else
+        format = "html"
+      end
+
+      actionSym = (action+"_"+format).to_sym
+      if presenterInstance.respond_to?(actionSym)
+        method = presenterInstance.method(actionSym)
+        method.call(*args)
+      end
+      erb((@presenter+"/"+action+"."+format).to_sym, :locals => @locals, :layout => ("layout."+format).to_sym)
+    rescue ResolverStoppedError
+      pass
+      return
     rescue Errno::ENOENT => e
       puts "view '#{e.message.split("/")[-2..-1].join("/")}' not available"
-      pass
     end
+
   end
 end

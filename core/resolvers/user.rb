@@ -7,6 +7,11 @@ class UserResolver < PSquaredResolver
     resolve("user", "dashboard")
   end
 
+  # show users
+  get %r{^/users/?$}i do
+    resolve("user", "list")
+  end
+
   # show user
   get %r{^/user/(\w+)/?$}i do |username|
     resolve("user", "show", username)

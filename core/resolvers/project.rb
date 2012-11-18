@@ -2,6 +2,11 @@
 
 class ProjectResolver < PSquaredResolver
 
+  # show projects
+  get %r{^/projects/?$}i do
+    resolve("project", "list")
+  end
+
   # show project
   get %r{^/project/(\w+)/?$}i do |title|
     resolve("project", "show", title)

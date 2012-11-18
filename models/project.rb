@@ -1,8 +1,6 @@
 # encoding: UTF-8
 
 class Project < ActiveRecord::Base
-  attr_accessor :title
-
   has_many :project_skills
   has_many :skills, :through => :project_skills
   has_many :categories, :through => :skills
