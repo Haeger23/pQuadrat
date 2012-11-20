@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 3.5.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 15. Nov 2012 um 22:24
--- Server Version: 5.5.27
--- PHP-Version: 5.4.7
+-- Host: localhost
+-- Generation Time: Nov 20, 2012 at 10:13 PM
+-- Server version: 5.5.25a
+-- PHP Version: 5.4.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `p_squared`
+-- Database: `p_squared`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -38,12 +38,13 @@ CREATE TABLE IF NOT EXISTS `categories` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `projects`
+-- Table structure for table `projects`
 --
 
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `progress` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `project_skills`
+-- Table structure for table `project_skills`
 --
 
 CREATE TABLE IF NOT EXISTS `project_skills` (
@@ -71,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `project_skills` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `requests`
+-- Table structure for table `requests`
 --
 
 CREATE TABLE IF NOT EXISTS `requests` (
@@ -79,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
   `project_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `is_invitation` tinyint(1) NOT NULL,
+  `message` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -89,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `request_skills`
+-- Table structure for table `request_skills`
 --
 
 CREATE TABLE IF NOT EXISTS `request_skills` (
@@ -107,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `request_skills` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `skills`
+-- Table structure for table `skills`
 --
 
 CREATE TABLE IF NOT EXISTS `skills` (
@@ -125,13 +127,14 @@ CREATE TABLE IF NOT EXISTS `skills` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `salt` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `forename` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `surname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -144,12 +147,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `session` (`session`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_projects`
+-- Table structure for table `user_projects`
 --
 
 CREATE TABLE IF NOT EXISTS `user_projects` (
@@ -168,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `user_projects` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_project_skills`
+-- Table structure for table `user_project_skills`
 --
 
 CREATE TABLE IF NOT EXISTS `user_project_skills` (
@@ -187,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `user_project_skills` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user_skills`
+-- Table structure for table `user_skills`
 --
 
 CREATE TABLE IF NOT EXISTS `user_skills` (
@@ -204,52 +207,52 @@ CREATE TABLE IF NOT EXISTS `user_skills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Constraints der exportierten Tabellen
+-- Constraints for dumped tables
 --
 
 --
--- Constraints der Tabelle `project_skills`
+-- Constraints for table `project_skills`
 --
 ALTER TABLE `project_skills`
   ADD CONSTRAINT `project_skills_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `project_skills_ibfk_2` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `requests`
+-- Constraints for table `requests`
 --
 ALTER TABLE `requests`
   ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `requests_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `request_skills`
+-- Constraints for table `request_skills`
 --
 ALTER TABLE `request_skills`
   ADD CONSTRAINT `request_skills_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `requests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `request_skills_ibfk_2` FOREIGN KEY (`project_skill_id`) REFERENCES `project_skills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `skills`
+-- Constraints for table `skills`
 --
 ALTER TABLE `skills`
   ADD CONSTRAINT `skills_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `user_projects`
+-- Constraints for table `user_projects`
 --
 ALTER TABLE `user_projects`
   ADD CONSTRAINT `user_projects_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_projects_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `user_project_skills`
+-- Constraints for table `user_project_skills`
 --
 ALTER TABLE `user_project_skills`
   ADD CONSTRAINT `user_project_skills_ibfk_1` FOREIGN KEY (`projectskill_id`) REFERENCES `project_skills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_project_skills_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `user_skills`
+-- Constraints for table `user_skills`
 --
 ALTER TABLE `user_skills`
   ADD CONSTRAINT `user_skills_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
