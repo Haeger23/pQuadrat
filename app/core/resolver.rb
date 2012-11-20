@@ -4,8 +4,8 @@ require_relative 'presenter'
 require_relative 'p_squared_resolver'
 
 # require resolvers
-Dir["core/resolvers/*"].each do |file|
-  require_relative "../"+file
+Dir[PSquared.path+"/core/resolvers/*"].each do |file|
+  require file
 end
 
 class ResolverStoppedError < StandardError

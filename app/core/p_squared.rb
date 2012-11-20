@@ -7,7 +7,7 @@ module PSquared
 
   self.user = false
   self.debug = false
-  self.path = File.expand_path "..", __FILE__
+  self.path = File.expand_path "../..", __FILE__
 
   gem 'activerecord'
   gem 'mysql'
@@ -19,7 +19,7 @@ module PSquared
     require 'yaml'
 
     # initialize database
-    dbConfig = YAML::load(File.open(File.expand_path(file)))
+    dbConfig = YAML::load(File.open(PSquared.path+"/"+file))
     ActiveRecord::Base.establish_connection(dbConfig)
 
     # load models

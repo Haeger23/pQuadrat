@@ -53,12 +53,11 @@ protected
       @format = "html"
     end
 
-    options = args.extract_options!
-    require_relative "../presenters/#{presenter}"
-    if Object.respond_to?((presenter.capitalize+"Presenter").to_sym)
+    begin
+      require PSquared.path+"/presenters/#{presenter}"
       presenterInstance = Object.const_get(presenter.capitalize+"Presenter").new
       @locals = presenterInstance.view
-    else
+    rescue
       presenterInstance = nil
       @locals = {}
     end
