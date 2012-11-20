@@ -19,7 +19,7 @@ class Resolver < PSquaredResolver
   use DebugResolver
 
   not_found do
-    erb :"not_found.html"
+    erb :"../layout/not_found.html"
   end
 
 end

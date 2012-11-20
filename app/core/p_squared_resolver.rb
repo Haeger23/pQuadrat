@@ -4,6 +4,9 @@ require 'sinatra/base'
 
 class PSquaredResolver < Sinatra::Base
   set :root, File.expand_path('../..', __FILE__)
+  set :public_folder, -> { File.join(root, "layout/files") }
+
+  p settings.public_folder
 
   helpers do
     def template(view, locals={}, *args)
@@ -21,9 +24,9 @@ class PSquaredResolver < Sinatra::Base
       newJs = []
       args.each do |file|
         if(file[0] == "/")
-          src = "#{settings.public_folder}/#{file[1..-1]}.js"
+          src = "#{request.base_url}/js/#{file[1..-1]}.js"
         else
-          src = "#{settings.views}/#{@presenter}/#{file}.js"
+          src = "#{settings.views}/#{@presenter}/js/#{file}.js"
         end
         newJs << "<script type='text/javascript' src='#{src}'></script>"
       end
@@ -33,7 +36,7 @@ class PSquaredResolver < Sinatra::Base
     def css(*args)
       out = ""
       args.each do |file|
-        out << "<link rel='stylesheet' type='text/css' href='#{settings.public_folder}/#{file}.css'></link>\n"
+        out << "<link rel='stylesheet' type='text/css' href='#{PSquared.path}/css/#{file}.css'></link>\n"
       end
       out
     end
@@ -85,7 +88,7 @@ protected
     end
 
     begin
-      erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => ("layout."+@format).to_sym)
+      erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => ("../layout/layout."+@format).to_sym)
     rescue Errno::ENOENT => e
       puts "view '#{e.message.split("/")[-2..-1].join("/")}' not available"
     end
