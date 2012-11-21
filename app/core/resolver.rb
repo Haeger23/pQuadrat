@@ -8,9 +8,6 @@ Dir[PSquared.path+"/core/resolvers/*"].each do |file|
   require file
 end
 
-class ResolverStoppedError < StandardError
-end
-
 class Resolver < PSquaredResolver
 
   use LoginResolver

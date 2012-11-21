@@ -56,42 +56,14 @@ protected
       @format = "html"
     end
 
-    begin
-      require PSquared.path+"/presenters/#{presenter}"
-      presenterInstance = Object.const_get(presenter.capitalize+"Presenter").new
-      @locals = presenterInstance.view
-    rescue
-      presenterInstance = nil
-      @locals = {}
-    end
     @presenter = presenter
-
-    if presenterInstance.respond_to?(action.to_sym)
-      begin
-        method = presenterInstance.method(action.to_sym)
-        method.call(*args)
-      rescue ResolverStoppedError
-        pass
-        return
-      end
-    end
-
-    actionSym = (action+"_"+@format).to_sym
-    if presenterInstance.respond_to?(actionSym)
-      begin
-        method = presenterInstance.method(actionSym)
-        method.call(*args)
-      rescue ResolverStoppedError
-        pass
-        return
-      end
-    end
+    @locals = Presenter.present(presenter, action, @format, *args)
+    pass unless @locals
 
     begin
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => ("../layout/layout."+@format).to_sym)
     rescue Errno::ENOENT => e
       puts "view '#{e.message.split("/")[-2..-1].join("/")}' not available"
     end
-
   end
 end
