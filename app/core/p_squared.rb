@@ -17,14 +17,16 @@ module PSquared
     require 'active_record'
     require 'mysql'
     require 'yaml'
+    require 'json'
+    require 'builder'
 
     # initialize database
     dbConfig = YAML::load(File.open(PSquared.path+"/"+file))
     ActiveRecord::Base.establish_connection(dbConfig)
 
     # load models
-    Dir["models/*"].each do |f|
-      require_relative "../"+f
+    Dir[PSquared.path+"/models/*"].each do |f|
+      require f
     end
 
     self

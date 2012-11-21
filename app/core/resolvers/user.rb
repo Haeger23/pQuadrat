@@ -24,7 +24,7 @@ class UserResolver < PSquaredResolver
 
   # create user
   post %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "create", username)
+    resolve("user", "create", username, request.params)
   end
 
   # update user

@@ -17,7 +17,7 @@ class Presenter
     raise PresenterStoppedError.new "Stopped Presenter"
   end
 
-  def self.present(presenter, action, format, *args)
+  def self.do(presenter, action, format, *args)
     begin
       require PSquared.path+"/presenters/#{presenter}"
       instance = Object.const_get(presenter.capitalize+"Presenter").new

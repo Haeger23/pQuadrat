@@ -9,7 +9,7 @@ class UserPresenter < Presenter
   def show username
     user = User.find_by_username(username)
     stop until user
-    view["test"] = "show user #{user.username}"
+    view["username"] = user.username
   end
 
   def add username
@@ -20,11 +20,11 @@ class UserPresenter < Presenter
     view["test"] = "add user #{username.downcase}"
   end
 
-  def create username
-    User.create(
+  def create username, params
+    User.create!(
         username: username,
-        password: username,
-        mail: "ff026@hdm-stuttgart.de"
+        password: params["password"],
+        mail: params["mail"]
     )
   end
 

@@ -6,4 +6,9 @@ class DebugResolver < PSquaredResolver
     resolve("debug", action, request.params)
   end
 
+  get "/debug" do
+    resolve("debug", "api")
+  end
+
+
 end

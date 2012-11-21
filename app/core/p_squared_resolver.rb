@@ -4,9 +4,6 @@ require 'sinatra/base'
 
 class PSquaredResolver < Sinatra::Base
   set :root, File.expand_path('../..', __FILE__)
-  set :public_folder, -> { File.join(root, "layout/files") }
-
-  p settings.public_folder
 
   helpers do
     def template(view, locals={}, *args)
@@ -23,11 +20,7 @@ class PSquaredResolver < Sinatra::Base
       @js ||= []
       newJs = []
       args.each do |file|
-        if(file[0] == "/")
-          src = "#{request.base_url}/js/#{file[1..-1]}.js"
-        else
-          src = "#{settings.views}/#{@presenter}/js/#{file}.js"
-        end
+        src = "#{request.base_url}/js/#{file}.js"
         newJs << "<script type='text/javascript' src='#{src}'></script>"
       end
       @js = newJs | @js
@@ -36,7 +29,7 @@ class PSquaredResolver < Sinatra::Base
     def css(*args)
       out = ""
       args.each do |file|
-        out << "<link rel='stylesheet' type='text/css' href='#{PSquared.path}/css/#{file}.css'></link>\n"
+        out << "<link rel='stylesheet' type='text/css' href='#{request.base_url}/css/#{file}.css'></link>\n"
       end
       out
     end
@@ -45,25 +38,32 @@ class PSquaredResolver < Sinatra::Base
 protected
   def resolve(presenter, action, *args)
     # find requested format
-    request.preferred_type(%w[text/html application/json application/x-json text/json text/x-json application/xml text/xml])
-    if request.accept? "text/html"
-      @format = "html"
-    elsif request.accept? "application/json" or request.accept? "application/x-json" or request.accept? "text/json" or request.accept? "text/x-json"
-      @format = "json"
-    elsif request.accept? "application/xml" or request.accept? "text/xml"
-      @format = "xml"
-    else
-      @format = "html"
+    request.accept.each do |value|
+      if value == "text/html"
+        @format = "html"
+        break
+      elsif value == "application/json" or value == "application/x-json" or value == "text/json" or value == "text/x-json"
+        @format = "json"
+        break
+      elsif value == "application/xml" or value == "text/xml"
+        @format = "xml"
+        break
+      end
     end
-
+    @format ||= "html"
     @presenter = presenter
-    @locals = Presenter.present(presenter, action, @format, *args)
+    @locals = Presenter.do(presenter, action, @format, *args)
     pass unless @locals
 
     begin
-      erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => ("../layout/layout."+@format).to_sym)
+      erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("../layout/layout."+@format).to_sym))
     rescue Errno::ENOENT => e
-      puts "view '#{e.message.split("/")[-2..-1].join("/")}' not available"
+      if @format == "json"
+        JSON.generate @locals
+      else
+        @locals.to_xml(:root => "data")
+      end
+      #puts "view '#{e.message.split("/")[-2..-1].join("/")}' not available"
     end
   end
 end

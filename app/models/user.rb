@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   end
 
   before_save :changePassword
-  before_save :create_salt, :on => :create
 
   has_many :user_projects
   has_many :projects, :through => :user_projects
@@ -22,18 +21,11 @@ class User < ActiveRecord::Base
   has_many :categories, :through => :skills
   has_many :requests
 
-  def create_salt
-    value = ""
-    chars = ("a".."z").to_a
-    8.times.each { value << chars[rand(26)] }
-    self.salt = value
-  end
-
   def self.login(username, password)
     user = self.find_by_username(username)
     return nil unless user
 
-    if self.encrypt_password(password) === user.password
+    if user.encrypt(password) === user.password
       PSquared.user = user
     end
   end
@@ -46,15 +38,23 @@ protected
     end
   end
 
-  def self.encrypt_password(password)
+  def encrypt(password)
     require "digest/sha1"
-    Digest::SHA1.hexdigest(password + salt)
+    Digest::SHA1.hexdigest(password + self.salt)
+  end
+
+  def create_salt
+    value = ""
+    chars = ("a".."z").to_a
+    16.times.each { value << chars[rand(26)] }
+    self.salt = value
   end
 
   def changePassword
     if password_changed?
       require "digest/sha1"
-      write_attribute("password", self.encrypt_password(password))
+      create_salt if self.salt.nil?
+      self.password = encrypt(self.password)
     end
   end
 end

@@ -1,0 +1,25 @@
+
+<form method="post">
+    <label for="type">Url</label>
+    <input id="url" name="url"/>
+    <label for="type">Type</label>
+    <select id="type" name="type">
+      <option value="get">GET</option>
+      <option value="post">POST</option>
+      <option value="put">PUT</option>
+      <option value="delete">DELETE</option>
+    </select>
+    <label for="accept">Accept</label>
+    <select id="accept" name="accept">
+      <option value="html">HTML</option>
+      <option value="json">JSON</option>
+      <option value="xml">XML</option>
+    </select>
+  <a href="#">add parameter</a>
+  <div id="parameters">
+  </div>
+  <input type="submit" value="send"/>
+</form>
+<div id="result"></div>
+
+<% js "debug" %>

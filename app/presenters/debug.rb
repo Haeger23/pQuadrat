@@ -8,7 +8,6 @@ class DebugPresenter < Presenter
       password: "secret",
       mail: "valid@email.de"
     )
-
   end
 
 end
