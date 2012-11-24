@@ -1,9 +1,14 @@
 (function($) {
-    var $parameters = $("#parameters");
-    $("form")
+    var $form = $("form"),
+        $parameters = $("#parameters"),
+        $accept = $form.find("#accept"),
+        $url = $form.find("#url"),
+        $type = $form.find("#type");
+
+    $form
         .submit(function() {
             var $form = $(this),
-                type = $form.children("#accept").val(),
+                type = $accept.val(),
                 $params = $parameters.children(),
                 parameter = {};
 
@@ -13,18 +18,18 @@
             });
 
             $.ajax({
-                url: $form.children("#url").val(),
-                type: $form.children("#type").val(),
+                url: $url.val(),
+                type: $type.val(),
                 dataType: type,
                 data: parameter,
-                success: function(data, textStatus) {
-                    console.log(textStatus, data);
+                success: function(data) {
+                    console.log(data);
                     if(type == "html") {
                         $("#result").html(data)
                     } else if(type == "json") {
-                        $("#result").html("").text(JSON.stringify(data));
+                        $("#result").html("").append($("<pre></pre>").text(JSON.stringify(data)));
                     } else if(type == "xml") {
-                        $("#result").text(window.ActiveXObject ? $(data).xml : (new XMLSerializer()).serializeToString(data));
+                        $("#result").html("").append($("<pre></pre>").text(window.ActiveXObject ? $(data).xml : (new XMLSerializer()).serializeToString(data)));
                     }
                 },
                 error: function(jqXHR, textStatus) {
@@ -33,11 +38,16 @@
             })
             return false;
         })
-        .children("a")
+        .find("#addParameter")
             .click(function() {
-                $("<div class='parameters'><input /><input /></div>")
-                    .append($("<a href='#'>remove</a>").click(function() { $(this).parent().remove()}))
+                $("<div class='parameters'><input type='text' class='input-small'/><input type='text'/></div>")
+                    .append($("<button class='btn btn-danger'><i class='icon-remove icon-white'></i></button>").click(function() { $(this).parent().remove()}))
                     .appendTo($parameters);
-            });
+            })
+            .end()
+        .find("#removeAllParameter")
+            .click(function() {
+                $parameters.html("");
+            })
 }(jQuery));
 

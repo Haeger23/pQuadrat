@@ -6,9 +6,16 @@ class UserPresenter < Presenter
     view["test"] = "show #{"admin " if PSquared.user}dashboard"
   end
 
+  def list
+    view["search"] = "Users"
+    view["users"] = User.all(:order => "updated_at desc", :limit => 10)
+  end
+
   def show username
     user = User.find_by_username(username)
     stop until user
+
+    view["title"] = user.username
     view["username"] = user.username
   end
 

@@ -1,1 +1,3 @@
-show all users
+<% users.each do |user| %>
+    <%= link("user/#{user.username}", user.username) %>
+<% end %>

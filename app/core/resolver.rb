@@ -11,12 +11,15 @@ end
 class Resolver < PSquaredResolver
 
   use LoginResolver
+  use SearchResolver
   use UserResolver
   use ProjectResolver
   use DebugResolver
+  use ErrorResolver
 
   not_found do
-    erb :"../layout/not_found.html"
+    p request
+    resolve("error", "not_found")
   end
 
 end

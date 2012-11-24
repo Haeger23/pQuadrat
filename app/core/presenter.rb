@@ -5,12 +5,18 @@ end
 
 class Presenter
 
+  @@default = {
+    title: "p squared",
+    search: "All",
+    query: ""
+  }
   attr_reader :view
 
   def initialize
-    @view = {
-        title: "p squared"
-    }
+    @view = @@default.clone
+  end
+
+  def init *args
   end
 
   def stop
@@ -22,9 +28,11 @@ class Presenter
       require PSquared.path+"/presenters/#{presenter}"
       instance = Object.const_get(presenter.capitalize+"Presenter").new
       locals = instance.view
-    rescue
-      return {}
+    rescue LoadError
+      return @@default.clone
     end
+
+    instance.init *args
 
     if instance.respond_to?(action.to_sym)
       begin

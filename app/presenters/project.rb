@@ -2,7 +2,16 @@
 
 class ProjectPresenter < Presenter
 
+  def list
+    view["search"] = "Projects"
+    view["projects"] = Project.all(:order => "updated_at desc", :limit => 10)
+  end
+
   def show title
+    project = Projects.find_by_title(title)
+    stop unless project
+
+    view["title"] = project.title
     view["test"] = "show project #{title}"
   end
 
