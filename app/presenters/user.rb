@@ -28,11 +28,15 @@ class UserPresenter < Presenter
   end
 
   def create username, params
-    User.create!(
-        username: username,
-        password: params["password"],
-        mail: params["mail"]
-    )
+    begin
+      User.create!(
+          username: username,
+          password: params[:password],
+          mail: params[:mail]
+      )
+    rescue Exception => e
+      halt 400, e.message
+    end
   end
 
   def update username
