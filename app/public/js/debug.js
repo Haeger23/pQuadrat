@@ -33,7 +33,11 @@
                     }
                 },
                 error: function(jqXHR, textStatus) {
-                    $("#result").html(jqXHR.status+": "+jqXHR.responseText)
+                    if(type == "html") {
+                        $("#result").html(jqXHR.responseText)
+                    } else {
+                        $("#result").html("").append($("<pre></pre>").text(jqXHR.responseText));
+                    }
                 }
             })
             return false;

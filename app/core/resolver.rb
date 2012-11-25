@@ -15,11 +15,9 @@ class Resolver < PSquaredResolver
   use UserResolver
   use ProjectResolver
   use DebugResolver
-  use ErrorResolver
 
   not_found do
-    p request
-    resolve("error", "not_found")
+    resolve("error", "error_404", "The requested Page doesn't exist")
   end
 
 end

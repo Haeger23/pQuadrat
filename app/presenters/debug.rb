@@ -11,8 +11,8 @@ class DebugPresenter < Presenter
   end
 
   def api
-    view["title"] = "API"
-    view["help"] = [
+    view[:title] = "API"
+    view[:help] = [
       ["users", "GET", ""],
       ["projects", "GET", ""],
       ["search/all", "GET", "query"],

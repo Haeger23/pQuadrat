@@ -3,28 +3,28 @@
 class UserPresenter < Presenter
 
   def dashboard
-    view["test"] = "show #{"admin " if PSquared.user}dashboard"
+    view[:test] = "show #{"admin " if PSquared.user}dashboard"
   end
 
   def list
-    view["search"] = "Users"
-    view["users"] = User.all(:order => "updated_at desc", :limit => 10)
+    view[:search] = "Users"
+    view[:users] = User.all(:order => "updated_at desc", :limit => 10)
   end
 
   def show username
     user = User.find_by_username(username)
-    stop until user
+    stop(404, "There is no user with the username '#{username}'") until user
 
-    view["title"] = user.username
-    view["username"] = user.username
+    view[:title] = user.username
+    view[:username] = user.username
   end
 
   def add username
-    view["test"] = "add user #{username.downcase}"
+    view[:test] = "add user #{username.downcase}"
   end
 
   def edit username
-    view["test"] = "add user #{username.downcase}"
+    view[:test] = "add user #{username.downcase}"
   end
 
   def create username, params
@@ -35,7 +35,7 @@ class UserPresenter < Presenter
           mail: params[:mail]
       )
     rescue Exception => e
-      halt 400, e.message
+      stop(400, e.message)
     end
   end
 

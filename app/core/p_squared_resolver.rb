@@ -79,16 +79,38 @@ class PSquaredResolver < Sinatra::Base
 protected
   def resolve(presenter, action, *args)
     @presenter = presenter
-    @locals = Presenter.do(presenter, action, @format, *args)
-    pass unless @locals
+    begin
+
+      instance = Presenter.do(presenter, action, @format, *args)
+
+      if instance
+        @locals = instance.view
+        status instance.current_status
+      else
+        @locals = Presenter.default.clone
+      end
+    rescue PresenterPassedError
+      pass
+      return
+    rescue PresenterStoppedError => e
+      return resolve("error", "error_"+e.status.to_s, e.message)
+    end
 
     begin
       @username = PSquared.user ? PSquared.user.username : nil
+      p @presenter, action
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
     rescue Errno::ENOENT => e
+      if @format == "html"
+        return resolve("error", "no_view", @locals)
+      end
+
+      default = Presenter.default
+      @locals = @locals.clone.delete_if {|key, value| default.has_key?(key)}
+
       if @format == "json"
         JSON.generate @locals
-      else
+      elsif @format == "xml"
         @locals.to_xml(:root => "data")
       end
     end
