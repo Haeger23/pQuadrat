@@ -23,7 +23,7 @@ class PSquaredResolver < Sinatra::Base
   end
 
   helpers do
-    def template(view, locals={}, *args)
+    def view(view, locals={}, *args)
       currentPresenter = @presenter
       currentLocals = @locals
       options = args.extract_options!
@@ -74,6 +74,9 @@ class PSquaredResolver < Sinatra::Base
     def link href, title
       "<a href='#{request.base_url}/#{href}'>#{title}</a>"
     end
+    def keys
+      @locals.keys.sort
+    end
   end
 
 protected
@@ -81,11 +84,13 @@ protected
     @presenter = presenter
     begin
 
-      instance = Presenter.do(presenter, action, @format, *args)
+      instance = Presenter.do!(presenter, action, @format, *args)
 
       if instance
         @locals = instance.view
-        status instance.current_status
+        if instance.current_status
+          status instance.current_status
+        end
       else
         @locals = Presenter.default.clone
       end
@@ -97,8 +102,7 @@ protected
     end
 
     begin
-      @username = PSquared.user ? PSquared.user.username : nil
-      p @presenter, action
+      @user = PSquared.user
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
     rescue Errno::ENOENT => e
       if @format == "html"

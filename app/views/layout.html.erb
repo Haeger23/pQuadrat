@@ -16,10 +16,10 @@
                 <div class="btn-group">
                   <button class="btn dropdown-toggle input-small" data-toggle="dropdown"><i class="icon-<%= {All: "star", Projects: "briefcase", Users: "user"}[search.to_sym] %>"></i> <span class="text"><%= search %></span> <span class="caret"></span></button>
                   <ul class="dropdown-menu">
-                    <li><a href="#"><i class="icon-star"></i> All</a></li>
+                    <li><a><i class="icon-star"></i> All</a></li>
                     <li class="divider"></li>
-                    <li><a href="#"><i class="icon-briefcase"></i> Projects</a></li>
-                    <li><a href="#"><i class="icon-user"></i> Users</a></li>
+                    <li><a><i class="icon-briefcase"></i> Projects</a></li>
+                    <li><a><i class="icon-user"></i> Users</a></li>
                   </ul>
                 </div>
                 <input name="query" type="text" id="prependedDropdownButton" class="search-query" value="<%= query %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[search.to_sym] %>" />
@@ -29,8 +29,8 @@
             <ul id="menu">
               <li><a href="<%= request.base_url %>/projects"><i class="icon-briefcase icon-white"></i>Projects</a></li>
               <li><a href="<%= request.base_url %>/users"><i class="icon-user icon-white"></i>Users</a></li>
-              <% if @username %>
-                  <li class="user"><a href="user/<%= @username %>"><%= @username %></a></li>
+              <% if @user %>
+                  <li class="user"><a href="user/<%= @user.username %>"><%= @user.username %></a></li>
                   <li><a href="logout"><i class="icon-off icon-white"></i>Logout</a></li>
               <% end %>
             </ul>
@@ -53,8 +53,8 @@
           </div>
         </div>
       <script>
-        var p_squared = {
-            base_url: "<%= request.base_url %>"
+        var pSquared = {
+            baseUrl: "<%= request.base_url %>"
         };
       </script>
       <%= js "jquery-1.8.3",

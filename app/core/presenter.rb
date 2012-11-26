@@ -12,6 +12,7 @@ class PresenterStoppedError < StandardError
 end
 
 class Presenter
+  include Enumerable
 
   @@default = {
     title: "p squared",
@@ -24,7 +25,6 @@ class Presenter
 
   def initialize
     @view = @@default.clone
-    @current_status = 200
   end
 
   def self.default
@@ -34,13 +34,13 @@ class Presenter
   def init *args
   end
 
-  def self.do(presenter, action, format, *args)
+  def self.do!(presenter, action, format, *args)
     begin
       require PSquared.path+"/presenters/#{presenter}"
       instance = Object.const_get(presenter.capitalize+"Presenter").new
       locals = instance.view
     rescue LoadError
-      return self.class.default
+      return nil
     end
 
     instance.init *args
@@ -50,13 +50,43 @@ class Presenter
       method.call(*args)
     end
 
-    actionSym = (action+"_"+format).to_sym
-    if instance.respond_to?(actionSym)
-      method = instance.method(actionSym)
-      method.call(*args)
+    if format
+      actionSym = (action+"_"+format).to_sym
+      if instance.respond_to?(actionSym)
+        method = instance.method(actionSym)
+        method.call(*args)
+      end
     end
 
     return instance
+  end
+
+  def self.do(presenter, action, format, *args)
+    begin
+      self.do!(presenter, action, format, *args)
+    rescue
+      nil
+    end
+  end
+
+  def self.collect(presenter, action, format, *args, &block)
+    if instance = self.do(presenter, action, format, *args)
+      instance.each &block
+    else
+      {}
+    end
+  end
+
+  def each(&block)
+    if block_given?
+      @view.each &block
+    else
+      @view
+    end
+  end
+
+  def to_view(hash, *args)
+    args.each { |k| view[k] = hash[k] }
   end
 
 protected

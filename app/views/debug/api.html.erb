@@ -1,7 +1,7 @@
 <div class="row">
-    <form method="post" class="form-horizontal span6">
+    <form id="debugForm" method="post" class="form-horizontal span6">
         <div class="control-group">
-            <label class="control-label" for="url">Url</label>
+            <label class="control-label required" for="url">Url<abbr title="required">*</abbr></label>
             <div class="controls">
                 <input type="text" id="url" name="url" placeholder="Url" />
             </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">test</button>
+                <button type="submit" class="btn btn-primary" data-loading-text="Loading...">test</button>
             </div>
         </div>
 
@@ -69,4 +69,6 @@
 </div>
 
 
-<% js "debug" %>
+<% js "debug/dom2js",
+      "debug/debug"
+%>

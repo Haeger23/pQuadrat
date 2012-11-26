@@ -16,7 +16,7 @@ class UserPresenter < Presenter
     stop(404, "There is no user with the username '#{username}'") until user
 
     view[:title] = user.username
-    view[:username] = user.username
+    to_view(user.attributes, "username", "forename", "surname")
   end
 
   def add username

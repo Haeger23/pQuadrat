@@ -1,5 +1,5 @@
 (function($) {
-    var url = p_squared.base_url;
+    var url = pSquared.baseUrl;
     $("#search ul").on("click", "a", function() {
         var $this = $(this),
             text = $this.text(),
