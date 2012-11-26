@@ -15,8 +15,8 @@ class ProjectPresenter < Presenter
     view[:test] = "show project #{title}"
   end
 
-  def add title
-    view[:test] = "add project #{title}"
+  def add params
+    view[:title] = "Add project"
   end
 
   def edit title

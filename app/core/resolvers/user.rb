@@ -12,11 +12,6 @@ class UserResolver < PSquaredResolver
     resolve("user", "list")
   end
 
-  # add user to users
-  get %r{^/users/add/?$}i do
-    resolve("user", "add", params)
-  end
-
   # edit user, show user
   get %r{^/user/(\w+)/(edit|show)/?$}i do |username, action|
     resolve("user", action, username)

@@ -36,8 +36,8 @@ class LoginResolver < PSquaredResolver
 
 
   # show register
-  get %r{^/register/?$}i do
-
+  get %r{^/registration/?$}i do
+    resolve("user", "add", params)
   end
 
 

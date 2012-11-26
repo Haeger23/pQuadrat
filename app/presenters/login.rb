@@ -17,7 +17,7 @@ class LoginPresenter < Presenter
     user.session = Digest::SHA1.hexdigest(user.id.to_s + var)
   end
 
-  def register
+  def registration
     # do registration
   end
 

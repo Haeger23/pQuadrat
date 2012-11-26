@@ -19,8 +19,8 @@ class UserPresenter < Presenter
     to_view(user.attributes, "username", "forename", "surname")
   end
 
-  def add username
-    view[:test] = "add user #{username.downcase}"
+  def add params
+    view[:title] = "Add user"
   end
 
   def edit username
