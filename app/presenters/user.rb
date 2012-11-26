@@ -24,7 +24,7 @@ class UserPresenter < Presenter
   end
 
   def edit username
-    view[:test] = "add user #{username.downcase}"
+    view[:test] = "edit user #{username.downcase}"
   end
 
   def create username, params

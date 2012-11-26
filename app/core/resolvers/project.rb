@@ -12,7 +12,8 @@ class ProjectResolver < PSquaredResolver
     resolve("project", "show", title)
   end
 
-  get %r{^/project/(\w+)/(show|add|edit)/?$}i do |title, action|
+  # add project, edit project, show project
+  get %r{^/project/(\w*)/(add|edit|show)/?$}i do |title, action|
     resolve("project", action, title)
   end
 

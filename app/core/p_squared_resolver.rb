@@ -81,6 +81,9 @@ class PSquaredResolver < Sinatra::Base
 
 protected
   def resolve(presenter, action, *args)
+    presenter.downcase!
+    action.downcase!
+
     @presenter = presenter
     begin
 

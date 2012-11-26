@@ -35,6 +35,9 @@ class Presenter
   end
 
   def self.do!(presenter, action, format, *args)
+    presenter.downcase!
+    action.downcase!
+
     begin
       require PSquared.path+"/presenters/#{presenter}"
       instance = Object.const_get(presenter.capitalize+"Presenter").new
