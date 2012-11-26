@@ -1,0 +1,69 @@
+<%= keys %>
+
+
+<form class="form-horizontal">
+  <div class="row">
+    <div class="span4">
+        <div class="control-group">
+          <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
+          <div class="controls">
+            <input type="text"  placeholder="Username" name="username">
+          </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="mail">Email<abbr title="required">*</abbr></label>
+            <div class="controls">
+                <input type="text"  placeholder="Email" name="mail">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password<abbr title="required">*</abbr></label>
+            <div class="controls">
+                <input type="password" placeholder="Password" name="password">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="confirm_password">Confirm Password<abbr title="required">*</abbr></label>
+            <div class="controls">
+                <input type="password" placeholder="Confirm Password" name="confirm_password">
+            </div>
+        </div>
+    </div>
+    <div class="span5">
+      <div class="control-group">
+        <label class="control-label" for="forename">Forename</label>
+        <div class="controls">
+          <input type="text" placeholder="Forename" name="forename">
+        </div>
+      </div>
+      <div class="control-group">
+          <label class="control-label" for="surename">Surename</label>
+          <div class="controls">
+            <input type="text" placeholder="Surename" name="surename">
+          </div>
+        </div>
+          <div class="control-group">
+            <label class="control-label" for="Birthday">Birthday</label>
+            <div class="controls">
+              <div class="input-append date" data-date-viewmode="years" data-date="2012-03-12" data-date-format="yyyy-mm-dd">
+                <input type="text" value="2012-03-12" name="birthday" placeholder="Birthday">
+                <span class="add-on"><i class="icon-calendar"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+
+<div class="control-group">
+  <div class="controls">
+    <button type="submit" class="btn btn-large btn-primary">register</button>
+  </div>
+</div>
+</form>
+
+<% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
+      "user/add"
+%>

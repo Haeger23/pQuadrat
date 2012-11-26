@@ -3,8 +3,11 @@
     <head>
       <meta charset='utf-8'>
       <title><%= title %></title>
-      <%= css "/bootstrap/css/bootstrap.min" %>
-      <%= less "style" %>
+      <%= css "/bootstrap/css/bootstrap.min",
+              "/bootstrap/plugins/datepicker/css/datepicker"
+      %>
+      <%= less "style"
+      %>
       <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,600,600italic,700,700italic,900,300,300italic' rel='stylesheet' type='text/css'>
     </head>
     <body>
@@ -22,7 +25,7 @@
                     <li><a><i class="icon-user"></i> Users</a></li>
                   </ul>
                 </div>
-                <input name="query" type="text" id="prependedDropdownButton" class="search-query" value="<%= query %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[search.to_sym] %>" />
+                <input name="query" type="text" id="prependedDropdownButton" value="<%= query %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[search.to_sym] %>" />
                 <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
               </div>
             </form>
