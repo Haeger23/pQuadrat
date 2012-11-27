@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class UserProject < ActiveRecord::Base
+class UserProject < Model
   belongs_to :project
   belongs_to :user
 end

@@ -29,12 +29,12 @@ class UserResolver < PSquaredResolver
 
   # update user
   put %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "update", username)
+    resolve("user", "update", user, username, params)
   end
 
   # delete user
   delete %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "delete", username)
+    resolve("user", "delete", user, username)
   end
 
   # update user, delete user (workaround for HTML5 forms)

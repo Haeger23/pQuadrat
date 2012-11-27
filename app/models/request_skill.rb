@@ -1,5 +1,5 @@
 # encoding: UTF-8
 
-class RequestSkill < ActiveRecord::Base
+class RequestSkill < Model
 
 end

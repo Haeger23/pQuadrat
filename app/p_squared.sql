@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2012 at 10:13 PM
+-- Generation Time: Nov 27, 2012 at 02:23 PM
 -- Server version: 5.5.25a
 -- PHP Version: 5.4.4
 
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
-  `salt` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `salt` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `forename` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `surname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `session` (`session`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 

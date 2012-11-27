@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class UserSkill < ActiveRecord::Base
+class UserSkill < Model
   belongs_to :skill
   belongs_to :user
 end

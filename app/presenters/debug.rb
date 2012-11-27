@@ -12,7 +12,7 @@ class DebugPresenter < Presenter
 
   def api
     view[:title] = "API"
-    to_view(Presenter.collect("help", "api", nil))
+    to_view(Presenter.collect("help", "api"))
     view[:urls] = view[:api].map { |help| help[0] }.uniq
   end
 

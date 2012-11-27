@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class User < ActiveRecord::Base
+class User < Model
   before_validation :strip
 
   validates_presence_of   :username, :password, :mail
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     user = self.find_by_username(username)
     return nil unless user
 
-    if user.encrypt(password) === user.password
+    if user.encrypt(password) == user.password
       user
     end
   end
@@ -45,15 +45,13 @@ protected
   end
 
   def create_salt
-    value = ""
     chars = ("a".."z").to_a
-    16.times.each { value << chars[rand(26)] }
+    value = 16.times.to_a.collect { chars[rand(26)] }.join("")
     self.salt = value
   end
 
   def changePassword
     if password_changed?
-      require "digest/sha1"
       create_salt if self.salt.nil?
       self.password = encrypt(self.password)
     end
