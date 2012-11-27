@@ -1,0 +1,43 @@
+
+<form id="user-edit-form" class="form-horizontal" >
+<h5>Personal Dates</h5>
+<div class="control-group">
+  <label class="control-label" for="forename">Forename</label>
+  <div class="controls">
+    <input type="text"  class="input-xlarge" placeholder="Forename" name="forename">
+  </div>
+</div>
+<div class="control-group">
+  <label class="control-label" for="surename">Surename</label>
+  <div class="controls">
+    <input type="text"  class="input-xlarge" placeholder="Surename" name="surename">
+  </div>
+</div>
+<div class="control-group">
+  <label class="control-label" for="Birthday">Birthday</label>
+  <div class="controls">
+    <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
+      <input type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
+      <span class="add-on"><i class="icon-calendar"></i></span>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="website">Website</label>
+  <div class="controls">
+    <input type="text"  class="input-xlarge" placeholder="www.my-homepage.de" name="website">
+  </div>
+</div>
+
+<h5>Skills</h5>
+<div class="control-group">
+  <label class="control-label">Parameters</label>
+  <div class="controls">
+    <button type="button" id="addParameter" class="btn">add skill</button>
+    <button type="button" id="removeAllParameter" class="btn">remove skill</button>
+    <div id="parameters"></div>
+  </div>
+</div>
+</div>
+</form>
