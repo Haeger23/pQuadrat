@@ -20,7 +20,6 @@ class Presenter
     query: ""
   }
   attr_reader :current_status
-  attr_reader :status
   attr_reader :view
 
   def initialize
@@ -67,17 +66,17 @@ class Presenter
   def self.do(presenter, action, format, *args)
     begin
       self.do!(presenter, action, format, *args)
-    rescue StandardError => e
-      p e
+    rescue StandardError => error
+      p error
       nil
     end
   end
 
-  def self.collect(presenter, action, format, *args, &block)
-    if instance = self.do(presenter, action, format, *args)
+  def self.collect(presenter, action, *args, &block)
+    if instance = self.do(presenter, action, nil, *args)
       instance.each &block
     else
-      {}
+      self.default
     end
   end
 

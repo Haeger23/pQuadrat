@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class Project < ActiveRecord::Base
+class Project < Model
 
   validates_presence_of   :title
   validates_uniqueness_of :title

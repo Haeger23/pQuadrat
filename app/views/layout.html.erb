@@ -17,7 +17,7 @@
       <script>
           var pSquared = {
               baseUrl: "<%= request.base_url %>",
-              session: <%= if @user then "'#{@user.session}'" else "null" end %>,
+              session: <%= if user then "'#{user.session}'" else "null" end %>,
               scripts: [],
               script: function(js) {
                   this.scripts.push(js);

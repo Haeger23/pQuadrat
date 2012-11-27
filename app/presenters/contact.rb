@@ -11,7 +11,7 @@ class ContactPresenter < Presenter
         {username: "lukas"},
         {username: "alex"}
     ].each do |developer|
-      vars = Presenter.collect("user", "show", nil, developer[:username])
+      vars = Presenter.collect("user", "show", developer[:username])
       ["forename", "surname"].each do |key|
         developer[key] = vars[key]
       end

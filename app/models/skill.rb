@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class Skill < ActiveRecord::Base
+class Skill < Model
 
   belongs_to :category
 

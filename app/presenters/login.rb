@@ -15,9 +15,8 @@ class LoginPresenter < Presenter
     stop(403, "Wrong username or password") unless user
 
     require "digest/sha1"
-    var = ""
     chars = ("a".."z").to_a
-    16.times.each { var << chars[rand(26)] }
+    var = 16.times.to_a.collect { chars[rand(26)] }.join("")
     user.session = Digest::SHA1.hexdigest(user.id.to_s + var)
     user.save
 

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class ProjectSkill < ActiveRecord::Base
+class ProjectSkill < Model
   belongs_to :project
   belongs_to :skill
 

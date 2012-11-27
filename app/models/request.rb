@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class Request < ActiveRecord::Base
+class Request < Model
   belongs_to :user
   belongs_to :project
 

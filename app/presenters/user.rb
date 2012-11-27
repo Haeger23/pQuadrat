@@ -34,17 +34,27 @@ class UserPresenter < Presenter
           password: params[:password],
           mail: params[:mail]
       )
-    rescue Exception => e
-      stop(400, e.message)
+    rescue StandardError => error
+      stop(400, error.message)
     end
   end
 
-  def update username
-    # update user
+  def update user, username, params
+    stop(403, "Only a logged in user can update the account") until user
+    stop(403, "You only can update your account") until user.username.downcase == username.downcase
+
+    begin
+      user.update_with_hash!(params, :username, :password, :mail, :image, :forename, :surname, :birthday)
+    rescue StandardError => error
+      stop(400, error.message)
+    end
   end
 
-  def delete username
-    # delete user
+  def delete user, username
+    stop(403, "Only a logged in user can delete the account") until user
+    stop(403, "You only can delete your account") until user.username.downcase == username.downcase
+
+    user.delete
   end
 
 end
