@@ -12,13 +12,8 @@ class DebugPresenter < Presenter
 
   def api
     view[:title] = "API"
-    view[:help] = [
-      ["users", "GET", ""],
-      ["projects", "GET", ""],
-      ["search/all", "GET", "query"],
-      ["search/users", "GET", "query"],
-      ["search/projects", "GET", "query"],
-    ]
+    to_view(Presenter.collect("help", "api", nil))
+    view[:urls] = view[:api].map { |help| help[0] }.uniq
   end
 
 end

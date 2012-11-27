@@ -67,7 +67,8 @@ class Presenter
   def self.do(presenter, action, format, *args)
     begin
       self.do!(presenter, action, format, *args)
-    rescue
+    rescue StandardError => e
+      p e
       nil
     end
   end
@@ -89,7 +90,11 @@ class Presenter
   end
 
   def to_view(hash, *args)
-    args.each { |k| view[k] = hash[k] }
+    if args.length > 0
+      args.each { |k| view[k] = hash[k] }
+    else
+      view.merge!(hash)
+    end
   end
 
 protected

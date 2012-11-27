@@ -2,8 +2,8 @@
 
 class UserPresenter < Presenter
 
-  def dashboard
-    view[:test] = "show #{"admin " if PSquared.user}dashboard"
+  def dashboard user
+    view[:test] = "show #{"admin " if user}dashboard"
   end
 
   def list
@@ -27,10 +27,10 @@ class UserPresenter < Presenter
     view[:test] = "edit user #{username.downcase}"
   end
 
-  def create username, params
+  def create params
     begin
       User.create!(
-          username: username,
+          username: params[:username],
           password: params[:password],
           mail: params[:mail]
       )

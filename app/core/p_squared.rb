@@ -5,7 +5,7 @@ module PSquared
     attr_accessor :user, :debug, :path
   end
 
-  self.user = false
+  self.user = nil
   self.debug = false
   self.path = File.expand_path "../..", __FILE__
 

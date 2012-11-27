@@ -54,8 +54,8 @@
         })
         .find("#addParameter")
             .click(function() {
-                $("<div class='parameters'><input type='text' class='input-small'/><input type='text'/></div>")
-                    .append($("<button class='btn btn-danger'><i class='icon-remove icon-white'></i></button>").click(function() { $(this).parent().remove()}))
+                $("<div class='parameters'><input class='span2' type='text' placeholder='Key'/> <input type='text' class='span4' placeholder='Value'/> </div>")
+                    .append($("<button type='button' class='btn btn-danger btn-mini'>remove</button>").click(function() { $(this).parent().remove()}))
                     .appendTo($parameters);
             })
             .end()

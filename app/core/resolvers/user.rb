@@ -4,7 +4,7 @@ class UserResolver < PSquaredResolver
 
   # show dashboard
   get '/' do
-    resolve("user", "dashboard")
+    resolve("user", "dashboard", user)
   end
 
   # show users
@@ -23,8 +23,8 @@ class UserResolver < PSquaredResolver
   end
 
   # create user
-  post %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "create", username, params)
+  post %r{^/user/?$}i do
+    resolve("user", "create", params)
   end
 
   # update user

@@ -8,6 +8,12 @@ class ErrorPresenter < Presenter
     view[:title] = "400 – Bad Request"
   end
 
+  def error_403(message)
+    status 403
+    view[:message] = message
+    view[:title] = "403 – Forbidden"
+  end
+
   def error_404(message)
     status 404
     view[:message] = message
@@ -21,10 +27,10 @@ class ErrorPresenter < Presenter
   end
 
   def no_view(locals)
-    default = Presenter.default
-    locals = locals.clone.delete_if {|key, value| default.has_key?(key)}
-    view[:vars] = locals
     view[:title] = locals[:title]
+    default = Presenter.default
+    locals = locals.delete_if {|key, value| default.has_key?(key)}
+    view[:vars] = locals
   end
 
 end

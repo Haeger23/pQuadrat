@@ -3,7 +3,10 @@
 require 'sinatra/base'
 
 class PSquaredResolver < Sinatra::Base
-  set :root, File.expand_path('../..', __FILE__)
+
+  configure do
+    set :root, File.expand_path('../..', __FILE__)
+  end
 
   before do
     # find requested format
@@ -72,10 +75,20 @@ class PSquaredResolver < Sinatra::Base
       out
     end
     def link href, title
-      "<a href='#{request.base_url}/#{href}'>#{title}</a>"
+      if user
+        sign = (href.include? "?") ? "&" : "?"
+        suffix = sign + "session=" + user.session
+      else
+        suffix = ""
+      end
+
+      "<a href='#{request.base_url}/#{href}#{suffix}'>#{title}</a>"
     end
     def keys
       @locals.keys.sort
+    end
+    def user
+      request.env['user']
     end
   end
 
@@ -105,7 +118,6 @@ protected
     end
 
     begin
-      @user = PSquared.user
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
     rescue Errno::ENOENT => e
       if @format == "html"
@@ -113,7 +125,7 @@ protected
       end
 
       default = Presenter.default
-      @locals = @locals.clone.delete_if {|key, value| default.has_key?(key)}
+      @locals = @locals.delete_if {|key, value| default.has_key?(key)}
 
       if @format == "json"
         JSON.generate @locals

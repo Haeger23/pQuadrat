@@ -27,8 +27,13 @@ class User < ActiveRecord::Base
     return nil unless user
 
     if user.encrypt(password) === user.password
-      PSquared.user = user
+      user
     end
+  end
+
+  def encrypt(password)
+    require "digest/sha1"
+    Digest::SHA1.hexdigest(password + self.salt)
   end
 
 protected
@@ -37,11 +42,6 @@ protected
     [:username, :password, :mail, :forename, :surname].each do |attr|
       self[attr].strip! if self[attr].respond_to?(:strip!)
     end
-  end
-
-  def encrypt(password)
-    require "digest/sha1"
-    Digest::SHA1.hexdigest(password + self.salt)
   end
 
   def create_salt

@@ -8,9 +8,17 @@ require_relative 'p_squared_resolver'
 class Resolver < PSquaredResolver
 
   # require resolvers
-  Dir[PSquared.path+"/core/resolvers/*"].each do |file|
-    require file
-    use Object.const_get(File.basename(file, ".rb").capitalize+"Resolver")
+  [
+      "login",
+      "user",
+      "project",
+      "search",
+      "debug",
+      "contact",
+      "help"
+  ].each do |resolver|
+    require PSquared.path+"/core/resolvers/#{resolver}.rb"
+    use Object.const_get(resolver.capitalize+"Resolver")
   end
 
   not_found do

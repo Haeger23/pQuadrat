@@ -23,7 +23,7 @@ class ProjectPresenter < Presenter
     view[:test] = "add project #{title}"
   end
 
-  def create title
+  def create params
     # create user
   end
 

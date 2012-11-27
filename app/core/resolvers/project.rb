@@ -18,8 +18,8 @@ class ProjectResolver < PSquaredResolver
   end
 
   # create project
-  post %r{^/project/(\w+)/?$}i do |title|
-    resolve("project", "create", title)
+  post %r{^/project/?$}i do
+    resolve("project", "create", params)
   end
 
   # update project

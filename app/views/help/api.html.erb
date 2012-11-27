@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Url</th>
+    <th>Type</th>
+    <th>Parameters</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% api.each do |h| %>
+      <tr>
+        <td><%= h[0] %></td>
+        <td><%= h[1] %></td>
+        <td><%= h[2].map {|k, v| "<span class='"+(v["required"] ? "text-info muted" : "muted")+"'>#{k}</span>"}.join(", ") %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
