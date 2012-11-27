@@ -1,33 +1,36 @@
 # encoding: UTF-8
 
 class PresenterPassedError < StandardError
+  attr_reader :data
+  attr_reader :page
+
+  def initialize(data, page, msg = "Presenter passed")
+    super msg
+    @data, @page = data, page
+  end
 end
 
 class PresenterStoppedError < StandardError
   attr_reader :status
-  def initialize(status, msg = "An error on the server occured...")
+  attr_reader :data
+  attr_reader :page
+
+  def initialize(status, data, page, msg = "An error on the server occured...")
     super msg
-    @status = status
+    @status, @data, @page = status, data, page
   end
 end
 
 class Presenter
   include Enumerable
 
-  @@default = {
-    title: "p squared",
-    search: "All",
-    query: ""
-  }
   attr_reader :current_status
-  attr_reader :view
+  attr_reader :data
+  attr_reader :page
 
   def initialize
-    @view = @@default.clone
-  end
-
-  def self.default
-    @@default.clone
+    @data = {}
+    @page = {}
   end
 
   def init *args
@@ -40,7 +43,7 @@ class Presenter
     begin
       require PSquared.path+"/presenters/#{presenter}"
       instance = Object.const_get(presenter.capitalize+"Presenter").new
-      locals = instance.view
+      locals = instance.data
     rescue LoadError
       return nil
     end
@@ -76,33 +79,33 @@ class Presenter
     if instance = self.do(presenter, action, nil, *args)
       instance.each &block
     else
-      self.default
+      {}
     end
   end
 
   def each(&block)
     if block_given?
-      @view.each &block
+      @data.each &block
     else
-      @view
+      @data
     end
   end
 
-  def to_view(hash, *args)
+  def data_add(hash, *args)
     if args.length > 0
-      args.each { |k| view[k] = hash[k] }
+      args.each { |k| data[k] = hash[k] }
     else
-      view.merge!(hash)
+      data.merge!(hash)
     end
   end
 
 protected
   def pass
-    raise PresenterPassedError.new("Passed Presenter")
+    raise PresenterPassedError.new(data, page)
   end
 
   def stop(status, message)
-    raise PresenterStoppedError.new(status, message)
+    raise PresenterStoppedError.new(status, data, page, message)
   end
 
   def status(int)

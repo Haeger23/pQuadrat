@@ -11,9 +11,9 @@ class DebugPresenter < Presenter
   end
 
   def api
-    view[:title] = "API"
-    to_view(Presenter.collect("help", "api"))
-    view[:urls] = view[:api].map { |help| help[0] }.uniq
+    page[:title] = "API"
+    data_add(Presenter.collect("help", "api"))
+    data[:urls] = data[:api].map { |help| help[0] }.uniq
   end
 
 end

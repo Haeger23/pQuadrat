@@ -87,6 +87,9 @@ class PSquaredResolver < Sinatra::Base
     def keys
       @locals.keys.sort
     end
+    def value(key)
+      @locals[key]
+    end
     def user
       request.env['user']
     end
@@ -97,23 +100,32 @@ protected
     presenter.downcase!
     action.downcase!
 
+    @locals ||= {}
+    @page ||= {
+        title: action+" "+presenter,
+        search: "All",
+        query: ""
+    }
     @presenter = presenter
     begin
 
       instance = Presenter.do!(presenter, action, @format, *args)
 
       if instance
-        @locals = instance.view
+        @locals.merge!(instance.data)
+        @page.merge!(instance.page)
         if instance.current_status
           status instance.current_status
         end
-      else
-        @locals = Presenter.default.clone
       end
-    rescue PresenterPassedError
+    rescue PresenterPassedError => e
+      @locals.merge!(e.data)
+      @page.merge!(e.page)
       pass
       return
     rescue PresenterStoppedError => e
+      @locals.merge!(e.data)
+      @page.merge!(e.page)
       return resolve("error", "error_"+e.status.to_s, e.message)
     end
 
@@ -123,9 +135,6 @@ protected
       if @format == "html"
         return resolve("error", "no_view", @locals)
       end
-
-      default = Presenter.default
-      @locals = @locals.delete_if {|key, value| default.has_key?(key)}
 
       if @format == "json"
         JSON.generate @locals

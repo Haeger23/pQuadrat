@@ -2,7 +2,7 @@
 <html>
     <head>
       <meta charset='utf-8'>
-      <title><%= title %></title>
+      <title><%= @page[:title] %></title>
       <%= css "jqueryui/jquery-ui-1.9.1.custom",
               "/bootstrap/css/bootstrap.min",
               "/bootstrap/plugins/datepicker/css/datepicker"
@@ -33,7 +33,7 @@
             <form method="get" action="" id="search">
               <div class="input-prepend input-append">
                 <div class="btn-group">
-                  <button class="btn dropdown-toggle input-small" data-toggle="dropdown"><i class="icon-<%= {All: "star", Projects: "briefcase", Users: "user"}[search.to_sym] %>"></i> <span class="text"><%= search %></span> <span class="caret"></span></button>
+                  <button class="btn dropdown-toggle input-small" data-toggle="dropdown"><i class="icon-<%= {All: "star", Projects: "briefcase", Users: "user"}[@page[:search].to_sym] %>"></i> <span class="text"><%= @page[:search] %></span> <span class="caret"></span></button>
                   <ul class="dropdown-menu">
                     <li><a><i class="icon-star"></i> All</a></li>
                     <li class="divider"></li>
@@ -41,7 +41,7 @@
                     <li><a><i class="icon-user"></i> Users</a></li>
                   </ul>
                 </div>
-                <input name="query" type="text" id="prependedDropdownButton" value="<%= query %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[search.to_sym] %>" />
+                <input name="query" type="text" id="prependedDropdownButton" value="<%= @page[:query] %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[@page[:search].to_sym] %>" />
                 <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
               </div>
             </form>
@@ -57,7 +57,7 @@
         </div>
         <div id="wrapper" class="wrapper">
           <div id="wrapperTop"></div>
-            <h2><%= title %></h2>
+            <h2><%= @page[:title] %></h2>
             <%= yield %>
           <div id="wrapperBottom"></div>
         </div>

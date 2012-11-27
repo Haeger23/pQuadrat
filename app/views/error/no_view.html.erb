@@ -1,3 +1,4 @@
+<%= keys %>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -6,10 +7,10 @@
   </tr>
   </thead>
   <tbody>
-  <% vars.each do |key, value| %>
+  <% keys.each do |key| %>
       <tr>
         <td><%= key %></td>
-        <td><%= value %></td>
+        <td><%= value(key) %></td>
       </tr>
   <% end %>
   </tbody>
