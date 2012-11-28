@@ -23,6 +23,7 @@ class PSquaredResolver < Sinatra::Base
       end
     end
     @format ||= "html"
+    content_type @format.to_sym
   end
 
   helpers do
@@ -30,7 +31,7 @@ class PSquaredResolver < Sinatra::Base
       currentPresenter = @presenter
       currentLocals = @locals
       options = args.extract_options!
-      options.merge!(:layout => false, :locals => @locals.merge(locals))
+      options.merge!(:layout => false, :locals => @locals.merge!(locals))
       out = erb((@presenter+"/"+view.to_s+"."+@format).to_sym, options)
       @presenter = currentPresenter
       @locals = currentLocals
@@ -87,6 +88,9 @@ class PSquaredResolver < Sinatra::Base
     def keys
       @locals.keys.sort
     end
+    def value(key, default=nil)
+      @locals.fetch(key, default)
+    end
     def user
       request.env['user']
     end
@@ -97,35 +101,42 @@ protected
     presenter.downcase!
     action.downcase!
 
+    @locals ||= {}
+    @page ||= {
+        title: presenter.capitalize+": "+action,
+        search: "All",
+        query: ""
+    }
     @presenter = presenter
     begin
 
       instance = Presenter.do!(presenter, action, @format, *args)
 
       if instance
-        @locals = instance.view
+        @locals.merge!(instance.data)
+        @page.merge!(instance.page)
         if instance.current_status
           status instance.current_status
         end
-      else
-        @locals = Presenter.default.clone
       end
-    rescue PresenterPassedError
+    rescue PresenterPassedError => e
+      @locals.merge!(e.data)
+      @page.merge!(e.page)
       pass
       return
     rescue PresenterStoppedError => e
+      @locals.merge!(e.data)
+      @page.merge!(e.page)
       return resolve("error", "error_"+e.status.to_s, e.message)
     end
 
     begin
+      p "search for: "+(@presenter+"/"+action+"."+@format)
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
     rescue Errno::ENOENT => e
       if @format == "html"
         return resolve("error", "no_view", @locals)
       end
-
-      default = Presenter.default
-      @locals = @locals.delete_if {|key, value| default.has_key?(key)}
 
       if @format == "json"
         JSON.generate @locals

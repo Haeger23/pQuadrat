@@ -37,4 +37,14 @@ class ProjectResolver < PSquaredResolver
     resolve("project", action, title)
   end
 
+  # get all validators
+  get %r{^/projects/validators/?$}i do
+    resolve("project", "all_validators")
+  end
+
+  # get validators of attribute
+  get %r{^/projects/validators/(\w+)/?$}i do |attribute|
+    resolve("project", "validators", attribute)
+  end
+
 end

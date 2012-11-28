@@ -3,8 +3,8 @@
 class ContactPresenter < Presenter
 
   def contact
-    view[:title] = "Contact"
-    view[:developer] = [
+    page[:title] = "Contact"
+    data[:developer] = [
         {username: "friedolin"},
         {username: "willi"},
         {username: "simone"},
@@ -18,11 +18,11 @@ class ContactPresenter < Presenter
     end
 
 
-    view[:mail] = "info@p-squared.org"
+    data[:mail] = "info@p-squared.org"
   end
 
   def imprint
-    view[:title] = "Imprint"
+    page[:title] = "Imprint"
   end
 
 end

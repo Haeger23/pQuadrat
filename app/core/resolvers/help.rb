@@ -6,4 +6,8 @@ class HelpResolver < PSquaredResolver
     resolve("help", "overview", request.params)
   end
 
+  get "/help/views" do
+    resolve("help", "views")
+  end
+
 end

@@ -1,0 +1,24 @@
+<h3>Helper</h3>
+Helper functions you can call in the views
+<h4>keys</h4>
+<p>
+Get all available variables<br>
+Example: <code>keys # [:username, :forename, :surname]</code>
+</p>
+<h4>value(key, default=nil)</h4>
+Get the value with a key<br>
+Example: <code>value(:username) # friedolin</code><br>
+If the value is not available you can add a default value<br>
+Example: <code>value(:birthday, "No birthday given") # No birthday given</code>
+<h4>view(path, locals={})</h4>
+Render another view<br>
+Example: <code>view("../template/input", {title: "Forename"}) # Html code of the specific view</code><br>
+If the value is not available you can add a default value<br>
+Example: <code>value(:birthday, "No birthday given") # No birthday given</code>
+<h4>js(*scripts)</h4>
+Add scripts to the html
+
+<h3>Templates</h3>
+<h4>Input</h4>
+See the view <code>template/input.html.erb</code> for all options
+<%= view("../template/input", {title: "Forename"}) %>

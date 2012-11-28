@@ -3,12 +3,12 @@
 class HelpPresenter < Presenter
 
   def overview(params)
-    view[:title] = "Help"
+    page[:title] = "Help"
     api
   end
 
   def api
-    view[:api] = [
+    data[:api] = [
         ["users",             "GET",  {}],
         ["projects",          "GET",  {}],
         ["search/all",        "GET",  {}],
