@@ -4,7 +4,7 @@ class User < Model
   before_validation :strip
 
   validates_presence_of   :username, :password, :mail
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_length_of     :username, :minimum => 4, :maximum => 30
   validates_length_of     :forename, :surname, :maximum => 30
   validates_length_of     :password, :minimum => 6, :maximum => 30, :if => :password_changed?

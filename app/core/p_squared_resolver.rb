@@ -22,6 +22,7 @@ class PSquaredResolver < Sinatra::Base
         break
       end
     end
+    content_type @format.to_sym
     @format ||= "html"
   end
 
@@ -86,9 +87,6 @@ class PSquaredResolver < Sinatra::Base
     end
     def keys
       @locals.keys.sort
-    end
-    def value(key)
-      @locals[key]
     end
     def user
       request.env['user']

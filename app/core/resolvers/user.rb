@@ -42,4 +42,14 @@ class UserResolver < PSquaredResolver
     resolve("user", action, username)
   end
 
+  # get all validators
+  get %r{^/users/validators/?$}i do
+    resolve("user", "all_validators")
+  end
+
+  # get validators of attribute
+  get %r{^/users/validators/(\w+)/?$}i do |attribute|
+    resolve("user", "validators", attribute)
+  end
+
 end

@@ -1,4 +1,3 @@
-<%= keys %>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -10,7 +9,7 @@
   <% keys.each do |key| %>
       <tr>
         <td><%= key %></td>
-        <td><%= value(key) %></td>
+        <td><%= @locals[key] %></td>
       </tr>
   <% end %>
   </tbody>

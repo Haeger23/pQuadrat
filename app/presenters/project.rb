@@ -35,4 +35,12 @@ class ProjectPresenter < Presenter
     # delete user
   end
 
+  def all_validators
+    data[:validators] = Project.validators_as_hash
+  end
+
+  def validators(attribute)
+    data[:validators] = Project.validators_as_hash_on(attribute)
+  end
+
 end
