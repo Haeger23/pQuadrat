@@ -1,0 +1,13 @@
+<%#
+required
+ title (string) Label and Placeholder for the input
+optional
+ name (string) The name-attribute; default: title.downcase
+ input_tags (hash) More input tags
+ %>
+<div class="control-group">
+  <label class="control-label" for="<%= value(:name, title.downcase) %>"><%= title %></label>
+  <div class="controls">
+    <input type="text" name="<%= value(:name, title.downcase) %>" placeholder="<%= title %>" <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>
+  </div>
+</div>

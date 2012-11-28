@@ -22,8 +22,8 @@ class PSquaredResolver < Sinatra::Base
         break
       end
     end
-    content_type @format.to_sym
     @format ||= "html"
+    content_type @format.to_sym
   end
 
   helpers do
@@ -31,7 +31,7 @@ class PSquaredResolver < Sinatra::Base
       currentPresenter = @presenter
       currentLocals = @locals
       options = args.extract_options!
-      options.merge!(:layout => false, :locals => @locals.merge(locals))
+      options.merge!(:layout => false, :locals => @locals.merge!(locals))
       out = erb((@presenter+"/"+view.to_s+"."+@format).to_sym, options)
       @presenter = currentPresenter
       @locals = currentLocals
@@ -88,6 +88,9 @@ class PSquaredResolver < Sinatra::Base
     def keys
       @locals.keys.sort
     end
+    def value(key, default=nil)
+      @locals.fetch(key, default)
+    end
     def user
       request.env['user']
     end
@@ -100,7 +103,7 @@ protected
 
     @locals ||= {}
     @page ||= {
-        title: action+" "+presenter,
+        title: presenter.capitalize+": "+action,
         search: "All",
         query: ""
     }
@@ -128,6 +131,7 @@ protected
     end
 
     begin
+      p "search for: "+(@presenter+"/"+action+"."+@format)
       erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
     rescue Errno::ENOENT => e
       if @format == "html"
