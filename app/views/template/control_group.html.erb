@@ -1,0 +1,15 @@
+<%#
+optional
+ label    (Hash) A hash with label information
+ controls (Array) A array with controls
+ block    (lambda)
+ %>
+<div class="control-group">
+  <%= if value(:label) then view("template", "units/label", label) end %>
+  <div class="controls">
+    <% value(:controls, []).each do |control| %>
+        <%= control.is_a?(Hash) ? view("template", "units/#{control[:view]}", control) : control.to_s %>
+    <% end %>
+    <%= if block_given? then yield end %>
+  </div>
+</div>

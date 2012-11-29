@@ -1,0 +1,23 @@
+<h4>Textbox</h4>
+See the view <code>template/textbox.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "textbox", {title: "Forename"}) %>
+</div>
+
+<h4>Select</h4>
+See the view <code>template/select.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "select", {title: "Language", items: {en: "English", de: "German"}}) %>
+</div>
+
+<h4>Button</h4>
+See the view <code>template/button.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "button", {title: "Forename"}) %>
+</div>
+
+<h4>Control group</h4>
+See the view <code>template/control_group.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "control_group", {label: {title: "Group"}, controls: [{view: :textbox, title: "Url"}, {view: :button, title: "test button"}, "<div>You can add text or html elements</div>"]}) %>
+</div>

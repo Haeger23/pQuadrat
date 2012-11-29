@@ -7,7 +7,7 @@ class SearchPresenter < Presenter
     page[:title] = "No valid search"
   end
 
-  def projects_and_users query
+  def all query
     page[:search] = "All"
     page[:query] = query
     page[:title] = "Search for '#{query}' in projects and users"

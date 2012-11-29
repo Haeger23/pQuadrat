@@ -1,0 +1,7 @@
+<%#
+required
+ title (string) The title of the label
+optional
+ name (string) The for attribute
+ %>
+<label class="control-label" for="<%= value(:name, title.downcase) %>"><%= title %></label>

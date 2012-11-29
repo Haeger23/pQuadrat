@@ -1,0 +1,22 @@
+<%#
+required
+ title      (string) Label and Placeholder for the input
+optional
+ current    (string) The current value of the input
+ name       (string) The name-attribute; default: title.downcase
+ input_tags (hash)   More input tags
+%>
+<%= view("template", "control_group", {
+    label: {
+        title: title,
+        current: value(:current),
+        name: value(:name)
+    },
+    controls: [{
+        view: :textbox,
+        title: title,
+        current: value(:current),
+        name: value(:name),
+        input_tags: value(:input_tags)
+    }]
+}) %>

@@ -1,0 +1,24 @@
+<%#
+required
+ title        (string) Label for the input
+ items        (Hash)   The hash with items, like {"id": "title"}
+optional
+ name        (string)  The name-attribute; default: title.downcase
+ select_tags (Hash)    More select tags
+ selected    (string)  The selected item
+%>
+<%= view("template", "control_group", {
+    label: {
+        title: title,
+        current: value(:current),
+        name: value(:name)
+    },
+    controls: [{
+        view: :select,
+        title: title,
+        items: items,
+        name: value(:name),
+        select_tags: value(:select_tags),
+        selected: value(:selected)
+    }]
+}) %>

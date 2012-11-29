@@ -27,12 +27,12 @@ class PSquaredResolver < Sinatra::Base
   end
 
   helpers do
-    def view(view, locals={}, *args)
+    def view(presenter, view, locals={}, &block)
       currentPresenter = @presenter
       currentLocals = @locals
-      options = args.extract_options!
-      options.merge!(:layout => false, :locals => @locals.merge!(locals))
-      out = erb((@presenter+"/"+view.to_s+"."+@format).to_sym, options)
+      @presenter = presenter.to_s.downcase
+      @locals = locals.empty? ? @locals : locals
+      out = erb((@presenter+"/"+view.to_s.downcase+"."+@format).to_sym, :layout => false, :locals => @locals, &block)
       @presenter = currentPresenter
       @locals = currentLocals
       out
@@ -89,7 +89,7 @@ class PSquaredResolver < Sinatra::Base
       @locals.keys.sort
     end
     def value(key, default=nil)
-      @locals.fetch(key, default)
+      @locals[key] || default
     end
     def user
       request.env['user']
@@ -103,15 +103,13 @@ protected
 
     @locals ||= {}
     @page ||= {
-        title: presenter.capitalize+": "+action,
+        title: presenter.capitalize+": "+action.split("_").map {|v| v.capitalize }.join(" "),
         search: "All",
         query: ""
     }
     @presenter = presenter
     begin
-
       instance = Presenter.do!(presenter, action, @format, *args)
-
       if instance
         @locals.merge!(instance.data)
         @page.merge!(instance.page)
@@ -130,15 +128,12 @@ protected
       return resolve("error", "error_"+e.status.to_s, e.message)
     end
 
-    begin
-      p "search for: "+(@presenter+"/"+action+"."+@format)
-      erb((@presenter+"/"+action+"."+@format).to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
-    rescue Errno::ENOENT => e
+    if File.exist? PSquared.path + "/views/#{@presenter}/#{action}.#{@format}.erb"
+      erb("#{@presenter}/#{action}.#{@format}".to_sym, :locals => @locals, :layout => (request.xhr? ? false : ("layout."+@format).to_sym))
+    else
       if @format == "html"
         return resolve("error", "no_view", @locals)
-      end
-
-      if @format == "json"
+      elsif @format == "json"
         JSON.generate @locals
       elsif @format == "xml"
         @locals.to_xml(:root => "data")

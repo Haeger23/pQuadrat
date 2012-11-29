@@ -1,46 +1,24 @@
 <div class="row">
     <form id="debugForm" method="post" class="form-horizontal span10">
 
-        <div class="control-group">
-            <label class="control-label required" for="url">Url<abbr title="required">*</abbr></label>
-            <div class="controls">
-                <input class="span4" type="text" id="url" name="url" placeholder="Url" autocomplete="off" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="type">Type</label>
-            <div class="controls">
-                <select class="span4" id="type" name="type">
-                    <option value="get">GET</option>
-                    <option value="post">POST</option>
-                    <option value="put">PUT</option>
-                    <option value="delete">DELETE</option>
-                </select>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Parameters</label>
-            <div class="controls">
-                <button type="button" id="addParameter" class="btn">add</button>
-                <button type="button" id="removeAllParameter" class="btn btn-danger">remove all</button>
-                <div id="parameters"></div>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="accept">Type</label>
-            <div class="controls">
-                <select  class="span4" id="accept" name="accept">
-                  <option value="html">HTML</option>
-                  <option value="json">JSON</option>
-                  <option value="xml">XML</option>
-                </select>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <button type="submit" class="btn btn-primary" data-loading-text="Loading...">test</button>
-            </div>
-        </div>
+        <%= view("template", "textbox", {title: "Url", input_tags: {id: "url", class: "span4", autocomplete: "off", }}) %>
+        <%= view("template", "select", {title: "Type", select_tags: {id: "type", class: "span4"}, items: {
+            get:    "GET",
+            post:   "POST",
+            put:    "PUT",
+            delete: "DELETE"
+        }}) %>
+        <%= view("template", "control_group", {label: {title: "Parameters"}, controls: [
+            { view: :button, title: "add", type: "button", button_tags: {id: "addParameter"}},
+            { view: :button, title: "remove all", type: "button", attributes: ["danger"], button_tags: {id: "removeAllParameter"}},
+            "<div id='parameters'></div>"
+        ]}) %>
+        <%= view("template", "select", {title: "Format", name: "accept", select_tags: {id: "accept", class: "span4"}, items: {
+            html: "HTML",
+            json: "JSON",
+            xml:  "XML"
+        }}) %>
+        <%= view("template", "button", {title: "test", attributes: ["primary"], button_tags: {"data-loading-text" => "Loading..."}}) %>
 
     </form>
 </div>
