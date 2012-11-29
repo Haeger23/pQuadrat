@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2012 at 02:23 PM
+-- Generation Time: Nov 29, 2012 at 01:44 PM
 -- Server version: 5.5.25a
 -- PHP Version: 5.4.4
 
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `about` text COLLATE utf8_unicode_ci,
   `progress` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -136,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `salt` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `about` text COLLATE utf8_unicode_ci,
   `forename` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `surname` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `birthday` date DEFAULT NULL,
@@ -147,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `session` (`session`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 

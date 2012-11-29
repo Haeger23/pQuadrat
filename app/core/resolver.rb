@@ -12,6 +12,7 @@ class Resolver < PSquaredResolver
       "login",
       "user",
       "project",
+      "request",
       "search",
       "debug",
       "contact",
