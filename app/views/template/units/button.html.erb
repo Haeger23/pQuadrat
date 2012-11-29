@@ -1,0 +1,13 @@
+<%#
+required
+ title       (string) Label and Placeholder for the input
+optional
+ button_tags (Hash)   An hash with additional tags
+ type        (string) The button type; default: submit; possible: button, reset, submit
+ attributes  (Array)  An array with attributes (like primary, mini)
+%>
+<button type="<%= value(:type, "submit") %>"
+        class="btn <%= value(:attributes, []).map {|v| "btn-#{v}"}.join(" ") %>"
+        <%= o=[]; value(:button_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
+  <%= title %>
+</button>

@@ -1,0 +1,26 @@
+Helper functions you can call in the views
+
+<h4>keys</h4>
+Get all available variables<br>
+Example: <code>keys # [:username, :forename, :surname]</code>
+
+<h4>value(key, default=nil)</h4>
+Get the value with a key<br>
+Example: <code>value(:username) # friedolin</code><br>
+If the value is not available you can add a default value<br>
+Example: <code>value(:birthday, "No birthday given") # No birthday given</code>
+
+<h4>view(presenter, view, locals={})</h4>
+Render another view<br>
+Example: <code>view("template", "input", {title: "Forename"}) # Html code of the specific view</code><br>
+If the value is not available you can add a default value<br>
+Example: <code>value(:birthday, "No birthday given") # No birthday given</code>
+
+<h4>link(href, title)</h4>
+Add a link to the page. This link has the session parameter if the user is logged in.<br>
+The href argument is the relativ url.<br>
+Example: <code>link("help/views/helper", "Helper functions to build the views")</code>
+
+<h4>js(*scripts)</h4>
+Add scripts to the html, this scripts are in the folder <code>public/js</code><br>
+Example: <code>js("debug/debug", "user/add")</code>

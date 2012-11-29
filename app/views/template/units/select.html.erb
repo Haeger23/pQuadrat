@@ -1,0 +1,15 @@
+<%#
+required
+ title        (string) Label for the input
+ items        (Hash)   The hash with items, like {"id": "title"}
+optional
+ name        (string)  The name-attribute; default: title.downcase
+ select_tags (Hash)    More select tags
+ selected    (string)  The selected item
+%>
+<select name="<%= value(:name, title.downcase) %>"
+        <%= o=[]; value(:select_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
+  <% items.each do |k,v| %>
+    <option value="<%= k %>"<%= (value(:selected) and value(:selected) == k) ? " selected='selected'" : "" %>><%= v %></option>
+  <% end %>
+</select>

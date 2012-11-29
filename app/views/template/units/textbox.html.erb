@@ -1,0 +1,12 @@
+<%#
+required
+ title      (string) Label and Placeholder for the input
+optional
+ current    (string) The current value of the input
+ name       (string) The name-attribute; default: title.downcase
+ input_tags (hash)   More input tags
+ %>
+<input type="text"
+       name="<%= value(:name, title.downcase) %>"<%= value(:current) ? " value='current'" : "" %>
+       placeholder="<%= title %>"
+       <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>

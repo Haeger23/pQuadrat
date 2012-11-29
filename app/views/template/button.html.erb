@@ -1,0 +1,17 @@
+<%#
+required
+ title       (string) Title for the button
+optional
+ button_tags (hash)   More input tags
+ type        (string) The button type; default: submit; possible: button, reset, submit
+ attributes  (Array)  An array with attributes (like primary, mini)
+%>
+<%= view("template", "control_group", {
+    controls: [{
+        view: :button,
+        title: title,
+        button_tags: value(:button_tags),
+        type: value(:type),
+        attributes: value(:attributes)
+    }]
+}) %>

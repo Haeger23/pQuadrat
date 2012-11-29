@@ -7,7 +7,7 @@ class SearchResolver < PSquaredResolver
     if query == ""
       resolve("search", "empty")
     else
-      resolve("search", "projects_and_users", query)
+      resolve("search", "all", query)
     end
   end
 

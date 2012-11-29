@@ -1,8 +1,6 @@
-Available variables: <%= keys %>
-
 <ul>
   <% developer.each do |developer| %>
-    <%= view("items/developer", developer)  %>
+    <%= view("contact", "items/developer", developer)  %>
   <% end %>
 </ul>
 <b><%= mail %></b>
