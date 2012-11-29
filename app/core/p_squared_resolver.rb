@@ -4,6 +4,8 @@ require 'sinatra/base'
 
 class PSquaredResolver < Sinatra::Base
 
+  @@id_counter = 0
+
   configure do
     set :root, File.expand_path('../..', __FILE__)
   end
@@ -88,11 +90,19 @@ class PSquaredResolver < Sinatra::Base
     def keys
       @locals.keys.sort
     end
-    def value(key, default=nil)
-      @locals[key] || default
+    def value(key, default=nil, setter=false)
+      if setter
+        @locals[key] = default
+      else
+        @locals[key] || default
+      end
     end
     def user
       request.env['user']
+    end
+    def _id
+      @@id_counter += 1
+      "template_"+@@id_counter.to_s
     end
   end
 
