@@ -7,6 +7,7 @@ optional
  input_tags (hash)   More input tags
  %>
 <input type="text"
-       name="<%= value(:name, title.downcase) %>"<%= value(:current) ? " value='current'" : "" %>
+       name="<%= value(:name, title.downcase) %>"
+       <%= value(:current) ? "value='current'" : "" %>
        placeholder="<%= title %>"
        <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>

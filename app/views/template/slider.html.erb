@@ -1,0 +1,52 @@
+<%#
+required
+ title      (string)  Label for the slider
+optional
+ options    (Hash)    The options of the slider
+ with_value (boolean) True if the value should be displayed
+ current    (string)  The current value of the input
+ name       (string)  The name-attribute; default: title.downcase
+ input_tags (hash)    More input tags
+%>
+<%
+   id = _id
+   unless value(:input_tags)
+     value(:input_tags, {id: id}, true)
+   else
+     input_tags["id"] = id
+   end
+%>
+<%= view("template", "control_group", {
+        label: {
+            title: title,
+            current: value(:current),
+            name: value(:name)
+        },
+        controls: [{
+            view: :slider,
+            title: title,
+            name: value(:name),
+            input_tags: value(:input_tags)
+        }]
+}) %>
+<script>
+    (function($) {
+        var $input = $("#<%= id %>").hide(),
+            $span = $input.prev().text(<%= value(:current, 0) %>),
+            $slider = $span.prev(),
+            options = $.extend({
+                range: "min",
+                min: 0,
+                max: 100,
+                value: <%= value(:current, 0) %>,
+                slide: function(event, ui) {
+                    $input.val(ui.value);
+                    <% unless value(:with_value) %>
+                    $span.text(ui.value);
+                    <% end %>
+                }
+            }, <%= value(:options, {}).to_json %>);
+        $slider.slider(options);
+
+    }(jQuery))
+</script>

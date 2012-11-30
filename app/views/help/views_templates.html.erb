@@ -21,3 +21,19 @@ See the view <code>template/control_group.html.erb</code> for all options
 <div class="form-horizontal">
   <%= view("template", "control_group", {label: {title: "Group"}, controls: [{view: :textbox, title: "Url"}, {view: :button, title: "test button"}, "<div>You can add text or html elements</div>"]}) %>
 </div>
+
+<h4>Slider</h4>
+See the view <code>template/slider.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "slider", {title: "Slider"}) %>
+</div>
+
+<h4>Skills</h4>
+See the view <code>template/skills.html.erb</code> for all options
+<div class="form-horizontal">
+  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}}) %>
+</div>
+And with items
+<div class="form-horizontal">
+  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP"}, {category: 4, skill: "Project Management"}]}) %>
+</div>

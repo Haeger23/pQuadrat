@@ -1,0 +1,12 @@
+<%#
+required
+ title      (string) Label and Placeholder for the input
+optional
+ name       (string) The name-attribute; default: title.downcase
+ input_tags (hash)   More input tags
+%>
+<div <%= value(:input_tags, {})["class"] ? input_tags["class"] : "class='input-large'" %>></div>
+<span class='ui-slider-text'></span>
+<input type="text"
+     name="<%= value(:name, title.downcase) %>"
+     <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>
