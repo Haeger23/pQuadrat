@@ -112,4 +112,13 @@ protected
     @current_status = int
   end
 
+  def feedback(activeRecord)
+    if activeRecord.invalid?
+      data[:errors] = activeRecord.errors.to_hash
+      stop(400, activeRecord.errors.full_messages.join(", "))
+    else
+      activeRecord
+    end
+  end
+
 end

@@ -28,26 +28,18 @@ class UserPresenter < Presenter
   end
 
   def create params
-    user = User.create(
+    feedback(User.create(
         username: params[:username],
         password: params[:password],
         mail: params[:mail]
-    )
-    if user.invalid?
-      data[:errors] = user.errors.to_hash
-      stop(400, user.errors.full_messages.join(", "))
-    end
+    ))
   end
 
   def update user, username, params
     stop(403, "Only a logged in user can update the account") until user
     stop(403, "You only can update your account") until user.username.downcase == username.downcase
 
-    user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday)
-    if user.invalid?
-      data[:errors] = user.errors.to_hash
-      stop(400, user.errors.full_messages.join(", "))
-    end
+    feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday))
   end
 
   def delete user, username

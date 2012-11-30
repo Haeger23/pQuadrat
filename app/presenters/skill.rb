@@ -2,11 +2,8 @@
 
 class SkillPresenter < Presenter
 
-  def skills page, params
-    conditions = []
-    if params["query"]
-      conditions = ["skills.name LIKE ?", "%#{params["query"]}%"]
-    end
+  def all page, params
+    conditions = params["query"] ? ["skills.name LIKE ?", "%#{params["query"]}%"] : []
     skills = Skill.all(:select => "skills.name as name, categories.name as category",
                        :conditions => conditions,
                        :joins => [:category],
@@ -14,11 +11,17 @@ class SkillPresenter < Presenter
                        :limit => 50,
                        :order => "skills.name asc")
 
-    data[:skills] = Hash.new() {|hash, key| hash[key] = []}
-    skills.each { |skill| data[:skills][skill["category"]].push(skill.name) }
+    skills.each do |skill|
+      category = skill["category"]
+      unless data[category]
+        data[category] = {skills: [], count: 0}
+      end
+      data[category][:skills].push(skill.name)
+      data[category][:count] += 1
+    end
   end
 
-  def skills_category category, page, params
+  def all_of_category category, page, params
     conditions = ["categories.name = ?", category]
     if params["query"]
       conditions[0] += " AND skills.name LIKE ?"
@@ -33,46 +36,22 @@ class SkillPresenter < Presenter
                        :order => "skills.name asc")
 
     data[:skills] = skills.collect { |skill| skill.name }
+    data[:count] = skills.length
   end
 
-  def add_category params
-    category = Category.create(
-        name: params[:name]
-    )
-    if category.invalid?
-      data[:errors] = category.errors.to_hash
-      stop(400, category.errors.full_messages.join(", "))
-    end
-    data[:category] = category.id
-  end
-
-  def add_skill params
-    category = Category.find_by_name(params[:category])
-    skill = Skill.create(
-        name: params[:name],
-        category: category
-    )
-    if skill.invalid?
-      data[:errors] = skill.errors.to_hash
-      stop(400, skill.errors.full_messages.join(", "))
-    end
-    data[:skill] = skill.id
-  end
-
-  def add_user_skill name, category
-    category = Category.find_by_name(category)
+  def from_projects page, params
     # todo
   end
 
-  def add_project_skill name, category
+  def from_project projectname, page, params
     # todo
   end
 
-  def add_user_project_skill name, category
+  def from_users page, params
     # todo
   end
 
-  def add_request_skill name, category
+  def from_user username, page, params
     # todo
   end
 

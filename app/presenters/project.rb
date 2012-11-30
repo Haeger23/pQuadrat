@@ -24,15 +24,15 @@ class ProjectPresenter < Presenter
   end
 
   def create params
-    # create user
+    # todo create user
   end
 
   def update title
-    # update user
+    # todo update user
   end
 
   def delete title
-    # delete user
+    # todo delete user
   end
 
   def all_validators

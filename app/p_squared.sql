@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 29, 2012 at 01:44 PM
+-- Generation Time: Nov 30, 2012 at 12:47 PM
 -- Server version: 5.5.25a
 -- PHP Version: 5.4.4
 
@@ -33,7 +33,14 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Testing', '2012-11-30 12:16:46', '2012-11-30 12:16:46');
 
 -- --------------------------------------------------------
 
@@ -66,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `project_skills` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `project_id_2` (`project_id`,`skill_id`),
   KEY `project_id` (`project_id`),
   KEY `skill_id` (`skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -103,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `request_skills` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `request_id_2` (`request_id`,`project_skill_id`),
   KEY `request_id` (`request_id`,`project_skill_id`),
   KEY `project_skill_id` (`project_skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -123,7 +132,14 @@ CREATE TABLE IF NOT EXISTS `skills` (
   UNIQUE KEY `name` (`name`),
   KEY `category_id` (`category_id`),
   KEY `category_id_2` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`id`, `category_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Unit Testing', '2012-11-30 12:17:23', '2012-11-30 12:17:23');
 
 -- --------------------------------------------------------
 
@@ -166,6 +182,7 @@ CREATE TABLE IF NOT EXISTS `user_projects` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_2` (`user_id`,`project_id`),
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -179,12 +196,13 @@ CREATE TABLE IF NOT EXISTS `user_projects` (
 CREATE TABLE IF NOT EXISTS `user_project_skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `projectskill_id` int(11) NOT NULL,
+  `project_skill_id` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `projectskill_id` (`projectskill_id`),
+  UNIQUE KEY `user_id_2` (`user_id`,`project_skill_id`),
+  KEY `projectskill_id` (`project_skill_id`),
   KEY `request_id` (`user_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -250,7 +268,7 @@ ALTER TABLE `user_projects`
 -- Constraints for table `user_project_skills`
 --
 ALTER TABLE `user_project_skills`
-  ADD CONSTRAINT `user_project_skills_ibfk_1` FOREIGN KEY (`projectskill_id`) REFERENCES `project_skills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_project_skills_ibfk_3` FOREIGN KEY (`project_skill_id`) REFERENCES `project_skills` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_project_skills_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

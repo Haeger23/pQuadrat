@@ -3,7 +3,7 @@
 class LoginPresenter < Presenter
 
   def login
-    # show login
+    # todo show login
   end
 
   def create_session(params)
@@ -24,7 +24,7 @@ class LoginPresenter < Presenter
   end
 
   def registration
-    # do registration
+    # todo do registration
   end
 
 end

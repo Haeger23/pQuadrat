@@ -7,4 +7,6 @@ class Request < Model
   has_many :request_skills
   has_many :project_skills, :through => :request_skills
   has_many :skills, :through => :project_skills
+
+  validates_presence_of :user, :project, :message
 end
