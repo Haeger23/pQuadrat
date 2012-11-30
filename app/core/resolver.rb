@@ -13,10 +13,12 @@ class Resolver < PSquaredResolver
       "user",
       "project",
       "request",
+      "skill",
       "search",
       "debug",
       "contact",
-      "help"
+      "help",
+      "admin"
   ].each do |resolver|
     require PSquared.path+"/core/resolvers/#{resolver}.rb"
     use Object.const_get(resolver.capitalize+"Resolver")

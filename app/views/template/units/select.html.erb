@@ -7,9 +7,9 @@ optional
  select_tags (Hash)    More select tags
  selected    (string)  The selected item
 %>
-<select name="<%= value(:name, title.downcase) %>"
+<select autocomplete='off' name='<%= value(:name, title.downcase) %>'
         <%= o=[]; value(:select_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
   <% items.each do |k,v| %>
-    <option value="<%= k %>"<%= (value(:selected) and value(:selected) == k) ? " selected='selected'" : "" %>><%= v %></option>
+    <option value='<%= k %>'<%= (value(:selected) and value(:selected) == k) ? " selected='selected'" : "" %>><%= v %></option>
   <% end %>
 </select>
