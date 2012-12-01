@@ -1,43 +1,133 @@
+<div id="user-image" xmlns="http://www.w3.org/1999/html">
+  <img src="..." class="img-polaroid" alt="User-Image"/><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a>
+</div>
 
-<form id="user-edit-form" class="form-horizontal" >
-<h5>Personal Dates</h5>
-<div class="control-group">
-  <label class="control-label" for="forename">Forename</label>
-  <div class="controls">
-    <input type="text"  class="input-xlarge" placeholder="Forename" name="forename">
-  </div>
-</div>
-<div class="control-group">
-  <label class="control-label" for="surename">Surename</label>
-  <div class="controls">
-    <input type="text"  class="input-xlarge" placeholder="Surename" name="surename">
-  </div>
-</div>
-<div class="control-group">
-  <label class="control-label" for="Birthday">Birthday</label>
-  <div class="controls">
-    <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
-      <input type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
-      <span class="add-on"><i class="icon-calendar"></i></span>
+<form id="user-edit-form" class="form-horizontal" align= "left">
+
+  <h5>General Account Settings</h5>
+  <div class="control-group">
+    <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
+    <div class="controls">
+      <input type="text" class="input-xlarge" placeholder="Username" name="username"><a class="btn btn-small" href="#"><i class=" icon-user"></i></a>
     </div>
   </div>
-</div>
-
-<div class="control-group">
-  <label class="control-label" for="website">Website</label>
-  <div class="controls">
-    <input type="text"  class="input-xlarge" placeholder="www.my-homepage.de" name="website">
+  <div class="control-group">
+    <label class="control-label" for="mail">Email<abbr title="required">*</abbr></label>
+    <div class="controls">
+      <input type="text" class="input-xlarge" placeholder="Email" name="mail"><a class="btn btn-small" href="#"><i class="icon-envelope"></i></a>
+    </div>
   </div>
-</div>
 
-<h5>Skills</h5>
-<div class="control-group">
-  <label class="control-label">Parameters</label>
-  <div class="controls">
-    <button type="button" id="addParameter" class="btn">add skill</button>
-    <button type="button" id="removeAllParameter" class="btn">remove skill</button>
-    <div id="parameters"></div>
+  <div class="control-group">
+    <label class="control-label" for="password">Password<abbr title="required">*</abbr></label>
+    <div class="controls">
+      <a class="btn btn-small" href="#"><abbr title="change password"/><i class="icon-pencil"></i></a>
+    </div>
   </div>
-</div>
-</div>
+
+
+
+  <h5>Personal Dates</h5>
+
+    <div class="control-group">
+      <label class="control-label" for="forename">Forename</label>
+      <div class="controls">
+        <input type="text"  class="input-xlarge" placeholder="Forename" name="forename">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="surename">Surename</label>
+      <div class="controls">
+        <input type="text"  class="input-xlarge" placeholder="Surename" name="surename">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="Birthday">Birthday</label>
+      <div class="controls">
+        <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
+          <input type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
+          <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="website">Website</label>
+      <div class="controls">
+        <input type="text"  class="input-xlarge" placeholder="www.my-homepage.de" name="website">
+      </div>
+    </div>
+  <div class="control-group">
+    <label class="control-label" for="website">about</label>
+    <div class="controls">
+  <textarea rows="3"></textarea>
+      </div>
+  </div>
+
+  <h5 >Skills</h5>
+  </form>
+
+    <table class="table table-hover">
+      <thead>
+      <tr><th>Name of Skill</th><th>Weight</th><th>Category</th></tr>
+      </thead>
+      <tbody>
+      <tr>    <td class="text-info"><strong>AJAX</strong></td>       <td>basics</td>          <td>Webdevelopment</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
+      <tr>    <td class="text-info"><strong>C</strong></td>       <td>advanced</td>          <td>Operating Systems</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
+      <tr>    <td class="text-info"><strong>CSS</strong></td>       <td>advanced</td>          <td>Webdesign</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
+      <tr>    <td class="text-info"><strong>HTML</strong></td>       <td>expert</td>        <td>Webdesign</td>  <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>       </tr>
+      <tr>    <td class="text-info"><strong>JavaScript</strong></td>       <td>advanced</td>          <td>Webdevelopment</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
+      <tr>    <td class="text-info"><strong>Ruby</strong></td>       <td>basics</td>        <td>Webdevelopment</td>  <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>       </tr>
+      </tbody>
+    </table>
+
+    <h5>Do you have new skills?</h5>
+
+    <table class="table table-striped" align="center">
+      <thead>
+      <tr>    <th>Skill</th>      <th>Weight</th>    <th>Category</th> </tr>
+      </thead>
+      <tbody>
+
+
+
+  <div class="control-group" align= "center">
+
+    <div class="controls" >
+      <button type="button" id="addParameter" class="btn btn-primary" >add skill</button>
+      <div id="parameters"></div>
+    </div>
+  </div>
+
+  <tr>    <td><div class="controls">
+    <input class="span4" type="text" placeholder="Name of skill" autocomplete="on">
+  </div></td>
+    <td>
+      <select>
+        <option>basics</option>
+        <option>advanced</option>
+        <option>expert</option>
+      </select>
+    </td>
+    <td>
+      <select>
+        <option>Webdesign</option>
+        <option>Webdevelopment</option>
+        <option>Operating Systems</option>
+        <option>Assembler</option>
+        <option>Mobile Communication</option>
+      </select>
+    </td>
+
+    <td><button class="btn btn-mini btn-success" type="button">add this skill</button></td>       </tr>
+
+  </tbody>
+</table>
+
 </form>
+
+
+
+<% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
+      "user/add"
+%>
