@@ -5,8 +5,38 @@ optional
  name       (string) The name-attribute; default: title.downcase
  input_tags (hash)   More input tags
 %>
+<%
+   unless value(:input_tags)
+     value(:input_tags, {}, true)
+   end
+   unless value(:input_tags)[:id]
+     value(:input_tags)[:id] = _id
+   end
+%>
 <div <%= value(:input_tags, {})["class"] ? input_tags["class"] : "class='input-large'" %>></div>
-<span class='ui-slider-text'></span>
-<input type="text"
-     name="<%= value(:name, title.downcase) %>"
+<span class="ui-slider-text"></span>
+<input type='text'
+     name='<%= value(:name, title.downcase) %>'
      <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>
+
+<script>
+    (function($) {
+        var $input = $('#<%= value(:input_tags)[:id] %>').hide(),
+            $span = $input.prev().text(<%= value(:current, 0) %>),
+            $slider = $span.prev(),
+            options = $.extend({
+                range: 'min',
+                min: 0,
+                max: 100,
+                value: <%= value(:current, 0) %>,
+                slide: function(event, ui) {
+                    $input.val(ui.value);
+                    <% unless value(:with_value) %>
+                    $span.text(ui.value);
+                    <% end %>
+                }
+            }, <%= value(:options, {}).to_json %>);
+        $slider.slider(options);
+
+    }(jQuery))
+</script>
