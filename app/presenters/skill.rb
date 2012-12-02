@@ -39,6 +39,10 @@ class SkillPresenter < Presenter
     data[:count] = skills.length
   end
 
+  def one category, skill, params
+
+  end
+
   def from_projects page, params
     # todo
   end

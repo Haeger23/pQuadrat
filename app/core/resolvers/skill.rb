@@ -19,6 +19,10 @@ class SkillResolver < PSquaredResolver
     resolve("skill", "all_of_category", category, page.to_i, request.params)
   end
 
+  get %r{^/skill/(\w+)/(\w+)/?$}i do |category, skill|
+    resolve("skill", "one", category, skill, request.params)
+  end
+
   # PROJECTS SKILLS
   get %r{^/projects/skills/?$}i do
     resolve("skill", "from_projects", 1, request.params)

@@ -35,5 +35,5 @@ See the view <code>template/skills.html.erb</code> for all options
 </div>
 And with items
 <div class="form-horizontal">
-  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP"}, {category: 4, skill: "Project Management"}]}) %>
+  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]}) %>
 </div>
