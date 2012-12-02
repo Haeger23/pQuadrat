@@ -68,9 +68,9 @@ optional
             .typeahead(autoCompleteOptions);
 
         $("#<%= id %>").click(function() {
-            var $input = $("<input type='text' class='input-large'/>").hide();
+            var $input = $(" <input type='text' class='input-large'/>").hide();
             $("<li></li>")
-                .append("<%= view("template", "units/select", {items: categories, title: "", name: "skills[]"}).gsub(/\r\n/, "").gsub(/"/, '\\"') %>")
+                .append("<%= view("template", "units/select", {items: categories, title: "", name: "skills[]"}).gsub(/\r\n/, " ").gsub(/"/, '\\"') %>")
                 .append($("<input type='text' placeholder='Skill' name='skills[]' class='skill-name' />").typeahead(autoCompleteOptions))
                 .append("<div class='input-large'></div>")
                 .append("<span class='ui-slider-text'></span>")
