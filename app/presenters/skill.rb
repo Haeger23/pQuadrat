@@ -4,7 +4,7 @@ class SkillPresenter < Presenter
 
   def all page, params
     conditions = params["query"] ? ["skills.name LIKE ?", "%#{params["query"]}%"] : []
-    skills = Skill.all(:select => "skills.name as name, categories.name as category",
+    skills = Skill.all(:select => "*, skills.name as name, categories.name as category",
                        :conditions => conditions,
                        :joins => [:category],
                        :offset => (page-1)*50,
@@ -16,7 +16,10 @@ class SkillPresenter < Presenter
       unless data[category]
         data[category] = {skills: [], count: 0}
       end
-      data[category][:skills].push(skill.name)
+      data[category][:skills].push({
+        name: skill.name,
+        created_at: skill.created_at
+      })
       data[category][:count] += 1
     end
   end
@@ -28,19 +31,26 @@ class SkillPresenter < Presenter
       conditions.push("%#{params["query"]}%")
     end
 
-    skills = Skill.all(:select => "skills.name as name",
+    skills = Skill.all(:select => "*, skills.name as name",
                        :conditions => conditions,
                        :joins => [:category],
                        :offset => (page-1)*50,
                        :limit => 50,
                        :order => "skills.name asc")
 
-    data[:skills] = skills.collect { |skill| skill.name }
+    data[:skills] = skills.collect do |skill| {
+        name: skill.name,
+        created_at: skill.created_at
+    }
+    end
     data[:count] = skills.length
   end
 
   def one category, skill, params
+    category = Category.find_by_name(category)
+    skill = Skill.find_by_category_id_and_name(category.id, skill)
 
+    data_add(skill, :name, :created_at)
   end
 
   def from_projects page, params
