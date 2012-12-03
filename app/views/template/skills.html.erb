@@ -40,7 +40,6 @@ optional
                 autoCompleteOptions = {
                     minLength: 2,
                     source: function(query, process) {
-                        console.log(query);
                         query = query.toLowerCase();
                         var category = this.$element.prev().children("[selected='selected']").text();
                         // category = $(this.bindings[0]).prev().children("[selected='selected']").text();
@@ -53,8 +52,12 @@ optional
                         }
 
                         $.getJSON(pSquared.baseUrl+"/skills/"+encodeURI(category), {query: query}, function(data) {
-                            autoCompleteCache[category][query] = data.skills;
-                            process(data.skills);
+                            var skills = [];
+                            for(var i = 0, length = data.skills.length; i < length; i++) {
+                                skills.push(data.skills[i].name)
+                            }
+                            autoCompleteCache[category][query] = skills;
+                            process(skills);
                         });
                     }
                 };
