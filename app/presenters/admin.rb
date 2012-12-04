@@ -8,11 +8,11 @@ class AdminPresenter < Presenter
   end
 
   def add_project params
-    skills = params[:skills]
+    skills = params[:skills] || ""
     if skills
       ar_skills = []
       skills.split(",").gsub(/\s/, "").each do |skill|
-        skill = Skill.find_by_name("skill")
+        skill = Skill.find_by_url(skill)
         ar_skills.push(skill) if skill
       end
       skills = ar_skills
@@ -27,8 +27,10 @@ class AdminPresenter < Presenter
   end
 
   def add_project_skill params
-    project = Project.find_by_title(params[:project])
-    skill = Skill.find_by_name(params[:skill])
+    project = params[:project] || ""
+    skill = params[:skill] || ""
+    project = Project.find_by_url(project)
+    skill = Skill.find_by_url(skill)
     project_skill = feedback(ProjectSkill.create(
       project: project,
       skill: skill,
@@ -39,8 +41,10 @@ class AdminPresenter < Presenter
   end
 
   def add_request params
-    user = User.find_by_username(params[:user])
-    project = Project.find_by_project(params[:project])
+    user = params[:user] || ""
+    project = params[:project] || ""
+    user = User.find_by_url(user)
+    project = Project.find_by_url(project)
     request = feedback(Request.create(
       user: user,
       project: project,
@@ -56,7 +60,8 @@ class AdminPresenter < Presenter
   end
 
   def add_skill params
-    category = Category.find_by_name(params[:category])
+    category = params[:category] || ""
+    category = Category.find_by_url(category)
     skill = feedback(Skill.create(
       name: params[:name],
       category: category
