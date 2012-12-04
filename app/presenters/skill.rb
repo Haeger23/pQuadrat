@@ -40,7 +40,12 @@ class SkillPresenter < Presenter
   end
 
   def one category, skill, params
+    category = Category.find_by_url(category)
+    category_id = category.nil? ? nil : category.id
 
+    skill = Skill.find_by_category_id_and_url(category_id, skill)
+
+    data_add(skill, :name, :created_at)
   end
 
   def from_projects page, params
