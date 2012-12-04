@@ -16,9 +16,9 @@ module PSquared
   def self.initializeDatabase(file)
     require 'active_record'
     require 'mysql'
-    require 'yaml'
+    require 'yaml'  # YAML is a human friendly data serialization standard
     require 'json'
-    require 'builder'
+    require 'builder' # for creating XML markup and data structures
 
     # initialize database
     dbConfig = YAML::load(File.open(PSquared.path+"/"+file))
@@ -41,6 +41,7 @@ module PSquared
   def self.debug!
     require_relative 'resolver'
     self.debug = true
+    # WK ISSUE "require_relative 'resolver'" seems to be executed twice, problem?
     self.run!
   end
 end
