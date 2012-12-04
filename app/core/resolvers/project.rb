@@ -8,7 +8,7 @@ class ProjectResolver < PSquaredResolver
   end
 
   # add project to projects
-  get %r{^/projects/add/?$}i do |title|
+  get %r{^/projects/add/?$}i do
     resolve("project", "add", params)
   end
 

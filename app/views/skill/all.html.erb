@@ -1,1 +1,6 @@
-All skills of all categories
+<% keys.each do |category| %>
+   <h3><%= category %></h3>
+   <% value(category)[:skills].each do |skill| %>
+        <%= skill %>
+    <% end %>
+<% end %>
