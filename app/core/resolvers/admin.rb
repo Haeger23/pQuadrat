@@ -34,12 +34,16 @@ class AdminResolver < PSquaredResolver
     resolve("admin", "add_user_project", params)
   end
 
-  post %r{^/admin/user_project/?$}i do
+  post %r{^/admin/user_project_skill/?$}i do
     resolve("admin", "add_user_project_skill", params)
   end
 
-  post %r{^/admin/user_project/?$}i do
-    resolve("skill", "add_user_skill", params)
+  post %r{^/admin/user_skill/?$}i do
+    resolve("admin", "add_user_skill", params)
+  end
+
+  get %r{^/admin/db/?$}i do
+    resolve("admin", "update_database")
   end
 
 end

@@ -85,4 +85,14 @@ class AdminPresenter < Presenter
     # todo add user_skill
   end
 
+  def update_database
+    t1 = Time.now
+    con = ActiveRecord::Base.connection
+    con.execute("DROP DATABASE IF EXISTS p_squared;");
+    con.execute("CREATE DATABASE p_squared;");
+    system "mysql -u root p_squared < "+PSquared.path+"/../p_squared.sql"
+    t2 = Time.now
+    data[:time] = ((t2-t1)*1000).to_i/1000.0
+  end
+
 end
