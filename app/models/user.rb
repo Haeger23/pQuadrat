@@ -5,7 +5,7 @@ class User < Model
 
   validates_presence_of   :username, :password, :mail
   validates_uniqueness_of :url, :case_sensitive => false
-  validates_format_of     :username, :with => /^[a-z0-9_-äöü\+ ]+$/i
+  validates_format_of     :username, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
   validates_length_of     :username, :minimum => 4, :maximum => 30
   validates_length_of     :forename, :surname, :maximum => 30
   validates_length_of     :password, :minimum => 6, :maximum => 30, :if => :password_changed?
@@ -37,9 +37,13 @@ class User < Model
     Digest::SHA1.hexdigest(password + self.salt)
   end
 
-  def name=(value)
-    super
-    write_attribute(:url, value.downcase.gsub(/\W/, "_"))
+  def username=(value)
+    if value
+      # trim
+      value = value.strip.gsub(/\s/, " ")
+      write_attribute(:url, value.gsub(/\W/, "_"))
+    end
+    super(value)
   end
 
 protected

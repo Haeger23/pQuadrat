@@ -26,7 +26,15 @@ class LoginResolver < PSquaredResolver
     resolve("login", "create_session", params)
   end
 
+  # show logout
+  get %r{^/logout/?$}i do
+    resolve("login", "logout")
+  end
 
+  # do logout
+  post %r{^/logout/?$}i do
+    resolve("login", "delete_session", user)
+  end
 
   # show register
   get %r{^/registration/?$}i do

@@ -6,13 +6,17 @@ class LoginPresenter < Presenter
     # todo show login
   end
 
+  def logout
+    # todo show logout
+  end
+
   def create_session(params)
     username, password = params["username"], params["password"]
-    stop(403, "No username given") unless username
-    stop(403, "No password given") unless password
+    stop(400, "No username given") unless username
+    stop(400, "No password given") unless password
 
     user = User.login(username, password)
-    stop(403, "Wrong username or password") unless user
+    stop(400, "Wrong username or password") unless user
 
     require "digest/sha1"
     chars = ("a".."z").to_a
@@ -21,6 +25,13 @@ class LoginPresenter < Presenter
     user.save
 
     data[:session] = user.session
+  end
+
+  def delete_session user
+    stop(403, "Only a logged in user can logout") until user
+
+    user.session = nil
+    user.save
   end
 
   def registration

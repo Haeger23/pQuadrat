@@ -5,13 +5,17 @@ class Category < Model
   has_many :skills
 
   validates_uniqueness_of :url, :case_sensitive => false
-  validates_format_of     :name, :with => /^[-a-z0-9_äöü\+ ]+$/i
-  validates_presence_of :name
-  validates_length_of :name, :minimum => 4
+  validates_format_of     :name, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
+  validates_presence_of   :url, :name
+  validates_length_of     :name, :minimum => 4
 
   def name=(value)
-    super
-    write_attribute(:url, value.downcase.gsub(/\W+/, "_"))
+    if value
+      # trim
+      value = value.strip.gsub(/\s/, " ")
+      write_attribute(:url, value.gsub(/\W/, "_"))
+    end
+    super(value)
   end
 
 end

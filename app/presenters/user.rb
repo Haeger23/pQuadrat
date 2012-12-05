@@ -12,7 +12,7 @@ class UserPresenter < Presenter
   end
 
   def show username
-    user = User.find_by_username(username)
+    user = User.find_by_url(username)
     stop(404, "There is no user with the username '#{username}'") until user
 
     page[:title] = user.username
@@ -37,7 +37,7 @@ class UserPresenter < Presenter
 
   def update user, username, params
     stop(403, "Only a logged in user can update the account") until user
-    stop(403, "You only can update your account") until user.username.downcase == username.downcase
+    stop(403, "You only can update your account") until user.url.downcase == username.downcase
 
     feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday))
   end

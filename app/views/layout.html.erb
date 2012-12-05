@@ -50,7 +50,10 @@
               <li><%= link("users", "<i class='icon-user icon-white'></i>Users") %></li>
               <% if user %>
                   <li class="user"><%= link("user/#{user.username}", user.username) %></li>
-                  <li><%= link("logout", "<i class='icon-off icon-white'></i>Logout") %></li>
+                  <li><a id="logout" href="<%= request.base_url %>/logout"><i class='icon-off icon-white'></i>Logout</a></li>
+              <% else %>
+                  <li class="user"><%= link("registration", "Registration") %></li>
+                  <li><%= link("login", "Login") %></li>
               <% end %>
             </ul>
           </div>
@@ -76,6 +79,23 @@
       <%= js "layout" %>
         <script>
             (function() {
+                $("#logout").click(function() {
+                    var $this = $(this),
+                        href = $this.attr("href");
+
+                    $.ajax({
+                        url: href,
+                        type: "post",
+                        data: {session: pSquared.session},
+                        dataType: "json",
+                        success: function(data) {
+                            window.location.href = href
+                        }
+                    })
+                    return false;
+                });
+
+
                 var scripts = pSquared.scripts;
                 for(var i = 0, length = scripts.length; i < length; i++ ) {
                     scripts[i]();
