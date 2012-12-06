@@ -7,16 +7,16 @@ optional
  input_tags (hash)   More input tags
 %>
 <%= view("template", "control_group", {
-    label: {
-        title: title,
-        current: value(:current),
-        name: value(:name)
-    },
-    controls: [{
-        view: :textbox,
-        title: title,
-        current: value(:current),
-        name: value(:name),
-        input_tags: value(:input_tags)
-    }]
+        label: {
+                title: title,
+                current: value(:current),
+                name: value(:name)
+        },
+        controls: [{
+                           view: :textbox,
+                           title: title,
+                           current: value(:current),
+                           name: value(:name),
+                           input_tags: value(:input_tags)
+                   }]
 }) %>
