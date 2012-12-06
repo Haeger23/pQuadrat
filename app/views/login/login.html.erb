@@ -1,4 +1,4 @@
-<form id="login-form" class="form-horizontal" align="left">
+<form id="login-form" class="form-horizontal" align="left" method="post" action="/login" data-href="/">
   <div class="row">
 
     <div class="control-group">
@@ -24,3 +24,9 @@
   </div>
   </div>
 </form>
+
+<script>
+  pSquared.success = function(data) {
+    pSquared.session = data.session
+  };
+</script>
