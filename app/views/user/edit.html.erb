@@ -1,10 +1,11 @@
-<div id="user-image" xmlns="http://www.w3.org/1999/html">
+<div id="user-image" align="right">
   <img src="..." class="img-polaroid" alt="User-Image"/><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a>
 </div>
 
-<form id="user-edit-form" class="form-horizontal" align= "left">
+<form id="user-edit-form" class="form-horizontal" align="left">
 
   <h5>General Account Settings</h5>
+
   <div class="control-group">
     <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
     <div class="controls">
@@ -18,56 +19,94 @@
     </div>
   </div>
 
-  <div class="control-group">
-    <label class="control-label" for="password">Password<abbr title="required">*</abbr></label>
-    <div class="controls">
-      <a class="btn btn-small" href="#"><abbr title="change password"/><i class="icon-pencil"></i></a>
+  <div>
+
+    <a data-toggle="collapse" data-parent="#accordion2" href="#changePassword">
+      Change Password
+    </a>
+  <!----/div----->
+  <div id="changePassword" class="collapse">
+    <div class="accordion-inner">
+
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="forename">Old Password: </label>
+          <div class="controls">
+            <input type="password" class="input-xlarge" placeholder="Old Password" name="oldPassword">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="newPassword">New Password: </label>
+        <div class="controls">
+            <input type="password" class="input-xlarge" placeholder="New Password" name="NewPassword">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="forename">Confirm new Password: </label>
+
+          <div class="controls">
+            <input type="password" class="input-xlarge" placeholder="new Password" name="ConfirmNewPassword">
+          </div>
+        </div>
+      </form>
+      </div>
     </div>
   </div>
+  </form>
+  <!--------------------------------------------------------------------------->
 
-
-
+<form id="user-edit-personalDates-form" class="form-horizontal" align="left">
   <h5>Personal Dates</h5>
 
-    <div class="control-group">
-      <label class="control-label" for="forename">Forename</label>
-      <div class="controls">
-        <input type="text"  class="input-xlarge" placeholder="Forename" name="forename">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="surename">Surename</label>
-      <div class="controls">
-        <input type="text"  class="input-xlarge" placeholder="Surename" name="surename">
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="Birthday">Birthday</label>
-      <div class="controls">
-        <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
-          <input type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
-          <span class="add-on"><i class="icon-calendar"></i></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label class="control-label" for="website">Website</label>
-      <div class="controls">
-        <input type="text"  class="input-xlarge" placeholder="www.my-homepage.de" name="website">
-      </div>
-    </div>
   <div class="control-group">
-    <label class="control-label" for="website">about</label>
+    <label class="control-label" for="forename">Forename</label>
+
     <div class="controls">
-  <textarea rows="3"></textarea>
+      <input type="text" class="input-xlarge" placeholder="Forename" name="forename">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="surename">Surename</label>
+
+    <div class="controls">
+      <input type="text" class="input-xlarge" placeholder="Surename" name="surename">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="Birthday">Birthday</label>
+
+    <div class="controls">
+      <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
+        <input class="input-xlarge" type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
+        <span class="add-on"><i class="icon-calendar"></i></span>
       </div>
+    </div>
   </div>
 
-  <h5 >Skills</h5>
-  </form>
+  <div class="control-group">
+    <label class="control-label" for="website">Website</label>
 
-    <table class="table table-hover">
+    <div class="controls">
+      <input type="text" class="input-xlarge" placeholder="www.my-homepage.de" name="website">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="website">about</label>
+
+    <div class="controls">
+      <textarea rows="3"></textarea>
+    </div>
+  </div>
+  <h5>Skills</h5>
+
+</form>
+<div class="form-horizontal" id="user-edit-addSkill">
+  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]}) %>
+</div>
+</div>
+
+<!--View with table---xmlns="http://www.w3.org/1999/html">
+<!--table class="table table-hover">
       <thead>
       <tr><th>Name of Skill</th><th>Weight</th><th>Category</th></tr>
       </thead>
@@ -92,6 +131,7 @@
 
 
   <div class="control-group" align= "center">
+
 
     <div class="controls" >
       <button type="button" id="addParameter" class="btn btn-primary" >add skill</button>
@@ -121,10 +161,11 @@
 
     <td><button class="btn btn-mini btn-success" type="button">add this skill</button></td>       </tr>
 
-  </tbody>
-</table>
 
-</form>
+  </tbody>
+</table-->
+
+
 
 
 
