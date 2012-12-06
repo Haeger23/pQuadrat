@@ -3,6 +3,7 @@
 class LoginPresenter < Presenter
 
   def login
+    page[:title] = "Login"
     # todo show login
   end
 

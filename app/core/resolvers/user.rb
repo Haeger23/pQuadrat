@@ -14,12 +14,12 @@ class UserResolver < PSquaredResolver
 
   # edit user, show user
   get %r{^/user/(\w+)/(edit|show)/?$}i do |username, action|
-    resolve("user", action, username)
+    resolve("user", action, user, username)
   end
 
   # show user
   get %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "show", username)
+    resolve("user", "show", user, username)
   end
 
   # create user
@@ -28,8 +28,8 @@ class UserResolver < PSquaredResolver
   end
 
   # update user
-  put %r{^/user/(\w+)/?$}i do |username|
-    resolve("user", "update", user, username, params)
+  put %r{^/user/?$}i do
+    resolve("user", "update", user, params)
   end
 
   # delete user

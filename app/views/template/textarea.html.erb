@@ -6,10 +6,9 @@ optional
  name       (string)  The name-attribute; default: title.downcase
  input_tags (hash)    More input tags
  required   (boolean) required flag
- add_before (string)  A add-on tag
- add_after  (string)  A add-on tag
- type       (boolean) default: text
+ password   (boolean) password flag
  wrap_tags  (hash)    A hash with tags
+ rows       (int)     default: 3
 %>
 <%= view("template", "control_group", {
         label: {
@@ -18,14 +17,13 @@ optional
                 required: value(:required, false)
         },
         controls: [{
-               view: :textbox,
-               title: title,
-               current: value(:current, ""),
-               name: value(:name),
-               input_tags: value(:input_tags),
-               add_before: value(:add_before),
-               add_after: value(:add_after),
-               type: value(:type),
-               wrap_tags: value(:wrap_tags)
-       }]
+                           view: :textarea,
+                           title: title,
+                           current: value(:current, ""),
+                           name: value(:name),
+                           input_tags: value(:input_tags),
+                           password: value(:password),
+                           wrap_tags: value(:wrap_tags),
+                           rows: value(:rows)
+                   }]
 }) %>

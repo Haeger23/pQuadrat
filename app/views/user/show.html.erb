@@ -1,1 +1,3 @@
-<%= username %>
+<% if ownAccount %>
+    <%= link("user/#{user.url}/edit", "Edit profile", "btn btn-primary") %>
+<% end %>

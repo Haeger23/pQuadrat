@@ -1,7 +1,8 @@
 <%#
 required
- title (string) The title of the label
+ title    (string)  The title of the label
 optional
- name (string) The for attribute
+ name     (string)  The for attribute
+ required (boolean) required flag
  %>
-<label class="control-label" for="<%= value(:name, title.downcase) %>"><%= title %></label>
+<label class="control-label" for="<%= value(:name, title.downcase) %>"><%= title %><%= value(:required, false) ? "<abbr title='required'>*</abbr>" : "" %></label>

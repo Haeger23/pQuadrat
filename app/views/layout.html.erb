@@ -56,7 +56,7 @@
         </div>
         <div id="wrapper" class="wrapper">
           <div id="wrapperTop"></div>
-            <h2><%= @page[:title] %></h2>
+            <h2 id="headline"><%= @page[:title] %></h2>
             <div id="messages">
                 <noscript>
                   <div class="alert alert-error">
@@ -128,7 +128,7 @@
                         if(href) {
                             if(pSquared.session) {
                                 var connection = href.indexOf("?") == -1 ? "?" : "&";
-                                href = connection+"session="+pSquared.session;
+                                href += connection+"session="+pSquared.session;
                             }
                             setTimeout(function() {
                                 window.location.href = pSquared.baseUrl + href;

@@ -77,7 +77,7 @@ class PSquaredResolver < Sinatra::Base
       end
       out
     end
-    def link href, title
+    def link href, title, classes=""
       if user
         sign = (href.include? "?") ? "&" : "?"
         suffix = sign + "session=" + user.session
@@ -85,7 +85,7 @@ class PSquaredResolver < Sinatra::Base
         suffix = ""
       end
 
-      "<a href='#{request.base_url}/#{href}#{suffix}'>#{title}</a>"
+      "<a href='#{request.base_url}/#{href}#{suffix}' class='#{classes}'>#{title}</a>"
     end
     def keys
       @locals.keys.sort

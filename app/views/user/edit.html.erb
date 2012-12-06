@@ -1,174 +1,56 @@
-<div id="user-image" align="right">
-  <img src="..." class="img-polaroid" alt="User-Image"/><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a>
-</div>
+<form id="user-edit-form" class="form-horizontal" method="put" action="/user" data-href="/user/<%= user.url %>">
 
-<form id="user-edit-form" class="form-horizontal" align="left">
+  <%# GENERAL SETTINGS %>
+  <fieldset>
+    <legend><i class="icon-user"></i> General Account Settings</legend>
+    <%= view("template", "textbox", {title: "Username", current: username, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-user"></i>'}) %>
+    <%= view("template", "textbox", {title: "Email", name: "mail", current: mail, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-envelope"></i>'}) %>
+    <%= view("template", "textbox", {title: "Image", input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"}) %>
 
-  <h5>General Account Settings</h5>
-
-  <div class="control-group">
-    <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
-    <div class="controls">
-      <input type="text" class="input-xlarge" placeholder="Username" name="username"><a class="btn btn-small" href="#"><i class=" icon-user"></i></a>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="mail">Email<abbr title="required">*</abbr></label>
-    <div class="controls">
-      <input type="text" class="input-xlarge" placeholder="Email" name="mail"><a class="btn btn-small" href="#"><i class="icon-envelope"></i></a>
-    </div>
-  </div>
-
-  <div>
-    <div class="control-group" class="input-xlarge">
-    <a data-toggle="collapse" data-parent="#accordion2" href="#changePassword">
-      Change Password
-    </a>
-    </div>
-  <!----/div----->
-  <div id="changePassword" class="collapse">
-    <div class="accordion-inner">
-
-      <form class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="forename">Old Password: </label>
-          <div class="controls">
-            <input type="password" class="input-xlarge" placeholder="Old Password" name="oldPassword">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="newPassword">New Password: </label>
-        <div class="controls">
-            <input type="password" class="input-xlarge" placeholder="New Password" name="NewPassword">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="forename">Confirm new Password: </label>
-
-          <div class="controls">
-            <input type="password" class="input-xlarge" placeholder="new Password" name="ConfirmNewPassword">
-          </div>
-        </div>
-      </form>
+    <%# CHANGE PASSWORD %>
+    <%= view("template", "control_group", {controls: ['<a data-toggle="collapse" href="#changePassword">Change Password</a>']}) %>
+    <div id="changePassword" class="collapse">
+      <div class="accordion-inner">
+        <%= view("template", "textbox", {title: "Old password", name: "old_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
+        <%= view("template", "textbox", {title: "New password", name: "new_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
+        <%= view("template", "textbox", {title: "Confirm new password", name: "confirm_new_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
       </div>
     </div>
+  </fieldset>
+
+  <%# PERSONAL DATA %>
+  <fieldset>
+    <legend><i class="icon-pencil"></i> Personal Dates</legend>
+    <%= view("template", "textbox", {title: "Forename", current: value(:forename, ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Surname", current: value(:forename, ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Birthday", current: value(:birthday, ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-calendar"></i>', wrap_tags: {class: "input-append date", "data-date-viewmode" => "years", "data-date" => "#{value(:birthday, "")}", "data-date-format" => "yyyy-mm-dd"}}) %>
+    <%= view("template", "textbox", {title: "Website", current: value(:website, ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textarea", {title: "About", current: value(:about, ""), input_tags: {class: "input-xlarge"}}) %>
+  </fieldset>
+
+  <%# SKILLS %>
+  <fieldset>
+    <legend><i class="icon-tasks"></i> Skills</legend>
+    <%= view("template", "skills", {categories: {"design" => "Design", "programming" => "Programming", "communication" => "Communication", "planning" => "Planning"}, items: [{category: "programming", skill: "PHP", weight: 23}, {category: "planning", skill: "Project Management", weight: 75}]}) %>
+  </fieldset>
+
+  <%# PROJECTS %>
+  <fieldset>
+    <legend><i class="icon-briefcase"></i> Projects</legend>
+  </fieldset>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">Change profile</button>
+    <%= link("user/#{user.url}", "Cancel", "btn btn-link") %>
   </div>
-  </form>
-  <!--------------------------------------------------------------------------->
-
-<form id="user-edit-personalDates-form" class="form-horizontal" align="left">
-  <h5>Personal Dates</h5>
-
-  <div class="control-group">
-    <label class="control-label" for="forename">Forename</label>
-
-    <div class="controls">
-      <input type="text" class="input-xlarge" placeholder="Forename" name="forename">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="surename">Surename</label>
-
-    <div class="controls">
-      <input type="text" class="input-xlarge" placeholder="Surename" name="surename">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="Birthday">Birthday</label>
-
-    <div class="controls">
-      <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
-        <input class="input-xlarge" type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
-        <span class="add-on"><i class="icon-calendar"></i></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label" for="website">Website</label>
-
-    <div class="controls">
-      <input type="text" class="input-xlarge" placeholder="www.my-homepage.de" name="website">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="website">about</label>
-
-    <div class="controls">
-      <textarea rows="3"></textarea>
-    </div>
-  </div>
-  <h5>Skills</h5>
-
 </form>
-<div class="form-horizontal" id="user-edit-addSkill">
-  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]}) %>
-</div>
-</div>
-
-<!--View with table---xmlns="http://www.w3.org/1999/html">
-<!--table class="table table-hover">
-      <thead>
-      <tr><th>Name of Skill</th><th>Weight</th><th>Category</th></tr>
-      </thead>
-      <tbody>
-      <tr>    <td class="text-info"><strong>AJAX</strong></td>       <td>basics</td>          <td>Webdevelopment</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
-      <tr>    <td class="text-info"><strong>C</strong></td>       <td>advanced</td>          <td>Operating Systems</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
-      <tr>    <td class="text-info"><strong>CSS</strong></td>       <td>advanced</td>          <td>Webdesign</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
-      <tr>    <td class="text-info"><strong>HTML</strong></td>       <td>expert</td>        <td>Webdesign</td>  <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>       </tr>
-      <tr>    <td class="text-info"><strong>JavaScript</strong></td>       <td>advanced</td>          <td>Webdevelopment</td> <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>      </tr>
-      <tr>    <td class="text-info"><strong>Ruby</strong></td>       <td>basics</td>        <td>Webdevelopment</td>  <td><a class="btn btn-small" href="#"><abbr title="edit"/><i class="icon-pencil"></i></a><a class="btn btn-small" href="#"><abbr title="remove"/><i class="icon-remove"></i></a></td>       </tr>
-      </tbody>
-    </table>
-
-    <h5>Do you have new skills?</h5>
-
-    <table class="table table-striped" align="center">
-      <thead>
-      <tr>    <th>Skill</th>      <th>Weight</th>    <th>Category</th> </tr>
-      </thead>
-      <tbody>
-
-
-
-  <div class="control-group" align= "center">
-
-
-    <div class="controls" >
-      <button type="button" id="addParameter" class="btn btn-primary" >add skill</button>
-      <div id="parameters"></div>
-    </div>
-  </div>
-
-  <tr>    <td><div class="controls">
-    <input class="span4" type="text" placeholder="Name of skill" autocomplete="on">
-  </div></td>
-    <td>
-      <select>
-        <option>basics</option>
-        <option>advanced</option>
-        <option>expert</option>
-      </select>
-    </td>
-    <td>
-      <select>
-        <option>Webdesign</option>
-        <option>Webdevelopment</option>
-        <option>Operating Systems</option>
-        <option>Assembler</option>
-        <option>Mobile Communication</option>
-      </select>
-    </td>
-
-    <td><button class="btn btn-mini btn-success" type="button">add this skill</button></td>       </tr>
-
-
-  </tbody>
-</table-->
-
-
-
-
+<script>
+  pSquared.success = function(data) {
+    if(data.new_url) {
+        $("#user-edit-form").attr("data-href", "/user/"+data.new_url);
+    }
+  }
+</script>
 
 <% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
       "user/add"

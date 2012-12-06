@@ -1,0 +1,18 @@
+<%#
+required
+ title      (string) Label and Placeholder for the input
+optional
+ current    (string) The current value of the input
+ name       (string) The name-attribute; default: title.downcase
+ input_tags (hash)   More input tags
+ wrap_tags  (hash)   More wrap tags
+ rows       (int)    default: 3
+%>
+<div <% unless value(:wrap_tags, {}).key?(:class) %> class="<%= (value(:add_before) ? "input-prepend" : "")+" "+(value(:add_after) ? "input-append" : "") %>" <% end %>
+     <%= o=[]; value(:wrap_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
+  <textarea rows="<%= value(:rows, 3) %>"
+         name="<%= value(:name, title.downcase) %>"
+         value='<%= value(:current, "") %>'
+         placeholder="<%= title %>"
+         <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>></textarea>
+</div>

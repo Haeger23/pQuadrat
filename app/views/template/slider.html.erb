@@ -7,12 +7,13 @@ optional
  current    (string)  The current value of the input
  name       (string)  The name-attribute; default: title.downcase
  input_tags (hash)    More input tags
+ required   (boolean) required flag
 %>
 <%= view("template", "control_group", {
         label: {
             title: title,
-            current: value(:current),
-            name: value(:name)
+            name: value(:name),
+            required: value(:required, false)
         },
         controls: [{
             view: :slider,

@@ -11,20 +11,36 @@ class UserPresenter < Presenter
     data[:users] = User.all(:order => "updated_at desc", :limit => 10)
   end
 
-  def show username
-    user = User.find_by_url(username)
-    stop(404, "There is no user with the username '#{username}'") until user
+  def show user, username
+    _user = User.find_by_url(username)
+    stop(404, "There is no user with the username '#{username}'") until _user
 
-    page[:title] = user.username
-    data_add(user.attributes, "username", "forename", "surname")
+    data[:ownAccount] = (user and user.id == _user.id)
+
+    page[:title] = _user.username
+    data_add(_user.attributes, "username", "forename", "surname")
   end
 
   def add params
     page[:title] = "Add user"
   end
 
-  def edit username
-    data[:test] = "edit user #{username.downcase}"
+  def edit user, username
+    stop(403, "Only a logged in user can update the account") until user
+    stop(403, "You only can update your account") until user.url.downcase == username.downcase
+
+    page[:title] = "Edit your profile"
+
+    data[:skills] = []
+    user.skills.map do |skill|
+      data[:skills].push({
+        category: skill.category,
+        skill: skill.name,
+        weight: skill.weight
+      })
+    end
+
+    data_add(user.attributes, "username", "mail", "birthday", "forename", "surname", "website")
   end
 
   def create params
@@ -35,11 +51,17 @@ class UserPresenter < Presenter
     ))
   end
 
-  def update user, username, params
+  def update user, params
     stop(403, "Only a logged in user can update the account") until user
-    stop(403, "You only can update your account") until user.url.downcase == username.downcase
 
-    feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday))
+    old_url = user.url
+
+    feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website))
+
+    if old_url != user.url
+      data[:old_url] = old_url
+      data[:new_url] = user.url
+    end
   end
 
   def delete user, username

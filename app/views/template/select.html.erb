@@ -6,12 +6,13 @@ optional
  name        (string)  The name-attribute; default: title.downcase
  select_tags (Hash)    More select tags
  selected    (string)  The selected item
+ required   (boolean) required flag
 %>
 <%= view("template", "control_group", {
     label: {
         title: title,
-        current: value(:current),
-        name: value(:name)
+        name: value(:name),
+        required: value(:required, false)
     },
     controls: [{
         view: :select,

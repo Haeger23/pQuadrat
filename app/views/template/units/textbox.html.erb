@@ -5,9 +5,49 @@ optional
  current    (string) The current value of the input
  name       (string) The name-attribute; default: title.downcase
  input_tags (hash)   More input tags
+ wrap_tags  (hash)   More wrap tags
  %>
-<input type="text"
+<%
+    typeFile = (value(:type, "text") == "file")
+    if typeFile
+      value(:type, "text", true)
+      unless value(:input_tags)
+        value(:input_tags, {}, true)
+      end
+      unless value(:input_tags)[:id]
+        value(:input_tags)[:id] = _id
+      end
+    end
+%>
+<div <% unless value(:wrap_tags, {}).key?(:class) %> class="<%= (value(:add_before) ? "input-prepend" : "")+" "+(value(:add_after) ? "input-append" : "") %>" <% end %>
+     <%= o=[]; value(:wrap_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
+<%= (value(:add_before) ? "<span class='add-on'>#{add_before}</span>" : "") %>
+<input type="<%= value(:type, "text") %>"
        name="<%= value(:name, title.downcase) %>"
-       <%= value(:current) ? "value='current'" : "" %>
+       value='<%= value(:current, "") %>'
        placeholder="<%= title %>"
        <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>
+<%= (value(:add_after) ? "<span class='add-on'>#{add_after}</span>" : "") %>
+<% if typeFile %>
+  <a class="btn" href="#">Browse</a>
+  <input type="file" name="<%= value(:name, title.downcase)+"_file" %>" class="hidden" />
+  <script>
+      (function() {
+          var $textInput = $("#<%= value(:input_tags)[:id] %>"),
+              $fileInput = $textInput.siblings("[type=file]");
+
+          console.log($textInput.nextUntil("[type=file]"), $fileInput)
+          $textInput.nextUntil("[type=file]").andSelf()
+                  .click(function() {
+                      $fileInput.click();
+                      return false;
+                  });
+
+          $fileInput
+                  .change(function() {
+                      $textInput.val($(this).val())
+                  });
+      }())
+  </script>
+<% end %>
+</div>
