@@ -76,9 +76,9 @@ optional
                 .append("<%= view("template", "units/select", {items: categories, title: "", name: "skills[]"}).gsub(/\r\n/, " ").gsub(/"/, '\\"') %>")
                 .append($("<input type='text' placeholder='Skill' name='skills[]' class='skill-name' /> ").typeahead(autoCompleteOptions))
                 .append(" <div class='input-large'></div>")
-                .append("<span class='ui-slider-text'></span>")
+                .append(" <span class='ui-slider-text'></span>")
                 .append($input)
-                .append($("<button type='button' class='btn btn-danger btn-mini'>remove</button>").click(fadeOut))
+                .append($(" <button type='button' class='btn btn-danger btn-mini'>remove</button>").click(fadeOut))
                 .appendTo($list);
 
             var $span = $input.prev().text(<%= value(:current, 0) %>),
@@ -94,7 +94,6 @@ optional
                     }
                 });
             $slider.slider(options);
-
 
         });
     }(jQuery))
