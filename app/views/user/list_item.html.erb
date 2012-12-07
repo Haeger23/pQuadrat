@@ -1,4 +1,5 @@
-<div>
-  <img src="/images/users/default/thumb.png" />
-  <h3><%= user.username %></h3>
+<%= link("user/#{user.url}", '<img src="/images/users/default/medium.png" />', "pull-left thumbnail") %>
+<div class="media-body">
+  <h4><%= link("user/#{user.url}", "#{user.username}", "media-heading") %></h4>
+  <%= user.about %>
 </div>
