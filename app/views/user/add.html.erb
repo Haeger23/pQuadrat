@@ -4,84 +4,45 @@
 <form id="user-add-form" class="form-horizontal" method="post" action="/user" data-href="/login">
   <div class="row">
 
-        <div class="control-group">
-          <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
-          <div class="controls">
-            <input type="text" class="input-xlarge" placeholder="Username" name="username">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="mail">Email<abbr title="required">*</abbr></label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" placeholder="Email" name="mail">
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="password">Password<abbr title="required">*</abbr></label>
-            <div class="controls">
-                <input type="password"  class="input-xlarge" placeholder="Password" name="password">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="confirm_password">Confirm Password<abbr title="required">*</abbr></label>
-            <div class="controls">
-                <input type="password"  class="input-xlarge" placeholder="Confirm Password" name="confirm_password">
-            </div>
-        </div>
-
-      <!--h5>Personal Dates</h5>
-      <div class="control-group">
-        <label class="control-label" for="forename">Forename</label>
-        <div class="controls">
-          <input type="text"  class="input-xlarge" placeholder="Forename" name="forename">
-        </div>
-      </div>
-      <div class="control-group">
-          <label class="control-label" for="surename">Surename</label>
-          <div class="controls">
-            <input type="text"  class="input-xlarge" placeholder="Surename" name="surename">
-          </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="Birthday">Birthday</label>
-            <div class="controls">
-              <div class="input-append date" data-date-viewmode="years" data-date="1985-03-12" data-date-format="yyyy-mm-dd">
-                <input type="text" value="1985-03-12" name="birthday" placeholder="Birthday">
-                <span class="add-on"><i class="icon-calendar"></i></span>
-              </div>
-            </div>
-          </div>
-
-        <div class="control-group">
-            <label class="control-label" for="website">Website</label>
-        <div class="controls">
-            <input type="text"  class="input-xlarge" placeholder="www.my-homepage.de" name="website">
-        </div>
-        </div>
-
-    <h5>Skills</h5>
     <div class="control-group">
-      <label class="control-label">Parameters</label>
+      <label class="control-label" for="username">Username<abbr title="required">*</abbr></label>
+
       <div class="controls">
-        <button type="button" id="addParameter" class="btn">add skill</button>
-        <button type="button" id="removeAllParameter" class="btn">remove skill</button>
-        <div id="parameters"></div>
+        <input type="text" class="input-xlarge" placeholder="Username" name="username">
       </div>
     </div>
-  </div-->
+    <div class="control-group">
+      <label class="control-label" for="mail">Email<abbr title="required">*</abbr></label>
+
+      <div class="controls">
+        <input type="text" class="input-xlarge" placeholder="Email" name="mail">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password">Password<abbr title="required">*</abbr></label>
+
+      <div class="controls">
+        <input type="password" class="input-xlarge" placeholder="Password" name="password">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="confirm_password">Confirm Password<abbr title="required">*</abbr></label>
+
+      <div class="controls">
+        <input type="password" class="input-xlarge" placeholder="Confirm Password" name="confirm_password">
+      </div>
+    </div>
 
 
-
-
-<div class="control-group">
-  <div class="controls">
-    <button type="submit" class="btn btn-large btn-success" id="register-btn">Sign Up</button>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn btn-large btn-success" id="register-btn">Sign Up</button>
+      </div>
+    </div>
   </div>
-</div>
-</div>
 </form>
 
 <% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
-        "user/add"
+      "user/add"
 %>
