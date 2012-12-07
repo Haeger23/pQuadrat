@@ -155,7 +155,7 @@
                                 for(var i = 0, length = fieldErrors.length; i < length; i++) {
                                     $innerUl.append("<li>"+fieldErrors[i]+"</li>");
                                 }
-                                $ul.append($li)
+                                $element.append($li)
                             }
                         } else if(response.message) {
                             $element = $("<div>"+response.message+"</div>");
