@@ -1,3 +1,5 @@
-<% users.each do |user| %>
-    <%= link("user/#{user.username}", user.username) %>
-<% end %>
+<ul>
+    <% users.each do |user| %>
+        <li><%= view("user", "list_item") %></li>
+    <% end %>
+</ul>
