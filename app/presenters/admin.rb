@@ -85,13 +85,43 @@ class AdminPresenter < Presenter
     # todo add user_skill
   end
 
-  def update_database
+  def export_all
+    data[:time_schema] = Presenter.collect("admin", "export_schema")[:time]
+    data[:time_data] = Presenter.collect("admin", "export_data")[:time]
+  end
+
+  def import_schema
     t1 = Time.now
     con = ActiveRecord::Base.connection
     con.execute("DROP DATABASE IF EXISTS p_squared;");
     con.execute("CREATE DATABASE p_squared;");
-    p "mysql -u root p_squared < "+PSquared.path+"/../p_squared.sql"
-    system "mysql -u root p_squared < "+PSquared.path+"/../p_squared.sql"
+    system "mysql -u root p_squared < "+PSquared.path+"/../schema.sql"
+    t2 = Time.now
+    data[:time] = ((t2-t1)*1000).to_i/1000.0
+  end
+
+  def export_schema
+    t1 = Time.now
+    system "mysqldump -u root --no-data --tables p_squared > "+PSquared.path+"/../schema.sql"
+    t2 = Time.now
+    data[:time] = ((t2-t1)*1000).to_i/1000.0
+  end
+
+  def import_all
+    data[:time_schema] = Presenter.collect("admin", "import_schema")[:time]
+    data[:time_data] = Presenter.collect("admin", "import_data")[:time]
+  end
+
+  def import_data
+    t1 = Time.now
+    system "mysql -u root p_squared < "+PSquared.path+"/../data.sql"
+    t2 = Time.now
+    data[:time] = ((t2-t1)*1000).to_i/1000.0
+  end
+
+  def export_data
+    t1 = Time.now
+    system "mysqldump -u root --skip-triggers --compact --no-create-info p_squared > "+PSquared.path+"/../data.sql"
     t2 = Time.now
     data[:time] = ((t2-t1)*1000).to_i/1000.0
   end

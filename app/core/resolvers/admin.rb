@@ -42,8 +42,44 @@ class AdminResolver < PSquaredResolver
     resolve("admin", "add_user_skill", params)
   end
 
-  get %r{^/admin/db/?$}i do
-    resolve("admin", "update_database")
+
+
+  get %r{^/db/?$}i do
+    resolve("admin", "db")
   end
+
+  get %r{^/db/import/?$}i do
+    resolve("admin", "import")
+  end
+
+  get %r{^/db/import/all/?$}i do
+    resolve("admin", "import_all")
+  end
+
+  get %r{^/db/import/schema/?$}i do
+    resolve("admin", "import_schema")
+  end
+
+  get %r{^/db/import/data/?$}i do
+    resolve("admin", "import_data")
+  end
+
+  get %r{^/db/export/?$}i do
+    resolve("admin", "export")
+  end
+
+  get %r{^/db/export/all/?$}i do
+    resolve("admin", "export_all")
+  end
+
+  get %r{^/db/export/schema/?$}i do
+    resolve("admin", "export_schema")
+  end
+
+  get %r{^/db/export/data/?$}i do
+    resolve("admin", "export_data")
+  end
+
+
 
 end
