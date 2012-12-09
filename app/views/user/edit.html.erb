@@ -1,3 +1,5 @@
+<!--%= keys %-->
+
 <form id="user-edit-form" class="form-horizontal" method="put" action="/user" data-href="/user/<%= user.url %>">
 
   <%# GENERAL SETTINGS %>
@@ -45,11 +47,11 @@
   </div>
 </form>
 <script>
-  pSquared.success = function(data) {
-    if(data.new_url) {
-        $("#user-edit-form").attr("data-href", "/user/"+data.new_url);
+    pSquared.success = function (data) {
+        if (data.new_url) {
+            $("#user-edit-form").attr("data-href", "/user/" + data.new_url);
+        }
     }
-  }
 </script>
 
 <% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
