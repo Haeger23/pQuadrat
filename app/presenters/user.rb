@@ -7,6 +7,7 @@ class UserPresenter < Presenter
   end
 
   def list
+    page[:title] = "Users"
     page[:search] = "Users"
     data[:users] = User.all(:order => "updated_at desc", :limit => 10)
   end
@@ -18,7 +19,33 @@ class UserPresenter < Presenter
     data[:ownAccount] = (user and user.id == _user.id)
 
     page[:title] = _user.username
-    data_add(_user.attributes, "username", "forename", "surname")
+    data[:image] = _user.image.url
+    data[:projects] = _user.projects
+
+    data_add(_user.attributes, "id", "username", "mail", "birthday", "forename", "surname", "website", "image_file_name", "about", "url")
+
+    data[:invitations] = []
+    data[:excludes] = []
+    data[:same_projects] = {}
+    if user and user.id != _user.id
+      projects = {}
+      data[:projects].each do |project|
+        projects[project.id] = project
+      end
+
+      user.projects.each do |project|
+        if project.is_admin
+          if not projects.has_key?(project.id)
+            data[:invitations].push(project)
+          else
+            data[:same_projects][project.id] = projects[project.id]
+            unless projects[project.id].is_admin
+              data[:excludes].push(projects[project.id])
+            end
+          end
+        end
+      end
+    end
   end
 
   def add params
@@ -40,7 +67,9 @@ class UserPresenter < Presenter
       })
     end
 
-    data_add(user.attributes, "username", "mail", "birthday", "forename", "surname", "website")
+    data[:image] = user.image.url
+    data_add(user.attributes, "id", "username", "mail", "birthday", "forename", "surname", "website", "image_file_name", "about", "url")
+    data[:projects] = user.projects
   end
 
   def create params
@@ -55,6 +84,14 @@ class UserPresenter < Presenter
     stop(403, "Only a logged in user can update the account") until user
 
     old_url = user.url
+
+    if params[:image].blank?
+      params["image"] = nil
+    elsif not (params[:image_file].nil? or params[:image_file].blank?)
+      params["image"] = params[:image_file][:tempfile]
+    else
+      params.delete("image")
+    end
 
     feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website))
 

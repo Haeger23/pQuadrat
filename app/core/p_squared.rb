@@ -12,11 +12,13 @@ module PSquared
   gem 'activerecord'
   gem 'mysql'
   gem 'sinatra'
+  gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
 
   def self.initializeDatabase(file)
     require 'active_record'
     require 'mysql'
     require 'yaml'  # YAML is a human friendly data serialization standard
+    require 'paperclip' # paperclip is for file attachments
     require 'json'
     require 'builder' # for creating XML markup and data structures
 
@@ -39,9 +41,7 @@ module PSquared
   end
 
   def self.debug!
-    require_relative 'resolver'
     self.debug = true
-    # WK ISSUE "require_relative 'resolver'" seems to be executed twice, problem?
     self.run!
   end
 end

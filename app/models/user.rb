@@ -1,6 +1,8 @@
 # encoding: UTF-8
 
 class User < Model
+  include Paperclip::Glue
+
   before_validation :strip
 
   validates_presence_of   :username, :password, :mail
@@ -22,6 +24,24 @@ class User < Model
   has_many :skills, :through => :user_skills
   has_many :categories, :through => :skills
   has_many :requests
+  has_attached_file :image,
+                    :default_url => '/images/users/default/:style.png',
+                    :default_style => :big,
+                    :styles => {
+                        :big => ["270x", :png],
+                        :medium => ["128x128^", :png],
+                        :small => ["64x64^", :png]
+                    },
+                    :convert_options => {
+                        :medium => "-gravity center -extent 128x128",
+                        :small => "-gravity center -extent 64x64"
+                    },
+                    :url => "/images/users/:id/:style.png",
+                    :path => PSquared.path+"/public:url"
+
+  def image_file_name=(value)
+    super(value.nil? ? nil : Time.now)
+  end
 
   def self.login(username, password)
     user = self.find_by_username(username)

@@ -5,7 +5,10 @@
     <legend><i class="icon-user"></i> General Account Settings</legend>
     <%= view("template", "textbox", {title: "Username", current: username, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-user"></i>'}) %>
     <%= view("template", "textbox", {title: "Email", name: "mail", current: mail, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-envelope"></i>'}) %>
-    <%= view("template", "textbox", {title: "Image", input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"}) %>
+    <%= view("template", "control_group", {label: {title: "Image"}, controls: [
+        {view: :textbox, title: "Image", current: value("image_file_name", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"},
+        "<img src='#{image}' alt='user' />"]
+    }) %>
 
     <%# CHANGE PASSWORD %>
     <%= view("template", "control_group", {controls: ['<a data-toggle="collapse" href="#changePassword">Change Password</a>']}) %>
