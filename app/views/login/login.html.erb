@@ -1,32 +1,23 @@
 <form id="login-form" class="form-horizontal" align="left" method="post" action="/login" data-href="/">
-  <div class="row">
+
+
+  <fieldset>
+
+    <%= view("template", "textbox", {title: "Username", input_tags: {class: "input-xlarge"} }) %>
+    <%= view("template", "textbox", {title: "Password", name: "password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
 
     <div class="control-group">
-      <label class="control-label" for="username">Username</label>
-
       <div class="controls">
-        <input type="text" placeholder="Username" name="username">
+        <button type="submit" class="btn btn-large btn-success" id="login-btn">Login</button>
       </div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label" for="password">Password</label>
 
-      <div class="controls">
-        <input type="password" placeholder="Password" name="password">
-      </div>
-    </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <button type="submit" class="btn btn-large btn-success" id="login-btn">Login</button>
-    </div>
-  </div>
-  </div>
+  </fieldset>
 </form>
 
 <script>
-  pSquared.success = function(data) {
-    pSquared.session = data.session
-  };
+    pSquared.success = function (data) {
+        pSquared.session = data.session
+    };
 </script>
