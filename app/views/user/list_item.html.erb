@@ -1,5 +1,12 @@
-<%= link("user/#{user.url}", '<img src="/images/users/default/medium.png" />', "pull-left thumbnail") %>
-<div class="media-body">
-  <h4><%= link("user/#{user.url}", "#{user.username}", "media-heading") %></h4>
-  <%= user.about %>
-</div>
+<table class="table">
+  <tr>
+    <td>
+      <%= link("user/#{user.url}", '<img src="/images/users/default/medium.png" />', "pull-left thumbnail") %>
+      <h3><%= link("user/#{user.url}", "#{user.username}", "media-heading") %></h3>
+    </td>
+    <td>
+      <p class="text-info"> About <%="#{user.username}"%>:</p>
+      <%= user.about, placeholder="There is no further information about " "#{user.username}" %>
+    </td>
+  </tr>
+</table>
