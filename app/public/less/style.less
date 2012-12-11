@@ -2,23 +2,24 @@
 @blue: #007DEB;
 
 html, body {
-    height: 100%;
+  height: 100%;
 }
+
 body {
-    background: @backgroundColor;
-    font-family: 'Titillium Web', sans-serif;
-    font-size: 14px;
+  background: @backgroundColor;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14px;
 }
 
 a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .btn {
 
-    i {
-        margin-top: 4px;
-    }
+  i {
+    margin-top: 4px;
+  }
 }
 
 label abbr[title=required] {
@@ -32,116 +33,134 @@ label abbr[title=required] {
 }
 
 .dropdown-menu i {
-    margin-top: 4px;
+  margin-top: 4px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
+
 #wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -33px; // the bottom margin is the negative value of the footer's height
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -33px; // the bottom margin is the negative value of the footer's height
 }
+
 #wrapperTop {
-    height: 130px;
+  height: 130px;
 }
+
 .wrapper {
-    margin: 0 auto;
-    width: 980px;
+  margin: 0 auto;
+  width: 980px;
 }
-
-
 
 #header {
-    height: 70px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    background: @blue;
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background: @blue;
 }
+
 #headline {
   margin-bottom: 20px;
 }
+
 #logo {
-    background: url(images/logo_small.png) no-repeat;
-    margin-top: 12px;
-    width: 48px;
-    height: 47px;
-    float: left;
-    position: relative;
-    a {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+  background: url(images/logo_small.png) no-repeat;
+  margin-top: 12px;
+  width: 48px;
+  height: 47px;
+  float: left;
+  position: relative;
+  a {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 }
+
 #search {
-    float: left;
-    margin-top: 20px;
-    margin-left: 20px;
+  float: left;
+  margin-top: 20px;
+  margin-left: 20px;
 }
+
 #menu {
-    list-style: none;
-    float: right;
-    margin-top: 20px;
-    li {
-        margin-left: 30px;
-        float: left;
-        a {
-            color: #fff;
-            display: block;
-            line-height: 30px;
-            i {
-                margin-top: 5px;
-                padding-left: 5px;
-            }
-        }
-        &.user {
-            margin-left: 80px;
-        }
+  list-style: none;
+  float: right;
+  margin-top: 20px;
+  li {
+    margin-left: 30px;
+    float: left;
+    a {
+      color: #fff;
+      display: block;
+      line-height: 30px;
+      i {
+        margin-top: 5px;
+        padding-left: 5px;
+      }
     }
+    &.user {
+      margin-left: 80px;
+    }
+  }
 }
+
 #footer, #wrapperBottom {
-    height: 33px; // .push must be the same height as #footer
-    clear: both;
+  height: 33px; // .push must be the same height as #footer
+  clear: both;
 }
+
 #wrapperBottom {
   height: 50px;
 }
+
 #footer {
-    overflow: hidden;
-    .wrapper > * {
-        margin-top: 6px;
+  overflow: hidden;
+  .wrapper > * {
+    margin-top: 6px;
+    color: #fff;
+  }
+  background: @blue;
+  .name {
+    float: left;
+  }
+  .license {
+    float: right;
+  }
+  #submenu {
+    list-style: none;
+    float: left;
+    display: block;
+    li {
+      margin: 0 10px;
+      float: left;
+      a {
         color: #fff;
-    }
-    background: @blue;
-    .name {
-        float: left;
-    }
-    .license {
-        float: right;
-    }
-    #submenu {
-        list-style: none;
-        float: left;
         display: block;
-        li {
-            margin: 0 10px;
-            float: left;
-            a {
-                color: #fff;
-                display: block;
-                i {
-                    margin-top: 5px;
-                    padding-left: 5px;
-                }
-            }
+        i {
+          margin-top: 5px;
+          padding-left: 5px;
         }
+      }
     }
+  }
+}
+
+.gap50 {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.gap150 {
+  margin-top: 10px;
+  margin-left: 150px;
 }
 
 @import "friedi";
