@@ -12,6 +12,7 @@ module PSquared
   gem 'activerecord'
   gem 'mysql'
   gem 'sinatra'
+  gem 'pony'
 
   def self.initializeDatabase(file)
     require 'active_record'

@@ -10,7 +10,7 @@ class RequestResolver < PSquaredResolver
   # join project
   post %r{^/user/(\w+)/join/(\w+)/?$}i do |username, projectname|
     # TODO another action
-    resolve("request", "join", username, projectname, params)
+    #resolve("request", "join_action", username, projectname, params)
   end
 
   # invite to project
