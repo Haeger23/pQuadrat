@@ -24,6 +24,7 @@ end
 class Presenter
   include Enumerable
 
+
   attr_reader :current_status
   attr_reader :data
   attr_reader :page
@@ -31,6 +32,9 @@ class Presenter
   def initialize
     @data = {}
     @page = {}
+
+    #include MailSender
+
   end
 
   def init *args

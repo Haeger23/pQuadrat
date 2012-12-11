@@ -1,0 +1,25 @@
+<div class="join-project">
+    <div class="row-fluid">
+      <div class="span4">
+        <h3>User</h3>
+        <div class="well well-large">
+            <img src="/less/images/user-icon.png" width="206.75px" height="350px">
+            <p class="lead"><%= username %></p>
+        </div>
+      </div>
+      <div class="middle span2">
+        <% if success %>
+          Sie sind dem Projekt erfolgreich beigetreten.
+        <% else %>
+          Ein Problem trat auf.
+        <% end %>
+      </div>
+      <div class="span4">
+        <h3>Projekt</h3>
+        <div class="well well-large">
+            <img src="/less/images/project-icon.png" width="206.75px" height="350px">
+            <p class="lead"><%= projectname %></p>
+        </div>
+      </div>
+    </div>
+</div>
