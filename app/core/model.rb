@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Model < ActiveRecord::Base
   self.abstract_class = true
 
@@ -13,7 +15,7 @@ class Model < ActiveRecord::Base
     begin
       update_with_hash!(hash, *filter)
     rescue
-      false
+      self
     end
   end
 

@@ -3,6 +3,7 @@
 class ProjectPresenter < Presenter
 
   def list
+    page[:title] = "Projects"
     page[:search] = "Projects"
     data[:projects] = Project.all(:order => "updated_at desc", :limit => 10)
   end
