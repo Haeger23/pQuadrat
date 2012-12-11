@@ -6,10 +6,12 @@ class UserPresenter < Presenter
     data[:test] = "show #{"admin " if user}dashboard"
   end
 
-  def list
+  def list(pageNumber)
     page[:title] = "Users"
     page[:search] = "Users"
     data[:users] = User.all(:order => "updated_at desc", :limit => 10)
+    data[:page] = pageNumber
+    data[:page_count] = 1 + User.count/10
   end
 
   def show user, username

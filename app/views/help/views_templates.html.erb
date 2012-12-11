@@ -38,3 +38,8 @@ And with items
   <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]}) %>
 </div>
 
+<h4>Pager</h4>
+See the view <code>template/pager.html.erb</code> for all options
+<%= view("template", "pager", {current: 33, count: 502, url: "users"}) %>
+
+

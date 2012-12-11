@@ -9,7 +9,12 @@ class UserResolver < PSquaredResolver
 
   # show users
   get %r{^/users/?$}i do
-    resolve("user", "list")
+    resolve("user", "list", 1)
+  end
+
+  # show users
+  get %r{^/users/(\d+)?$}i do |page|
+    resolve("user", "list", page.to_i)
   end
 
   # edit user, show user
