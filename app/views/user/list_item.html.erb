@@ -1,19 +1,10 @@
-Version 1
-<%= link("user/#{user.url}", '<img src="/images/users/default/medium.png" />', "pull-left thumbnail") %>
+<%#
+required
+ username
+ projects
+ %>
+<%= link("user/#{url}", "<img src='#{imageUrl}' />", "pull-left thumbnail") %>
 <div class="media-body">
-  <h4><%= link("user/#{user.url}", "#{user.username}", "media-heading") %></h4>
-  <%= user.about %>
+  <h3><%= link("user/#{url}", username, "media-heading") %></h3>
+  <%= value(:about, "There is no further information about #{username}") %>
 </div>
-Version 2
-<table class="table">
-  <tr>
-    <td>
-      <%= link("user/#{user.url}", '<img src="/images/users/default/medium.png" />', "pull-left thumbnail") %>
-      <h3><%= link("user/#{user.url}", "#{user.username}", "media-heading") %></h3>
-    </td>
-    <td>
-      <p class="text-info"> About <%="#{user.username}"%>:</p>
-      <%= user.about, placeholder="There is no further information about " "#{user.username}" %>
-    </td>
-  </tr>
-</table>
