@@ -9,21 +9,18 @@ class AdminPresenter < Presenter
 
   def add_project params
     skills = params[:skills] || ""
-    if skills
-      ar_skills = []
-      skills.split(",").gsub(/\s/, "").each do |skill|
-        skill = Skill.find_by_url(skill)
-        ar_skills.push(skill) if skill
-      end
-      skills = ar_skills
+    ar_skills = []
+    skills.split(",").each do |skill|
+      skill = Skill.find_by_url(skill.strip)
+      ar_skills.push(skill) if skill
     end
+    skills = ar_skills
     project = feedback!(Project.create(
       title: params[:title],
       about: params[:about],
-      progess: params[:progress],
+      progress: params[:progress],
       skills: skills
     ))
-    data[:id] = project.id
   end
 
   def add_project_skill params
@@ -36,21 +33,15 @@ class AdminPresenter < Presenter
       skill: skill,
       weight: params[:weight]
     ))
-    data[:id] = project_skill.id
     # todo test this function
   end
 
   def add_request params
-    user = params[:user] || ""
-    project = params[:project] || ""
-    user = User.find_by_url(user)
-    project = Project.find_by_url(project)
-    request = feedback!(Request.create(
-      user: user,
-      project: project,
-      message: params[:message],
-      is_invitation: params[:is_invitation].to_bool
-    ))
+    params["user"] = User.find_by_url(params["user"] || "")
+    params["project"] = Project.find_by_url(params["project"] || "")
+    params["is_invitation"] = !!params["is_invitation"]
+    p params
+    request = feedback!(Request.create_with_hash(params, "user", "project", "message", "is_invitation"))
     # todo test this function
   end
 
@@ -60,17 +51,16 @@ class AdminPresenter < Presenter
   end
 
   def add_skill params
-    category = params[:category] || ""
-    category = Category.find_by_url(category)
+    params["category"] = Category.find_by_url(params["category"] || "")
     skill = feedback!(Skill.create(
-      name: params[:name],
+      name: params["name"],
       category: category
     ))
     data[:id] = skill.id
   end
 
   def add_user params
-    # todo add_user
+    feedback!(User.create_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website"))
   end
 
   def add_user_project params

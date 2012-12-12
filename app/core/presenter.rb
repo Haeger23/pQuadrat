@@ -130,4 +130,12 @@ protected
     end
   end
 
+  def empty_to_nil(hash)
+    hash.each do |k,v|
+      if(v.respond_to?(:split) and v.split.empty?)
+        hash[k] = nil
+      end
+    end
+  end
+
 end

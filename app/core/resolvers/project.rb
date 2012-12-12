@@ -4,7 +4,17 @@ class ProjectResolver < PSquaredResolver
 
   # show projects
   get %r{^/projects/?$}i do
-    resolve("project", "list")
+    resolve("project", "list", 1)
+  end
+
+  # show projects
+  get %r{^/projects/(\d+)/?$}i do |page|
+    resolve("project", "list", page.to_i)
+  end
+
+  # show project
+  get %r{^/project/(\w+)/?$}i do |project|
+    resolve("project", "show", project, params)
   end
 
   # add project to projects

@@ -3,9 +3,33 @@
 class Model < ActiveRecord::Base
   self.abstract_class = true
 
+  def self.create_with_hash!(hash, *filter)
+    model = self.new
+    model.update_with_hash!(hash, *filter)
+    model
+  end
+
+  def self.create_with_hash(hash, *filter)
+    model = self.new
+    model.update_with_hash(hash, *filter)
+    model
+  end
+
+  def self.new_with_hash!(hash, *filter)
+    model = self.new
+    model.fill_with_hash!(hash, *filter)
+    model
+  end
+
+  def self.new_with_hash(hash, *filter)
+    model = self.new
+    model.fill_with_hash(hash, *filter)
+    model
+  end
+
   def fill_with_hash(hash, *filter)
-    hash.select {|k,v| filter.include?(k.to_sym) }.each do |k,v|
-      send(k + '=', v)
+    hash.select {|k,v| filter.include?(k) }.each do |k,v|
+      send(k.to_s + '=', v)
     end
     self
   end

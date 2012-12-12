@@ -1,0 +1,10 @@
+<%#
+required
+ username
+ projects
+%>
+<%= link("project/#{url}", "<img src='#{imageUrl}' />", "pull-left thumbnail") %>
+<div class="media-body">
+  <h3><%= link("project/#{url}", title, "media-heading") %></h3>
+  <%= value(:about, "There is no further information about #{title}") %>
+</div>
