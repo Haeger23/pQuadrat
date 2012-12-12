@@ -22,19 +22,24 @@ class ProjectResolver < PSquaredResolver
     resolve("project", "create", params)
   end
 
+  # create project
+  post %r{^/project/validate/?$}i do
+    resolve("project", "validate", params)
+  end
+
   # update project
-  put %r{^/project/(\w+)/?$}i do |title|
+  put %r{^/project/?$}i do |title|
     resolve("project", "update", title)
   end
 
   # delete user
-  delete %r{^/project/(\w+)/?$}i do |title|
+  delete %r{^/project/?$}i do |title|
     resolve("project", "delete", title)
   end
 
   # update user, delete user (workaround for HTML5 forms)
-  post %r{^/project/(\w+)/(update|delete)/?$}i do |title, action|
-    resolve("project", action, title)
+  post %r{^/project/(update|delete)/?$}i do |action|
+    resolve("project", action, params)
   end
 
   # get all validators

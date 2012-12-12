@@ -75,11 +75,26 @@ class UserPresenter < Presenter
   end
 
   def create params
-    feedback(User.create(
+    feedback!(User.create(
         username: params[:username],
         password: params[:password],
         mail: params[:mail]
     ))
+  end
+
+  def validate params
+    if params[:id].nil?
+      user = User.new(
+          username: params[:username],
+          password: params[:password],
+          mail: params[:mail]
+      )
+    else
+      user = User.find_by_id(params[:id])
+      stop(404, "There is no user with the id #{params[:id]}") until user
+      user.fill_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website)
+    end
+    feedback(user)
   end
 
   def update user, params
@@ -95,7 +110,7 @@ class UserPresenter < Presenter
       params.delete("image")
     end
 
-    feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website))
+    feedback!(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website))
 
     if old_url != user.url
       data[:old_url] = old_url

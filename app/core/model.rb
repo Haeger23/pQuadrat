@@ -3,20 +3,22 @@
 class Model < ActiveRecord::Base
   self.abstract_class = true
 
-  def update_with_hash!(hash, *filter)
+  def fill_with_hash(hash, *filter)
     hash.select {|k,v| filter.include?(k.to_sym) }.each do |k,v|
       send(k + '=', v)
     end
+    self
+  end
+
+  def update_with_hash!(hash, *filter)
+    fill_with_hash(hash, *filter)
     save!
     self
   end
 
   def update_with_hash(hash, *filter)
-    begin
-      update_with_hash!(hash, *filter)
-    rescue
-      self
-    end
+    fill_with_hash(hash, *filter)
+    save
   end
 
   def self.validators_as_hash *filter

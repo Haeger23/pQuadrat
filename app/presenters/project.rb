@@ -8,6 +8,21 @@ class ProjectPresenter < Presenter
     data[:projects] = Project.all(:order => "updated_at desc", :limit => 10)
   end
 
+  def validate params
+    if params[:id].nil?
+      project = Project.new(
+          title: params[:title],
+          about: params[:about],
+          progress: params[:progress]
+      )
+    else
+      project = Project.find_by_id(params[:id])
+      stop(404, "There is no project with the id #{params[:id]}") until project
+      project.fill_with_hash(params, :title, :progress, :about)
+    end
+    feedback(project)
+  end
+
   def show title
     project = Project.find_by_title(title)
     stop(404, "There is no project with the title '#{title}'") unless project
