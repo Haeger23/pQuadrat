@@ -3,76 +3,119 @@
 class AdminPresenter < Presenter
 
   def add_category params
-    category = feedback!(Category.create(name: params[:name]))
-    data[:id] = category.id
+    data[:required] = ["name"]
+    data[:optional] = []
+
+    feedback!(Category.create_with_hash(params, "name"))
   end
 
   def add_project params
-    skills = params[:skills] || ""
+    data[:required] = ["title"]
+    data[:optional] = ["about", "progress", "skills"]
+
+    params[:skills] = params[:skills] || ""
     ar_skills = []
-    skills.split(",").each do |skill|
+    params[:skills].split(",").each do |skill|
       skill = Skill.find_by_url(skill.strip)
       ar_skills.push(skill) if skill
     end
-    skills = ar_skills
-    project = feedback!(Project.create(
-      title: params[:title],
-      about: params[:about],
-      progress: params[:progress],
-      skills: skills
-    ))
+    params[:skills] = ar_skills
+    feedback!(Project.create_with_hash(params, "title", "about", "progress", "skills"))
   end
 
   def add_project_skill params
-    project = params[:project] || ""
-    skill = params[:skill] || ""
-    project = Project.find_by_url(project)
-    skill = Skill.find_by_url(skill)
-    project_skill = feedback!(ProjectSkill.create(
-      project: project,
-      skill: skill,
-      weight: params[:weight]
-    ))
+    data[:required] = ["project", "skill", "weight"]
+    data[:optional] = []
+
+    params["project"] = Project.find_by_url(params["project"] || "")
+    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["weight"] ||= 50
+    feedback!(ProjectSkill.create_with_hash(params, "project", "skill", "weight"))
     # todo test this function
   end
 
   def add_request params
+    data[:required] = ["user", "project", "message"]
+    data[:optional] = ["is_invitation"]
+
     params["user"] = User.find_by_url(params["user"] || "")
     params["project"] = Project.find_by_url(params["project"] || "")
     params["is_invitation"] = !!params["is_invitation"]
-    p params
-    request = feedback!(Request.create_with_hash(params, "user", "project", "message", "is_invitation"))
+    feedback!(Request.create_with_hash(params, "user", "project", "message", "is_invitation"))
     # todo test this function
   end
 
   def add_request_skill params
+    data[:required] = ["user", "project", "skill"]
+    data[:optional] = []
 
+    params["user"] = User.find_by_url(params["user"] || "")
+    params["project"] = Project.find_by_url(params["project"] || "")
+    params["request"] = Request.find_by_user_and_project(params["user"], params["project"])
+    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["project_skill"] = ProjectSkill.find_by_project_and_skill(params["project"], params["skill"])
+    params["weight"] ||= 50
+    RequestSkill.create_with_hash(params, "request", "project_skill", "weight")
     # todo add request_skill
   end
 
   def add_skill params
+    data[:required] = ["name", "category"]
+    data[:optional] = []
+
     params["category"] = Category.find_by_url(params["category"] || "")
-    skill = feedback!(Skill.create(
-      name: params["name"],
-      category: category
-    ))
-    data[:id] = skill.id
+    feedback!(Skill.create_with_hash(params, "name", "category"))
+    # todo test this function
   end
 
   def add_user params
-    feedback!(User.create_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website"))
+    data[:required] = ["username", "password", "mail"]
+    data[:optional] = ["forename", "surname", "birthday", "website", "skills"]
+
+    params[:skills] = params[:skills] || ""
+    ar_skills = []
+    params[:skills].split(",").each do |skill|
+      skill = Skill.find_by_url(skill.strip)
+      ar_skills.push(skill) if skill
+    end
+    params[:skills] = ar_skills
+
+    feedback!(User.create_with_hash(params, "username", "password", "mail", "forename", "surname", "birthday", "website", "skills"))
+    # todo test this function
   end
 
   def add_user_project params
-    # todo add user_project
+    data[:required] = ["user", "project"]
+    data[:optional] = []
+
+    params["user"] = User.find_by_url(params["user"] || "")
+    params["project"] = User.find_by_url(params["project"] || "")
+    feedback!(UserProject.create_with_hash(params, "user", "project"))
+    # todo test this function
   end
 
   def add_user_project_skill params
-    # todo add user_project_skill
+    data[:required] = ["user", "project", "skill"]
+    data[:optional] = ["weight"]
+
+    params["user"] = User.find_by_url(params["user"] || "")
+    params["project"] = Project.find_by_url(params["project"] || "")
+    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["project_skill"] = ProjectSkill.find_by_project_and_skill(params["project"], params["skill"])
+    params["weight"] ||= 50
+    feedback!(UserProjectSkill.create_with_hash(params, "user", "project_skill", "weight"))
+    # todo test this function
   end
 
   def add_user_skill params
-    # todo add user_skill
+    data[:required] = ["user", "skill", "weight"]
+    data[:optional] = []
+
+    params["user"] = User.find_by_url(params["user"] || "")
+    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["weight"] ||= 50
+    feedback(!UserSkill.create_with_hash(params, "user", "skill", "weight"))
+    # todo test this function
   end
 
   def export_all
