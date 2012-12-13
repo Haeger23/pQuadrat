@@ -13,13 +13,17 @@ class AdminPresenter < Presenter
     data[:required] = ["title"]
     data[:optional] = ["about", "progress", "skills"]
 
-    params[:skills] = params[:skills] || ""
+    params["skills"] = params["skills"] || ""
+    params["skills"] = params["skills"].strip
     ar_skills = []
-    params[:skills].split(",").each do |skill|
-      skill = Skill.find_by_url(skill.strip)
-      ar_skills.push(skill) if skill
+    unless params["skills"].empty?
+      params["skills"].split(",").each do |skill|
+        skill = Skill.find_by_name(skill.strip)
+        ar_skills.push(skill) if skill
+      end
     end
-    params[:skills] = ar_skills
+    params["skills"] = ar_skills
+
     feedback!(Project.create_with_hash(params, "title", "about", "progress", "skills"))
   end
 
@@ -27,8 +31,8 @@ class AdminPresenter < Presenter
     data[:required] = ["project", "skill", "weight"]
     data[:optional] = []
 
-    params["project"] = Project.find_by_url(params["project"] || "")
-    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["project"] = Project.find_by_title(params["project"] || "")
+    params["skill"] = Skill.find_by_name(params["skill"] || "")
     params["weight"] ||= 50
     feedback!(ProjectSkill.create_with_hash(params, "project", "skill", "weight"))
     # todo test this function
@@ -38,8 +42,8 @@ class AdminPresenter < Presenter
     data[:required] = ["user", "project", "message"]
     data[:optional] = ["is_invitation"]
 
-    params["user"] = User.find_by_url(params["user"] || "")
-    params["project"] = Project.find_by_url(params["project"] || "")
+    params["user"] = User.find_by_username(params["user"] || "")
+    params["project"] = Project.find_by_title(params["project"] || "")
     params["is_invitation"] = !!params["is_invitation"]
     feedback!(Request.create_with_hash(params, "user", "project", "message", "is_invitation"))
     # todo test this function
@@ -49,11 +53,11 @@ class AdminPresenter < Presenter
     data[:required] = ["user", "project", "skill"]
     data[:optional] = []
 
-    params["user"] = User.find_by_url(params["user"] || "")
-    params["project"] = Project.find_by_url(params["project"] || "")
-    params["request"] = Request.find_by_user_and_project(params["user"], params["project"])
-    params["skill"] = Skill.find_by_url(params["skill"] || "")
-    params["project_skill"] = ProjectSkill.find_by_project_and_skill(params["project"], params["skill"])
+    params["user"] = User.find_by_username(params["user"] || "")
+    params["project"] = Project.find_by_title(params["project"] || "")
+    params["request"] = Request.find_by_user_id_and_project_id(params["user"] && params["user"].id, params["project"] && params["project"].id)
+    params["skill"] = Skill.find_by_name(params["skill"] || "")
+    params["project_skill"] = ProjectSkill.find_by_project_id_and_skill_id(params["project"] && params["project"].id, params["skill"] && params["skill"].id)
     params["weight"] ||= 50
     RequestSkill.create_with_hash(params, "request", "project_skill", "weight")
     # todo add request_skill
@@ -63,7 +67,7 @@ class AdminPresenter < Presenter
     data[:required] = ["name", "category"]
     data[:optional] = []
 
-    params["category"] = Category.find_by_url(params["category"] || "")
+    params["category"] = Category.find_by_name(params["category"] || "")
     feedback!(Skill.create_with_hash(params, "name", "category"))
     # todo test this function
   end
@@ -72,13 +76,16 @@ class AdminPresenter < Presenter
     data[:required] = ["username", "password", "mail"]
     data[:optional] = ["forename", "surname", "birthday", "website", "skills"]
 
-    params[:skills] = params[:skills] || ""
+    params["skills"] = params["skills"] || ""
+    params["skills"] = params["skills"].strip
     ar_skills = []
-    params[:skills].split(",").each do |skill|
-      skill = Skill.find_by_url(skill.strip)
-      ar_skills.push(skill) if skill
+    unless params["skills"].empty?
+      params["skills"].split(",").each do |skill|
+        skill = Skill.find_by_name(skill.strip)
+        ar_skills.push(skill) if skill
+      end
     end
-    params[:skills] = ar_skills
+    params["skills"] = ar_skills
 
     feedback!(User.create_with_hash(params, "username", "password", "mail", "forename", "surname", "birthday", "website", "skills"))
     # todo test this function
@@ -88,8 +95,8 @@ class AdminPresenter < Presenter
     data[:required] = ["user", "project"]
     data[:optional] = []
 
-    params["user"] = User.find_by_url(params["user"] || "")
-    params["project"] = User.find_by_url(params["project"] || "")
+    params["user"] = User.find_by_username(params["user"] || "")
+    params["project"] = User.find_by_title(params["project"] || "")
     feedback!(UserProject.create_with_hash(params, "user", "project"))
     # todo test this function
   end
@@ -98,10 +105,10 @@ class AdminPresenter < Presenter
     data[:required] = ["user", "project", "skill"]
     data[:optional] = ["weight"]
 
-    params["user"] = User.find_by_url(params["user"] || "")
-    params["project"] = Project.find_by_url(params["project"] || "")
-    params["skill"] = Skill.find_by_url(params["skill"] || "")
-    params["project_skill"] = ProjectSkill.find_by_project_and_skill(params["project"], params["skill"])
+    params["user"] = User.find_by_username(params["user"] || "")
+    params["project"] = Project.find_by_title(params["project"] || "")
+    params["skill"] = Skill.find_by_name(params["skill"] || "")
+    params["project_skill"] = ProjectSkill.find_by_project_id_and_skill_id(params["project"] && params["project"].id, params["skill"] && params["skill"].id)
     params["weight"] ||= 50
     feedback!(UserProjectSkill.create_with_hash(params, "user", "project_skill", "weight"))
     # todo test this function
@@ -111,8 +118,8 @@ class AdminPresenter < Presenter
     data[:required] = ["user", "skill", "weight"]
     data[:optional] = []
 
-    params["user"] = User.find_by_url(params["user"] || "")
-    params["skill"] = Skill.find_by_url(params["skill"] || "")
+    params["user"] = User.find_by_username(params["user"] || "")
+    params["skill"] = Skill.find_by_name(params["skill"] || "")
     params["weight"] ||= 50
     feedback(!UserSkill.create_with_hash(params, "user", "skill", "weight"))
     # todo test this function
@@ -159,7 +166,6 @@ class AdminPresenter < Presenter
 
   def export_data
     files = Dir[PSquared.path+"/../data/*.sql"]
-    p files
     files.each do |file|
       File.delete(file)
     end
