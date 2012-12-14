@@ -3,6 +3,10 @@
 class Model < ActiveRecord::Base
   self.abstract_class = true
 
+  def to_s
+    self.id
+  end
+
   def self.create_with_hash!(hash, *filter)
     model = self.new
     model.update_with_hash!(hash, *filter)

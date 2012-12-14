@@ -3,3 +3,5 @@ database: p_squared
 username: root
 password:
 host:     localhost
+encoding: utf8
+timeout:  100
