@@ -9,7 +9,7 @@
     <%= view("template", "textbox", {title: "Email", name: "mail", current: mail, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-envelope"></i>'}) %>
     <%= view("template", "control_group", {label: {title: "Image"}, controls: [
         {view: :textbox, title: "Image", current: value("image_file_name", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"},
-        "<img src='#{image}' alt='user' />"]
+        "<div class='pull-left thumbnail'><img src='#{image}' alt='user' /></div>"]
     }) %>
 
     <%# CHANGE PASSWORD %>

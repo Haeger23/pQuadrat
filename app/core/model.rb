@@ -47,6 +47,7 @@ class Model < ActiveRecord::Base
   def update_with_hash(hash, *filter)
     fill_with_hash(hash, *filter)
     save
+    self
   end
 
   def self.validators_as_hash *filter

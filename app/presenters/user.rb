@@ -102,14 +102,15 @@ class UserPresenter < Presenter
 
     old_url = user.url
 
-    if params[:image].blank?
+    if params["image"].blank?
       params["image"] = nil
-    elsif not (params[:image_file].nil? or params[:image_file].blank?)
-      params["image"] = params[:image_file][:tempfile]
+    elsif not (params["image_file"].nil? or params["image_file"].blank?)
+      params["image"] = params["image_file"][:tempfile]
     else
       params.delete("image")
     end
 
+    p params
     feedback!(user.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website"))
 
     if old_url != user.url
