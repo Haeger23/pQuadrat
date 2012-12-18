@@ -1,0 +1,12 @@
+<%#
+required
+ name     (string)  The name of the skill
+ value    (integer) The value of the skill
+ category (string)  The name of the category
+ %>
+<div class="row skill">
+    <div class="span3 skillName"><%= name %> (<%= category %>)</div>
+    <div class="span7 progress">
+      <div class="bar" style="width: <%= value %>%;"></div>
+    </div>
+</div>

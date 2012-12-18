@@ -1,3 +1,10 @@
+<%
+    skills = [
+        {name: "PHP", category: "Programming", value: 82},
+        {name: "IT Management", category: "Management", value: 36}
+    ]
+%>
+
 <div class="row">
   <div class="span3">
     <div class="pull-left thumbnail">
@@ -33,11 +40,24 @@
         </div>
     <% end %>
   </div>
+  <div class="span7">
+    <h4 class="gap50">Personal Dates</h4>
+    <% if value("forename") or value("surname") or value("birthday") or value("website") %>
+    <div class="form-horizontal form-only-text">
+      <%= if value("forename") then view("template", "control_group", {label: {title: "forename"}, controls: ["<div class='value'>#{forename}</div>"]}) end %>
+      <%= if value("surname") then view("template", "control_group", {label: {title: "surname"}, controls: ["<div class='value'>#{surname}</div>"]}) end %>
+      <%= if value("birthday") then view("template", "control_group", {label: {title: "birthday"}, controls: ["<div class='value'>#{birthday}</div>"]}) end %>
+      <%= if value("website") then view("template", "control_group", {label: {title: "website"}, controls: ["<div class='value'>#{website}</div>"]}) end %>
+    </div>
+    <% end %>
+
+  </div>
   <div class="row-fluid">
     <div class="span7">
       <h4 class="gap50">Personal Dates</h4>
     </div>
       <div class="row-fluid">
+
         <div class="span3">
           <p class="gap150">forename</p>
           <p class="gap150">surname</p>
@@ -56,61 +76,11 @@
 
 
 
-<div class="row-fluid">
-  <div class="span12" id="user-skills-header">
-    <h4><%= username %>'s Skills</h4>
-
-    <div class="row-fluid">
-      <div class="skill">
-        <div class="row-fluid">
-          <div class="span4">
-            <div class="skillName">
-              <div class="gap150"><%= value(:skill, "name of skill is missing") %></div>
-            </div>
-          </div>
-          <div class="span8">
-            <div class="skill-bar">
-              <div class="progress">
-                <div class="bar" style="width: 60%;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="skill">
-        <div class="row-fluid">
-          <div class="span4">
-            <div class="skillName">
-              <div class="gap150"><%= value(:skill, "name of skill is missing") %></div>
-            </div>
-          </div>
-          <div class="span8">
-            <div class="skill-bar">
-              <div class="progress">
-                <div class="bar" style="width: 60%;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="row">
+    <div class="span10" id="user-skills-header">
+        <h4><%= username %>'s Skills</h4>
+        <%= view("template", "skills_show", {items: skills}) %>
     </div>
-=======
-    <div class="gap150"><%= value("forename", "Forname is not specified") %></div>
-    <div class="gap150" ><%= value("surname", "Surname is not specified") %></div>
-    <div class="gap150"><%= value("birthday", "Birthday is not specified") %></div>
-    <%= about %>
->>>>>>> origin/master
-
-    <div class="row-fluid">
-      <div class="span12" id="user-projects-header">
-        <h4><%= username %>'s Projects</h4>
-      </div>
-
-    </div>
-
-      </div>
-  </div>
-</div>
 </div>
 
 
