@@ -96,7 +96,7 @@ class AdminPresenter < Presenter
     data[:optional] = []
 
     params["user"] = User.find_by_username(params["user"] || "")
-    params["project"] = User.find_by_title(params["project"] || "")
+    params["project"] = Project.find_by_title(params["project"] || "")
     feedback!(UserProject.create_with_hash(params, "user", "project"))
     # todo test this function
   end
