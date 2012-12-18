@@ -1,3 +1,9 @@
+<%
+   categories = {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}
+   skills = [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]
+%>
+
+
 <h4>Textbox</h4>
 See the view <code>template/textbox.html.erb</code> for all options
 <div class="form-horizontal">
@@ -31,20 +37,22 @@ See the view <code>template/slider.html.erb</code> for all options
 <h4>Skills</h4>
 See the view <code>template/skills.html.erb</code> for all options
 <div class="form-horizontal">
-  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}}) %>
+  <%= view("template", "skills", {categories: categories}) %>
 </div>
 And with items
 <div class="form-horizontal">
-  <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}, items: [{category: 2, skill: "PHP", weight: 23}, {category: 4, skill: "Project Management", weight: 75}]}) %>
+  <%= view("template", "skills", {categories: categories, items: skills}) %>
 </div>
 
 <h4>Pager</h4>
 See the view <code>template/pager.html.erb</code> for all options
 <%= view("template", "pager", {current: 33, count: 502, url: "users"}) %>
 
-<h4>Gaps</h4>
+<h4>classes for gaps</h4>
 See the view <code>template/gaps.html.erb</code> for all options
 <%= view("template", "gaps") %>
+
+
 
 
 <!--

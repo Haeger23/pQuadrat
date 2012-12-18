@@ -93,11 +93,12 @@ class AdminPresenter < Presenter
 
   def add_user_project params
     data[:required] = ["user", "project"]
-    data[:optional] = []
+    data[:optional] = ["weight"]
 
     params["user"] = User.find_by_username(params["user"] || "")
-    params["project"] = User.find_by_title(params["project"] || "")
-    feedback!(UserProject.create_with_hash(params, "user", "project"))
+    params["project"] = Project.find_by_title(params["project"] || "")
+    params["weight"] ||= 50
+    feedback!(UserProject.create_with_hash(params, "user", "project", "weight"))
     # todo test this function
   end
 

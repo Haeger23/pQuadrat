@@ -1,0 +1,7 @@
+<%#
+required
+ items      (Array) An array with skills, every item must have name, value and category
+ %>
+<% items.each do |item| %>
+    <%= view("template", "units/skill", item) %>
+<% end %>

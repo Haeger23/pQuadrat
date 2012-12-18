@@ -17,7 +17,59 @@
   </div>
 
 </form>
+<script>
+    $().ready(function(){
+        $("#user-add-form").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 2
+                },
+                mail:{
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                confirm_password:{
+                    required: true,
+                    minlength: 6,
+                    equalTo: "input[name=password]"
+                }
+            },
+            messages: {
+                username:{
+                    required: "Username wird benötigt",
+                    minlength: "Username muss mindestens 4 Zeichen lang sein"
+                },
+                mail:{
+                    required: "Mail wird benötigt",
+                    email: "Bitte korrekte E-Mail Adresse angeben"
+                },
+                password:{
+                    required: "Passwort wird benötigt",
+                    minlength: "Passwort muss mindestens 6 Zeichen lang sein"
+                },
+                confirm_password:{
+                    required: "Passwort bitte erneut eingeben",
+                    minlength: "Passwort muss mindestens 6 Zeichen lang sein",
+                    equalTo: "Passwörter müssen gleich sein"
+                }
+            }
+        });
+       $("#register-btn").click(function(){
+           if($("#user-add-form").valid()){
+                $("#user-add-form").submit();
+           }
+           else{
+                $("#user-add-form").showErrors();
+           }
+       });
+    });
 
+</script>
 <% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
       "user/add"
 %>

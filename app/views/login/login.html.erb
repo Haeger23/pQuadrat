@@ -15,7 +15,22 @@
 
   </fieldset>
 </form>
+<script>
+   $().ready(function(){
+      $("#login-form").validate({
+          rules: {
+               username: "required",
+               password: "required"
+          },
+          messages: {
+               username: "Username wird benötigt",
+               password:"Passwort wird benötigt"
+          }
+      });
 
+   });
+
+</script>
 <script>
     pSquared.success = function (data) {
         pSquared.session = data.session
