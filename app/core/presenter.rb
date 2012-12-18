@@ -24,6 +24,8 @@ end
 class Presenter
   include Enumerable
 
+  #include MailSender
+  require PSquared.path+"/core/mail_sender.rb"
 
   attr_reader :current_status
   attr_reader :data
@@ -32,8 +34,6 @@ class Presenter
   def initialize
     @data = {}
     @page = {}
-
-    #include MailSender
 
   end
 

@@ -12,7 +12,7 @@ class RequestPresenter < Presenter
     stop(403, "No username given") unless username
     stop(403, "No projectname given") unless projectname
 
-    data[:username] = username
+    data[:sender_username] = username
     data[:projectname] = projectname
   end
 
@@ -21,13 +21,14 @@ class RequestPresenter < Presenter
     stop(403, "No username given") unless username
     stop(403, "No projectname given") unless projectname
 
-    data[:username] = username
+    data[:sender_username] = username
+    data[:recipient_username] = 'Paule'
     data[:projectname] = projectname
+    data[:mailto] = 'willi.kampe@gmail.com'
 
-    mail = MailSender.new('join', data)
-    mail.send()
 
-    data[:success] = true
+    #mail = MailSender.new('join', data)
+    data[:success] = MailSender.send('join', data)
   end
 
 end
