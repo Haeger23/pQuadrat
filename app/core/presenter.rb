@@ -117,11 +117,24 @@ protected
   end
 
   def feedback(activeRecord)
+    data[:errors] = activeRecord.invalid? ? activeRecord.errors.to_hash : {}
+    activeRecord
+  end
+
+  def feedback!(activeRecord)
     if activeRecord.invalid?
       data[:errors] = activeRecord.errors.to_hash
       stop(400, activeRecord.errors.full_messages.join(", "))
     else
       activeRecord
+    end
+  end
+
+  def empty_to_nil(hash)
+    hash.each do |k,v|
+      if(v.respond_to?(:split) and v.split.empty?)
+        hash[k] = nil
+      end
     end
   end
 

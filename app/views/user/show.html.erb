@@ -33,28 +33,99 @@
         </div>
     <% end %>
   </div>
-  <div class="span7">
+  <div class="row-fluid">
+    <div class="span7">
+      <h4 class="gap50">Personal Dates</h4>
+    </div>
+      <div class="row-fluid">
+        <div class="span3">
+          <p class="gap150">forename</p>
+          <p class="gap150">surname</p>
+          <p class="gap150">birthday</p>
+          <p class="gap150">about</p>
+        </div>
+        <div class="span4">
+            <div class="gap10-top"><%= value(:forename, "Forname is not specified") %></div>
+            <div class="gap10-top"><%= value(:surname, "Surname is not specified") %></div>
+            <div class="gap10-top"><%= value(:Birthday, "Birthday is not specified") %></div>
+            <div class="gap10-top"><%= value(:about, "Nothing about...") %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<div class="row-fluid">
+  <div class="span12" id="user-skills-header">
+    <h4><%= username %>'s Skills</h4>
+
+    <div class="row-fluid">
+      <div class="skill">
+        <div class="row-fluid">
+          <div class="span4">
+            <div class="skillName">
+              <div class="gap150"><%= value(:skill, "name of skill is missing") %></div>
+            </div>
+          </div>
+          <div class="span8">
+            <div class="skill-bar">
+              <div class="progress">
+                <div class="bar" style="width: 60%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="row-fluid">
+          <div class="span4">
+            <div class="skillName">
+              <div class="gap150"><%= value(:skill, "name of skill is missing") %></div>
+            </div>
+          </div>
+          <div class="span8">
+            <div class="skill-bar">
+              <div class="progress">
+                <div class="bar" style="width: 60%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+=======
+    <div class="gap150"><%= value("forename", "Forname is not specified") %></div>
+    <div class="gap150" ><%= value("surname", "Surname is not specified") %></div>
+    <div class="gap150"><%= value("birthday", "Birthday is not specified") %></div>
     <%= about %>
+>>>>>>> origin/master
+
+    <div class="row-fluid">
+      <div class="span12" id="user-projects-header">
+        <h4><%= username %>'s Projects</h4>
+      </div>
+
+    </div>
+
+      </div>
   </div>
+</div>
+</div>
 
 
-  <!------------------>
-  <div class="span4">
+<!--div class="span12">
+  <div id="user-skills">
+    <h4><!%= username %>s' Skills</h4>
 
-
-    <dl class="dl-horizontal">
-      <dt>Personal Dates</dt>
-      <dd><%= value(:forename, "Forname is not specified") %></dd>
-      <dd><%= value(:surname, "Surname is not specified") %></dd>
-      <dd> <%= value(:Birthday, "Birthday is not specified") %></dd>
-
-    </dl>
-
-
-
+    <div id="skill" class="gap50-left">
+      <div><!%= value(:skill, "name of skill is missing") %>
+        <div class="progress">
+          <div class="bar" style="width: 60%;"></div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 </div>
 
 

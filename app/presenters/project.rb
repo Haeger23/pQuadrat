@@ -2,18 +2,40 @@
 
 class ProjectPresenter < Presenter
 
-  def list
+  def list pageNumber
+    step = 10
+    data[:page_count] = 1 + Project.count/step
+    data[:page] = pageNumber
+    stop(404, "There is no project list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
+
+    data[:projects] = Project.all(
+        :order => "updated_at desc",
+        :offset => step*(pageNumber-1),
+        :limit => step
+    )
+
     page[:title] = "Projects"
     page[:search] = "Projects"
-    data[:projects] = Project.all(:order => "updated_at desc", :limit => 10)
   end
 
-  def show title
-    project = Project.find_by_title(title)
+  def validate params
+    if params[:id].nil?
+      project = Project.new_with_hash(params, "title", "about", "progress")
+    else
+      project = Project.find_by_id(params[:id])
+      stop(404, "There is no project with the id #{params[:id]}") until project
+      project.fill_with_hash(params, "title", "progress", "about")
+    end
+    feedback(project)
+  end
+
+  def show title, params
+    project = Project.find_by_url(title)
     stop(404, "There is no project with the title '#{title}'") unless project
 
     page[:title] = project.title
-    data[:test] = "show project #{title}"
+    data[:image] = project.image.url
+    data_add(params, "about", "progress")
   end
 
   def add params

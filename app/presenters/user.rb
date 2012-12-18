@@ -3,15 +3,23 @@
 class UserPresenter < Presenter
 
   def dashboard user
-    data[:test] = "show #{"admin " if user}dashboard"
+    page[:title] = "Dashboard"
   end
 
   def list(pageNumber)
+    step = 10
+    data[:page_count] = 1 + User.count/step
+    data[:page] = pageNumber
+    stop(404, "There is no user list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
+
+    data[:users] = User.all(
+        :order => "updated_at desc",
+        :offset => step*(pageNumber-1),
+        :limit => step
+    )
+
     page[:title] = "Users"
     page[:search] = "Users"
-    data[:users] = User.all(:order => "updated_at desc", :limit => 10)
-    data[:page] = pageNumber
-    data[:page_count] = 1 + User.count/10
   end
 
   def show user, username
@@ -51,7 +59,7 @@ class UserPresenter < Presenter
   end
 
   def add params
-    page[:title] = "Add user"
+    page[:title] = "Registration"
   end
 
   def edit user, username
@@ -75,11 +83,18 @@ class UserPresenter < Presenter
   end
 
   def create params
-    feedback(User.create(
-        username: params[:username],
-        password: params[:password],
-        mail: params[:mail]
-    ))
+    feedback!(User.create_with_hash(params, "username", "password", "mail"))
+  end
+
+  def validate params
+    if params[:id].nil?
+      user = User.new_with_hash(params, :username, :password, :mail)
+    else
+      user = User.find_by_id(params[:id])
+      stop(404, "There is no user with the id #{params[:id]}") until user
+      user.fill_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website")
+    end
+    feedback(user)
   end
 
   def update user, params
@@ -87,15 +102,16 @@ class UserPresenter < Presenter
 
     old_url = user.url
 
-    if params[:image].blank?
+    if params["image"].blank?
       params["image"] = nil
-    elsif not (params[:image_file].nil? or params[:image_file].blank?)
-      params["image"] = params[:image_file][:tempfile]
+    elsif not (params["image_file"].nil? or params["image_file"].blank?)
+      params["image"] = params["image_file"][:tempfile]
     else
       params.delete("image")
     end
 
-    feedback(user.update_with_hash(params, :username, :password, :mail, :image, :forename, :surname, :birthday, :website))
+    p params
+    feedback!(user.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website"))
 
     if old_url != user.url
       data[:old_url] = old_url

@@ -27,7 +27,7 @@
                     if(type == "html") {
                         $("#result").html(data).prepend($success)
                     } else if(type == "json") {
-                        $("#result").html($("<pre></pre>").text(JSON.stringify(data))).prepend($success);
+                        $("#result").html($("<pre></pre>").text(JSON.stringify(data, null, 4))).prepend($success);
                         console.log(data);
                     } else if(type == "xml") {
                         var xmlString = window.ActiveXObject ? $(data).xml : (new XMLSerializer()).serializeToString(data);
@@ -41,8 +41,9 @@
                     if(type == "html") {
                         $("#result").html(jqXHR.responseText).prepend($error)
                     } else if(type == "json") {
-                        $("#result").html($("<pre></pre>").text(jqXHR.responseText)).prepend($error);
-                        console.log(JSON.parse(jqXHR.responseText));
+                        var obj = JSON.parse(jqXHR.responseText);
+                        $("#result").html($("<pre></pre>").text(JSON.stringify(obj, null, 4))).prepend($error);
+                        console.log(obj);
                     } else if(type == "xml") {
                         $("#result").html($("<pre></pre>").text(jqXHR.responseText)).prepend($error);
                         console.log(dom2js($($.parseXML(jqXHR.responseText)).find("data").get(0)));

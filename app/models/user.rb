@@ -8,7 +8,7 @@ class User < Model
   validates_presence_of   :username, :password, :mail
   validates_uniqueness_of :url, :case_sensitive => false
   validates_format_of     :username, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
-  validates_length_of     :username, :minimum => 4, :maximum => 30
+  validates_length_of     :username, :minimum => 2, :maximum => 30
   validates_length_of     :forename, :surname, :maximum => 30
   validates_length_of     :password, :minimum => 6, :maximum => 30, :if => :password_changed?
   validates_format_of     :mail, :with => /\A([\w\.\-\+]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

@@ -10,8 +10,8 @@ class Skill < Model
 
   validates_uniqueness_of :url, :scope => :category_id, :case_sensitive => false
   validates_format_of     :name, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
-  validates_presence_of :name, :category
-  validates_length_of :name, :minimum => 2
+  validates_presence_of   :name, :category
+  validates_length_of     :name, :minimum => 2, :maximum => 30
 
   def name=(value)
     if value
