@@ -93,7 +93,7 @@ class AdminPresenter < Presenter
 
   def add_user_project params
     data[:required] = ["user", "project"]
-    data[:optional] = []
+    data[:optional] = ["weight"]
 
     params["user"] = User.find_by_username(params["user"] || "")
     params["project"] = Project.find_by_title(params["project"] || "")
