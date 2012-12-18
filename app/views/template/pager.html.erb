@@ -1,0 +1,22 @@
+<%#
+required
+ count   (int)    The count of pages
+ current (int)    The current page
+ url     (string) The url of the page
+ %>
+<%
+    start = current - 5
+    start = 1 if start < 1
+    stop = start + 10
+    stop = count if stop > count
+    pages = (start..stop)
+%>
+<div class="pagination pagination-centered">
+  <ul>
+    <li class="<%= "disabled" if current == 1 %>"><%= link(current == 1 ? "#" : "#{url}/#{current-1}", "Prev") %></li>
+    <% pages.each do |page| %>
+        <li class="<%= "active" if current == page %>"><%= link("#{url}/#{page}", page) %></li>
+    <% end %>
+    <li class="<%= "disabled" if current == count %>"><%= link(current == count ? "#" : "#{url}/#{current+1}", "Next") %></li>
+  </ul>
+</div>

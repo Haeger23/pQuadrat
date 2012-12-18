@@ -7,7 +7,7 @@ class Category < Model
   validates_uniqueness_of :url, :case_sensitive => false
   validates_format_of     :name, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
   validates_presence_of   :url, :name
-  validates_length_of     :name, :minimum => 4
+  validates_length_of     :name, :minimum => 2
 
   def name=(value)
     if value

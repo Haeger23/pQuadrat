@@ -1,20 +1,53 @@
+# encoding: UTF-8
+
 class Model < ActiveRecord::Base
   self.abstract_class = true
 
-  def update_with_hash!(hash, *filter)
-    hash.select {|k,v| filter.include?(k.to_sym) }.each do |k,v|
-      send(k + '=', v)
+  def to_s
+    self.id
+  end
+
+  def self.create_with_hash!(hash, *filter)
+    model = self.new
+    model.update_with_hash!(hash, *filter)
+    model
+  end
+
+  def self.create_with_hash(hash, *filter)
+    model = self.new
+    model.update_with_hash(hash, *filter)
+    model
+  end
+
+  def self.new_with_hash!(hash, *filter)
+    model = self.new
+    model.fill_with_hash!(hash, *filter)
+    model
+  end
+
+  def self.new_with_hash(hash, *filter)
+    model = self.new
+    model.fill_with_hash(hash, *filter)
+    model
+  end
+
+  def fill_with_hash(hash, *filter)
+    hash.select {|k,v| filter.include?(k) }.each do |k,v|
+      send(k.to_s + '=', v)
     end
+    self
+  end
+
+  def update_with_hash!(hash, *filter)
+    fill_with_hash(hash, *filter)
     save!
     self
   end
 
   def update_with_hash(hash, *filter)
-    begin
-      update_with_hash!(hash, *filter)
-    rescue
-      false
-    end
+    fill_with_hash(hash, *filter)
+    save
+    self
   end
 
   def self.validators_as_hash *filter

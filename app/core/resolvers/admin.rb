@@ -18,7 +18,7 @@ class AdminResolver < PSquaredResolver
     resolve("admin", "add_request", params)
   end
 
-  post %r{^/admin/request/?$}i do
+  post %r{^/admin/request_skill/?$}i do
     resolve("admin", "add_request_skill", params)
   end
 

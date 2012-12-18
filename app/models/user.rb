@@ -1,12 +1,14 @@
 # encoding: UTF-8
 
 class User < Model
+  include Paperclip::Glue
+
   before_validation :strip
 
   validates_presence_of   :username, :password, :mail
   validates_uniqueness_of :url, :case_sensitive => false
   validates_format_of     :username, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
-  validates_length_of     :username, :minimum => 4, :maximum => 30
+  validates_length_of     :username, :minimum => 2, :maximum => 30
   validates_length_of     :forename, :surname, :maximum => 30
   validates_length_of     :password, :minimum => 6, :maximum => 30, :if => :password_changed?
   validates_format_of     :mail, :with => /\A([\w\.\-\+]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -22,6 +24,24 @@ class User < Model
   has_many :skills, :through => :user_skills
   has_many :categories, :through => :skills
   has_many :requests
+  has_attached_file :image,
+                    :default_url => '/images/users/default/:style.png',
+                    :default_style => :big,
+                    :styles => {
+                        :big => ["270x", :png],
+                        :medium => ["128x128^", :png],
+                        :small => ["64x64^", :png]
+                    },
+                    :convert_options => {
+                        :medium => "-gravity center -extent 128x128",
+                        :small => "-gravity center -extent 64x64"
+                    },
+                    :url => "/images/users/:id/:style.png",
+                    :path => PSquared.path+"/public:url"
+
+  def image_file_name=(value)
+    super(value.nil? ? nil : Time.now)
+  end
 
   def self.login(username, password)
     user = self.find_by_username(username)

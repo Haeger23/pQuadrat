@@ -9,7 +9,12 @@ class UserResolver < PSquaredResolver
 
   # show users
   get %r{^/users/?$}i do
-    resolve("user", "list")
+    resolve("user", "list", 1)
+  end
+
+  # show users
+  get %r{^/users/(\d+)?$}i do |page|
+    resolve("user", "list", page.to_i)
   end
 
   # edit user, show user
@@ -27,6 +32,11 @@ class UserResolver < PSquaredResolver
     resolve("user", "create", params)
   end
 
+  # validate user
+  post %r{^/user/validate/?$}i do
+    resolve("user", "validate", params)
+  end
+
   # update user
   put %r{^/user/?$}i do
     resolve("user", "update", user, params)
@@ -38,8 +48,8 @@ class UserResolver < PSquaredResolver
   end
 
   # update user, delete user (workaround for HTML5 forms)
-  post %r{^/user/(\w+)/(update|delete)/?$}i do |username, action|
-    resolve("user", action, username)
+  post %r{^/user/(update|delete)/?$}i do |action|
+    resolve("user", action, params)
   end
 
   # get all validators

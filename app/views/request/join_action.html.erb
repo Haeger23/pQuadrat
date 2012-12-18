@@ -8,7 +8,11 @@
         </div>
       </div>
       <div class="middle span2">
-          <input type="button" class="btn btn-primary btn-join" value="beitreten">
+        <% if success %>
+          Sie sind dem Projekt erfolgreich beigetreten.
+        <% else %>
+          Ein Problem trat auf.
+        <% end %>
       </div>
       <div class="span4">
         <h3>Projekt</h3>
