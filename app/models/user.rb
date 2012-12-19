@@ -21,7 +21,7 @@ class User < Model
   has_many :user_projects
   has_many :projects, :through => :user_projects
   has_many :user_skills
-  has_many :skills, :through => :user_skills
+  has_many :skills, :through => :user_skills, :order => 'user_skills.weight DESC, skills.name ASC', :select => "*, user_skills.weight as weight"
   has_many :categories, :through => :skills
   has_many :requests
   has_attached_file :image,
@@ -61,7 +61,7 @@ class User < Model
     if value
       # trim
       value = value.strip.gsub(/\s/, " ")
-      write_attribute(:url, value.gsub(/\W/, "_"))
+      write_attribute(:url, value.gsub(/\W/, "_").downcase)
     end
     super(value)
   end

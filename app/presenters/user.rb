@@ -30,6 +30,11 @@ class UserPresenter < Presenter
 
     page[:title] = _user.username
     data[:image] = _user.image.url
+    data[:skills] = _user.skills.collect do |skill|
+      category = skill.category
+      {name: skill.name, category: category.name, value: skill.weight, url: "skill/#{category.url}/#{skill.url}"}
+    end
+
     data[:projects] = _user.projects
 
     data_add(_user.attributes, "id", "username", "mail", "birthday", "forename", "surname", "website", "image_file_name", "about", "url")
@@ -88,7 +93,7 @@ class UserPresenter < Presenter
 
   def validate params
     if params[:id].nil?
-      user = User.new_with_hash(params, :username, :password, :mail)
+      user = User.new_with_hash(params, "username", "password", "mail")
     else
       user = User.find_by_id(params[:id])
       stop(404, "There is no user with the id #{params[:id]}") until user

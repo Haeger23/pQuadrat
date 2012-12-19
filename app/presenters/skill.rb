@@ -52,11 +52,13 @@ class SkillPresenter < Presenter
 
   def one category, skill, params
     category = Category.find_by_url(category)
-    category_id = category.nil? ? nil : category.id
+    stop(404, "No category '#{category}' available") unless category
+    skill = Skill.find_by_category_id_and_url(category.id, skill)
+    stop(404, "No category '#{category}' available") unless skill
 
-    skill = Skill.find_by_category_id_and_url(category_id, skill)
+    page[:title] = "#{skill.name} (#{category.name})"
 
-    data_add(skill.attributes, "name", "url", "created_at") if skill
+    data_add(skill.attributes, "name", "url", "created_at")
   end
 
   def from_projects page, params

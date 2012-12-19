@@ -117,12 +117,12 @@ class AdminPresenter < Presenter
 
   def add_user_skill params
     data[:required] = ["user", "skill", "weight"]
-    data[:optional] = []
+    data[:optional] = ["weight"]
 
     params["user"] = User.find_by_username(params["user"] || "")
     params["skill"] = Skill.find_by_name(params["skill"] || "")
     params["weight"] ||= 50
-    feedback(!UserSkill.create_with_hash(params, "user", "skill", "weight"))
+    feedback!(UserSkill.create_with_hash(params, "user", "skill", "weight"))
     # todo test this function
   end
 

@@ -1,9 +1,4 @@
-<%
-   skills = [
-           {name: "PHP", category: "Programming", value: 82},
-           {name: "IT Management", category: "Management", value: 36}
-   ]
-%>
+
 
 <div class="row">
   <div class="span3">
@@ -41,8 +36,8 @@
     <% end %>
   </div>
   <div class="span7">
-    <h4 class="gap50">Personal Dates</h4>
     <% if value("forename") or value("surname") or value("birthday") or value("website") or value("about") %>
+        <h4 class="gap50">Personal Dates</h4>
         <div class="form-horizontal form-only-text">
           <%= if value("forename") then
                 view("template", "control_group", {label: {title: "forename"}, controls: ["<div class='gap50-left'>#{forename}</div>"]})
@@ -75,20 +70,19 @@
   </div>
 </div>
 
-
-<!--div class="span12">
-  <div id="user-skills">
-    <h4><!%= username %>s' Skills</h4>
-
-    <div id="skill" class="gap50-left">
-      <div><!%= value(:skill, "name of skill is missing") %>
-        <div class="progress">
-          <div class="bar" style="width: 60%;"></div>
+<div class="row">
+  <div class="span10" id="user-projects-header">
+    <h4><%= username %>'s Projects</h4>
+    <ul class="media-list projects">
+    <% projects.each do |project| %>
+      <li class="media">
+        <%= link("project/#{project.url}", "<img class='media-object' src='#{project.image.url(:medium)}'/>", "pull-left thumbnail") %>
+        <div class="media-body">
+          <h4 class="media-heading"><%= link("project/#{project.url}", project.title) %></h4>
+          <%= project.about %>
         </div>
-      </div>
-    </div>
+      </li>
+    <% end %>
+    </ul>
   </div>
 </div>
-
-
-<!--<p class="text-info"> About <!--%="#{user.username}"%:</p-->

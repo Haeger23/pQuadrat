@@ -1,0 +1,7 @@
+adapter:  mysql
+database: db157140x1786345
+username: s157140_1786345
+password: psquared1213
+host:     mysql.webhosting62.1blu.de
+encoding: utf8
+timeout:  100000
