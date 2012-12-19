@@ -30,7 +30,7 @@
     <%= view("template", "textbox", {title: "Surname", current: value(:forename, ""), input_tags: {class: "input-xlarge"}}) %>
     <%= view("template", "textbox", {title: "Birthday", current: value(:birthday, ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-calendar"></i>', wrap_tags: {class: "input-append date", "data-date-viewmode" => "years", "data-date" => "#{value(:birthday, "")}", "data-date-format" => "yyyy-mm-dd"}}) %>
     <%= view("template", "textbox", {title: "Website", current: value(:website, ""), input_tags: {class: "input-xlarge"}}) %>
-    <%= view("template", "textarea", {title: "About", current: value(:about, ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textarea",{title: "About", current: value(:about, ""), input_tags: {class: "input-xlarge"}}) %>
   </fieldset>
 
   <%# SKILLS %>
