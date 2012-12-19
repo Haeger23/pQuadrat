@@ -3,7 +3,7 @@
 class SearchResolver < PSquaredResolver
 
   get %r{^/search/all/?$}i do
-    query = params[:query] || ""
+    query = params["query"] || ""
     if query == ""
       resolve("search", "empty")
     else
@@ -12,12 +12,12 @@ class SearchResolver < PSquaredResolver
   end
 
   get %r{^/search/(projects|users)/?$}i do |action|
-    query = params[:query] || ""
+    query = params["query"] || ""
     action.downcase!
     if query == ""
-      resolve(action[0..-2], "list")
+      resolve(action[0..-2], "list", 1)
     else
-      resolve("search", action, query)
+      resolve("search", action, query, 1)
     end
   end
 

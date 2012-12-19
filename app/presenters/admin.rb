@@ -156,9 +156,9 @@ class AdminPresenter < Presenter
   def import_data
     files = Dir[PSquared.path+"/../data/*.sql"]
     len = files.length.to_s.length
-    dir =
     files.each_with_index do |file,index|
       t1 = Time.now
+      p file
       system "mysql -u root p_squared < "+file
       t2 = Time.now
       data[("time%#{len}d" % index).to_sym] = ("%.4f" % (t2-t1))
