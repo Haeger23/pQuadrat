@@ -29,13 +29,24 @@ class ProjectPresenter < Presenter
     feedback(project)
   end
 
-  def show title, params
+  def show user, title, params
     project = Project.find_by_url(title)
     stop(404, "There is no project with the title '#{title}'") unless project
 
     page[:title] = project.title
-    data[:image] = project.image.url
-    data_add(params, "about", "progress")
+
+    data["image"] = project.image.url
+    data["hasProject"] = false
+    if user
+      userProject = UserProject.find_by_user_id_and_project_id(user && user.id, project.id)
+
+      if userProject
+        data["hasProject"] = true
+        data["isAdmin"] = userProject.is_admin
+      end
+    end
+
+    data_add(project.attributes, "title", "url", "about", "progress")
   end
 
   def add params
