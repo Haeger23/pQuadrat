@@ -2,20 +2,25 @@
 
 class UserPresenter < Presenter
 
+  def initialize
+    super
+    @step = 10
+  end
+
   def dashboard user
     page[:title] = "Dashboard"
   end
 
   def list(pageNumber)
-    step = 10
-    data[:page_count] = 1 + User.count/step
+    data[:count] = User.count
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
     stop(404, "There is no user list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
     data[:users] = User.all(
         :order => "updated_at desc",
-        :offset => step*(pageNumber-1),
-        :limit => step
+        :offset => @step*(pageNumber-1),
+        :limit => @step
     )
 
     page[:title] = "Users"

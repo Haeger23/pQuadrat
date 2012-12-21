@@ -1,0 +1,8 @@
+<ul class="media-list">
+  <% items.each do |item|
+    project = item[:item]
+  %>
+      <li class="media"><%= view("project", "list_item", project.attributes.merge({users: project.users, imageUrl: project.image.url(:medium), "title" => item[:title], "about" => item[:about]})) %></li>
+  <% end %>
+</ul>
+<%= view("template", "pager", {current: page, count: page_count, url: "search/projects"}) %>

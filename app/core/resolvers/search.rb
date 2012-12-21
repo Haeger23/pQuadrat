@@ -3,22 +3,27 @@
 class SearchResolver < PSquaredResolver
 
   get %r{^/search/all/?$}i do
-    query = params["query"] || ""
-    if query == ""
-      resolve("search", "empty")
-    else
-      resolve("search", "all", query)
-    end
+    resolve("search", "all", params, 1)
   end
 
-  get %r{^/search/(projects|users)/?$}i do |action|
-    query = params["query"] || ""
-    action.downcase!
-    if query == ""
-      resolve(action[0..-2], "list", 1)
-    else
-      resolve("search", action, query, 1)
-    end
+  get %r{^/search/all/(\d+)/?$}i do |page|
+    resolve("search", "all", params, page.to_i)
+  end
+
+  get %r{^/search/users/?$}i do
+    resolve("search", "users", params, 1)
+  end
+
+  get %r{^/search/users/(\d+)/?$}i do |page|
+    resolve("search", "users", params, page.to_i)
+  end
+
+  get %r{^/search/projects/?$}i do
+    resolve("search", "projects", params, 1)
+  end
+
+  get %r{^/search/projects/(\d+)/?$}i do |page|
+    resolve("search", "projects", params, page.to_i)
   end
 
 end

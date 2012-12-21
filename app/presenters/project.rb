@@ -2,16 +2,21 @@
 
 class ProjectPresenter < Presenter
 
+  def initialize
+    super
+    @step = 10
+  end
+
   def list pageNumber
-    step = 10
-    data[:page_count] = 1 + Project.count/step
+    data[:count] = Project.count
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
     stop(404, "There is no project list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
     data[:projects] = Project.all(
         :order => "updated_at desc",
-        :offset => step*(pageNumber-1),
-        :limit => step
+        :offset => @step*(pageNumber-1),
+        :limit => @step
     )
 
     page[:title] = "Projects"

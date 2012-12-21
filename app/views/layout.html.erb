@@ -27,7 +27,7 @@
         <div id="header">
           <div class="wrapper">
             <div id="logo"><%= link("", "<h1 class='hide-text'>p squared – project platform</h1>") %></div>
-            <form method="get" action="" id="search">
+            <form method="get" action="" id="search" class="noAjax">
               <div class="input-prepend input-append">
                 <div class="btn-group">
                   <button class="btn dropdown-toggle input-small" data-toggle="dropdown"><i class="icon-<%= {All: "star", Projects: "briefcase", Users: "user"}[@page[:search].to_sym] %>"></i> <span class="text"><%= @page[:search] %></span> <span class="caret"></span></button>
@@ -103,7 +103,7 @@
                 });
 
 
-                $("form").ajaxForm({
+                $("form:not(.noAjax)").ajaxForm({
                     data: {session: pSquared.session},
                     dataType: "json",
                     forceSync: true,

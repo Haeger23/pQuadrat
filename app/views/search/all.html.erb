@@ -1,0 +1,13 @@
+<ul class="media-list">
+  <% items.each do |i|
+    type = i[:type]
+    item = i[:item]
+  %>
+      <% if type == "user" %>
+        <li class="media user-list-item"><%= view("user", "list_item", item.attributes.merge({projects: item.projects, imageUrl: item.image.url(:medium), "username" => i[:username], "about" => i[:about]})) %></li>
+      <% else %>
+        <li class="media project-list-item"><%= view("project", "list_item", item.attributes.merge({users: item.users, imageUrl: item.image.url(:medium), "title" => i[:title], "about" => i[:about]})) %></li>
+      <% end %>
+  <% end %>
+</ul>
+<%= view("template", "pager", {current: page, count: page_count, url: "search/all"}) %>

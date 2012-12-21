@@ -2,50 +2,60 @@
 
 class SearchPresenter < Presenter
 
+  def initialize
+    super
+    @step = 10
+  end
+
   def empty
     page[:search] = "All"
     page[:title] = "No valid search"
     # todo find all users and projects
   end
 
-  def all query, pageNumber
-    step = 10
+  def all(params, pageNumber)
+    query = params["query"] || ""
 
     page[:search] = "All"
     page[:query] = query
     page[:title] = "Search for '#{query}' in projects and users"
-    # todo find all users and projects with the given query
 
-    data[:page_count] = 1 + User.count/step
+    data[:count] = Searchable.count(query)
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
     stop(404, "There is no user list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
+
+    data["items"] = Searchable.all(
+        query,
+        offset: @step*(pageNumber-1),
+        limit: @step
+    )
   end
 
-  def projects query, pageNumber
-    conditions = ["title LIKE ? OR about LIKE ?", "%#{query}%", "%#{query}%"]
-    step = 10
+  def projects(params, pageNumber)
+    query = params["query"] || ""
 
     page[:search] = "Projects"
     page[:query] = query
     page[:title] = "Search for '#{query}' in projects"
-    # todo find all projects with the given query
 
-    data[:page_count] = 1 + Project.where(conditions).count/step
+    data[:count] = Searchable.project_count(query)
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
-    stop(404, "There is no user search list ##{pageNumber}, last user search list is ##{data[:page_count]}") if data[:page] > data[:page_count]
+    stop(404, "There is no project search list ##{pageNumber}, last project search list is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
-    Project.all(
-        :conditions => conditions,
-        :offset => step*(pageNumber-1),
-        :limit => step,
-        :order => "updated_at desc"
+    data["items"] = Searchable.projects(
+        query,
+        offset: @step*(pageNumber-1),
+        limit: @step
     )
   end
 
-  def users query, pageNumber
-    conditions = ["username LIKE ? OR about LIKE ?", "%#{query}%", "%#{query}%"]
-    step = 10
-    data[:page_count] = 1 + User.where(conditions).count/step
+  def users(params, pageNumber)
+    query = params["query"] || ""
+
+    data[:count] = Searchable.user_count(query)
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
     stop(404, "There is no user search list ##{pageNumber}, last user search list is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
@@ -53,11 +63,11 @@ class SearchPresenter < Presenter
     page[:query] = query
     page[:title] = "Search for '#{query}' in users"
 
-    User.all(
-       :conditions => conditions,
-       :offset => step*(pageNumber-1),
-       :limit => step,
-       :order => "updated_at desc"
+    data["items"] = Searchable.users(
+        query,
+        offset: @step*(pageNumber-1),
+        limit: @step,
+        order: "updated_at desc"
     )
   end
 

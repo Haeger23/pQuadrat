@@ -5,6 +5,8 @@ required
  url     (string) The url of the page
  %>
 <%
+   if count <= 1 then return end
+
     start = current - 5
     start = 1 if start < 1
     stop = start + 10
