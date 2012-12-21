@@ -10,4 +10,4 @@
       <% end %>
   <% end %>
 </ul>
-<%= view("template", "pager", {current: page, count: page_count, url: "search/all"}) %>
+<%= view("template", "pager", {current: page, count: page_count, url: "search/all", parameters: {query: @page[:query]}}) %>

@@ -38,7 +38,6 @@ class Searchable
       if item.type == "user"
         user = users[item.id]
         username = user.username && user.username.gsub(regexp, '<span class="queryPart">\1</span>')
-        p username
         about = user.about && user.about.gsub(regexp, '<span class="queryPart">\1</span>')
         {type: item.type, about: about, username: username, item: user}
       else

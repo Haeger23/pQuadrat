@@ -5,4 +5,4 @@
       <li class="media"><%= view("user", "list_item", user.attributes.merge({projects: user.projects, imageUrl: user.image.url(:medium), "username" => item[:username], "about" => item[:about]})) %></li>
   <% end %>
 </ul>
-<%= view("template", "pager", {current: page, count: page_count, url: "search/users"}) %>
+<%= view("template", "pager", {current: page, count: page_count, url: "search/users", parameters: {query: @page[:query]}}) %>
