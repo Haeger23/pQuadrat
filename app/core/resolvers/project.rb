@@ -24,7 +24,7 @@ class ProjectResolver < PSquaredResolver
 
   # edit project, show project
   get %r{^/project/(\w+)/(edit|show)/?$}i do |title, action|
-    resolve("project", action, title)
+    resolve("project", action, user, title)
   end
 
   # create project

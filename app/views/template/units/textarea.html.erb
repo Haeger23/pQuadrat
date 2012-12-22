@@ -12,7 +12,6 @@ optional
      <%= o=[]; value(:wrap_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
   <textarea rows="<%= value(:rows, 3) %>"
          name="<%= value(:name, title.downcase) %>"
-         value='<%= value(:current, "") %>'
          placeholder="<%= title %>"
-         <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>></textarea>
+         <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>><%= value(:current, "") %></textarea>
 </div>

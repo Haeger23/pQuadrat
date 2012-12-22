@@ -8,7 +8,7 @@ class UserPresenter < Presenter
   end
 
   def dashboard user
-    page[:title] = "Dashboard"
+    page[:title] = "Home"
   end
 
   def list(pageNumber)
@@ -34,6 +34,8 @@ class UserPresenter < Presenter
     data[:ownAccount] = (user and user.id == _user.id)
 
     page[:title] = _user.username
+    page[:breadcrumb] = [{url: "users", title: "Users"}]
+
     data[:image] = _user.image.url
     data[:skills] = _user.skills.collect do |skill|
       category = skill.category
@@ -77,14 +79,15 @@ class UserPresenter < Presenter
     stop(403, "You only can update your account") until user.url.downcase == username.downcase
 
     page[:title] = "Edit your profile"
+    page[:breadcrumb] = [{url: "users", title: "Users"}, {url: "user/#{user.url}", title: user.username}]
 
-    data[:skills] = []
-    user.skills.map do |skill|
-      data[:skills].push({
-        category: skill.category,
+    data[:categories] = Category.all.map {|category| category.name}
+    data[:skills] = user.skills.map do |skill|
+      {
+        category: skill.category.name,
         skill: skill.name,
         weight: skill.weight
-      })
+      }
     end
 
     data[:image] = user.image.url
@@ -110,6 +113,8 @@ class UserPresenter < Presenter
   def update user, params
     stop(403, "Only a logged in user can update the account") until user
 
+    empty_to_nil(params)
+
     old_url = user.url
 
     if params["image"].blank?
@@ -120,8 +125,25 @@ class UserPresenter < Presenter
       params.delete("image")
     end
 
+    skills = []
+    (params["skills"] || {}).each do |k,v|
+      category = Category.find_by_name(v["category"])
+      next unless category
+
+      skill = Skill.where(name: v["name"], category_id: category.id).first_or_create
+      if skill
+        userSkill = UserSkill.where(user_id: user.id, skill_id: skill.id).first_or_create(weight: v["weight"])
+        if userSkill
+          userSkill.weight = v["weight"]
+          userSkill.save
+          skills.push(userSkill)
+        end
+      end
+    end
+    params["user_skills"] = skills
+
     p params
-    feedback!(user.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website"))
+    feedback!(user.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website", "about", "user_skills"))
 
     if old_url != user.url
       data[:old_url] = old_url

@@ -2,7 +2,7 @@
 <html>
     <head>
       <meta charset='utf-8'>
-      <title><%= @page[:title] %></title>
+      <title><%= @page[:title].gsub(/<[^>]*>/ui,'') %></title>
       <%= css "jqueryui/jquery-ui-1.9.1.custom",
               "/bootstrap/css/bootstrap.min",
               "/bootstrap/plugins/datepicker/css/datepicker"
@@ -39,10 +39,14 @@
                   </ul>
                 </div>
                 <input name="query" type="text" id="prependedDropdownButton" value="<%= @page[:query] %>" placeholder="Search for <%= {All: "Projects and Users", Projects: "Projects", Users: "Users"}[@page[:search].to_sym] %>" />
+                <% if user %>
+                    <input name="session" type="hidden" value="<%= user.session %>"/>
+                <% end %>
                 <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
               </div>
             </form>
             <ul id="menu">
+              <li><%= link("skills", "<i class='icon-tasks icon-white'></i>Skills") %></li>
               <li><%= link("projects", "<i class='icon-briefcase icon-white'></i>Projects") %></li>
               <li><%= link("users", "<i class='icon-user icon-white'></i>Users") %></li>
               <% if user %>
@@ -57,6 +61,15 @@
         </div>
         <div id="wrapper" class="wrapper">
           <div id="wrapperTop"></div>
+            <% unless request.path_info == "/" %>
+              <ul class="breadcrumb">
+                <li><%= link("", "Home") %> <span class="divider">/</span></li>
+                <% @page[:breadcrumb].each do |item| %>
+                    <li><%= link(item[:url], item[:title]) %> <span class="divider">/</span></li>
+                <% end %>
+                <li class="active"><%= @page[:title] %></li>
+              </ul>
+            <% end %>
             <h2 id="headline"><%= @page[:title] %></h2>
             <div id="messages">
                 <noscript>
@@ -83,95 +96,5 @@
           </div>
         </div>
       <%= js "layout" %>
-        <script>
-            (function() {
-                $("#logout").click(function() {
-                    var $this = $(this),
-                        href = $this.attr("href");
-
-                    $.ajax({
-                        url: href,
-                        type: "post",
-                        data: {session: pSquared.session},
-                        dataType: "json",
-                        success: function(data) {
-                            window.location.href = href
-                        }
-                    });
-
-                    return false;
-                });
-
-
-                $("form:not(.noAjax)").ajaxForm({
-                    data: {session: pSquared.session},
-                    dataType: "json",
-                    forceSync: true,
-                    beforeSubmit: function(arr, $form, options) {
-                        if($form.valid()){
-                            $form.find("button[type=submit]").after("<div class='ajax-load'></div>");
-                        }else{
-                            return false;
-                        }
-                    },
-                    success: function(data, statusText, xhr, $form) {
-                        $form.find(".ajax-load").remove();
-
-                        var $messages = $("#messages"),
-                            $message = $("<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>×</button><h4>Success!</h4></div>");
-
-                        if(data.message) {
-                            $message.append("<div>"+data.message+"</div>");
-                        }
-                        $messages.html($message);
-
-                        if(pSquared.success instanceof Function) {
-                            pSquared.success(data, statusText, xhr, $form);
-                        }
-                        var href = $form.attr("data-href");
-
-                        if(href) {
-                            if(pSquared.session) {
-                                var connection = href.indexOf("?") == -1 ? "?" : "&";
-                                href += connection+"session="+pSquared.session;
-                            }
-                            setTimeout(function() {
-                                window.location.href = pSquared.baseUrl + href;
-                            }, 500);
-                        }
-                    },
-                    error: function(xhr) {
-                        $(".ajax-load").remove();
-                        var response = $.parseJSON(xhr.responseText),
-                            errors = response.errors;
-
-                        var $element,
-                            $messages = $("#messages"),
-                            $message = $("<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>×</button><h4>Validation failed!</h4></div>");
-
-                        if(errors) {
-                            $element = $("<ul></ul>");
-                            for(var field in errors) {
-                                var $li = $("<li>"+field+"</li>"),
-                                    $innerUl = $("<ul></ul>").appendTo($li),
-                                    fieldErrors = errors[field];
-
-
-                                for(var i = 0, length = fieldErrors.length; i < length; i++) {
-                                    $innerUl.append("<li>"+fieldErrors[i]+"</li>");
-                                }
-                                $element.append($li)
-                            }
-                        } else if(response.message) {
-                            $element = $("<div>"+response.message+"</div>");
-                        }
-                        if($element) {
-                            $message.append($element);
-                        }
-                        $messages.html($message);
-                    }
-                });
-            }());
-        </script>
     </body>
 </html>

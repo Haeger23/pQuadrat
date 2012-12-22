@@ -18,7 +18,7 @@ class SearchPresenter < Presenter
 
     page[:search] = "All"
     page[:query] = query
-    page[:title] = "Search for '#{query}' in projects and users"
+    page[:title] = "Search for <span class='queryPart'>#{query}</span> in projects and users"
 
     data[:count] = Searchable.count(query)
     data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
@@ -37,7 +37,7 @@ class SearchPresenter < Presenter
 
     page[:search] = "Projects"
     page[:query] = query
-    page[:title] = "Search for '#{query}' in projects"
+    page[:title] = "Search for <span class='queryPart'>#{query}</span> in projects"
 
     data[:count] = Searchable.project_count(query)
     data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
@@ -61,7 +61,7 @@ class SearchPresenter < Presenter
 
     page[:search] = "Users"
     page[:query] = query
-    page[:title] = "Search for '#{query}' in users"
+    page[:title] = "Search for <span class='queryPart'>#{query}</span> in users"
 
     data["items"] = Searchable.users(
         query,

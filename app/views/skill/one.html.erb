@@ -1,1 +1,36 @@
-<%= name %>
+<p>Used by <b><%= users_count %> <%= users_count == 1 ? "User" : "Users" %></b> and <b><%= projects_count %> <%= projects_count == 1 ? "Project" : "Projects" %></b></p>
+<div class="row">
+  <% unless users.empty? %>
+      <div class="span5">
+        <h3>Users</h3>
+        <ul class="media-list">
+          <% users.each do |user| %>
+              <li class="media">
+                <%= link("user/#{user.url}", "<img src='#{user.image.url(:small)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                    <h4><%= link("user/#{user.url}", user.username) %></h4>
+                    <%= "#{user.action} #{user.changed_at} #{user.action == "added" ? "with" : "to"} #{user.weight}%" %>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+  <% unless projects.empty? %>
+      <div class="span5">
+        <h3>Projects</h3>
+        <ul class="media-list">
+          <% projects.each do |project| %>
+              <li class="media">
+                <%= link("project/#{project.url}", "<img src='#{project.image.url(:small)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                    <h4><%= link("project/#{project.url}", project.title) %></h4>
+                    <%= "#{project.action} #{project.changed_at} #{project.action == "added" ? "with" : "to"} #{project.weight}%" %>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+</div>
+

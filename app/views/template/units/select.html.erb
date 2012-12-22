@@ -7,6 +7,13 @@ optional
  select_tags (Hash)    More select tags
  selected    (string)  The selected item
 %>
+<%
+    if items.is_a?(Array)
+        hash = {}
+        items.each {|v| hash[v] = v}
+        items = hash
+    end
+%>
 <select autocomplete='off' name='<%= value(:name, title.downcase) %>'
         <%= o=[]; value(:select_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>>
   <% items.each do |k,v| %>

@@ -36,7 +36,6 @@ optional
           var $textInput = $("#<%= value(:input_tags)[:id] %>"),
               $fileInput = $textInput.siblings("[type=file]");
 
-          console.log($textInput.nextUntil("[type=file]"), $fileInput)
           $textInput.nextUntil("[type=file]").andSelf()
                   .click(function() {
                       $fileInput.click();

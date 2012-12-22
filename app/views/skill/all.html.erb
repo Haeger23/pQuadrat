@@ -1,7 +1,0 @@
-<% keys.each do |category| %>
-   <h3><%= category %></h3>
-   <% value(category)[:skills].each do |skill| %>
-        <%= link("skill/#{category}/#{skill[:url]}", skill[:name]) %>
-        (Erzeugt am: <%= skill[:created_at]  %>) <br/>
-    <% end %>
-<% end %>

@@ -1,0 +1,6 @@
+<div class="media">
+  <div class="media-body">
+    <h3><%= link("skill/#{category.url}/#{url}", "#{name} (#{category.name})") %></h3>
+    Used by <b><%= users_count %> <%= users_count == 1 ? "User" : "Users" %></b> and <b><%= projects_count %> <%= projects_count == 1 ? "Project" : "Projects" %></b>
+  </div>
+</div>

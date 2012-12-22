@@ -115,7 +115,8 @@ protected
     @page ||= {
         title: presenter.capitalize+": "+action.split("_").map {|v| v.capitalize }.join(" "),
         search: "All",
-        query: ""
+        query: "",
+        breadcrumb: []
     }
     @presenter = presenter
     begin

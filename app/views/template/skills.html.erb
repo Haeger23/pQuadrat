@@ -23,7 +23,7 @@ optional
     ].concat(value(:items, []).map do |v|
       out = "<li>"
       out << view("template", "units/select", {items: categories, select_tags: {class: "input-medium"}, selected: v[:category], title: value(:title, ""), name: "skills[]"})
-      out << "<input type='text' class='skill-name' value='#{v[:skill]}' placeholder='Skill' name='skills[]' />"
+      out << "<input type='text' class='skill-name' value='#{v[:skill]}' placeholder='Skill' name='skills[]' autocomplete='off' />"
       out << view("template", "units/slider", {name: "skills[]", title: "", current: v[:weight]})
       out << "<button type='button' class='btn btn-danger btn-mini'>remove</button>"
       out << "</li>"
@@ -64,17 +64,17 @@ optional
 
         $list
             .children("li")
-            .children("button")
-            .click(fadeOut)
-            .end()
-            .children(".skill-name")
-            .typeahead(autoCompleteOptions);
+                .children("button")
+                    .click(fadeOut)
+                    .end()
+                .children(".skill-name")
+                    .typeahead(autoCompleteOptions);
 
         $("#<%= id %>").click(function() {
-            var $input = $(" <input type='text' class='input-large'/>").hide();
+            var $input = $(" <input type='hidden' class='input-large' value='0'/>");
             $("<li></li>")
                 .append("<%= view("template", "units/select", {items: categories, select_tags: {class: "input-medium"}, title: "", name: "skills[]"}).gsub(/\r\n/, " ").gsub(/"/, '\\"') %>")
-                .append($("<input type='text' placeholder='Skill' name='skills[]' class='skill-name' /> ").typeahead(autoCompleteOptions))
+                .append($("<input type='text' placeholder='Skill' name='skills[]' class='skill-name' autocomplete='off' /> ").typeahead(autoCompleteOptions))
                 .append(" <div class='input-large'></div>")
                 .append(" <span class='ui-slider-text'></span>")
                 .append($input)
@@ -96,5 +96,15 @@ optional
             $slider.slider(options);
 
         });
+        var names = ["category", "name", "weight"];
+        $list.closest("form").submit(function() {
+            $list.children("li").each(function(i) {
+                $(this).children("select, input").each(function(j) {
+                    $(this).attr("name", "skills["+i+"]["+names[j]+"]");
+                });
+            })
+        });
+
+
     }(jQuery))
 </script>

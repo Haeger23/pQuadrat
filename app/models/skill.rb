@@ -5,8 +5,9 @@ class Skill < Model
   belongs_to :category
 
   has_many :user_skills
+  has_many :users, :through => :user_skills, :select => "*, user_skills.weight as weight, user_skills.updated_at as changed_at, CASE WHEN user_skills.updated_at = user_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "user_skills.updated_at DESC, user_skills.weight DESC", :limit => 50
   has_many :project_skills
-  has_many :projects, :through => :project_skills
+  has_many :projects, :through => :project_skills, :select => "*, project_skills.weight as weight, project_skills.updated_at as changed_at, CASE WHEN project_skills.updated_at = project_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "project_skills.updated_at DESC, project_skills.weight DESC", :limit => 50
 
   validates_uniqueness_of :url, :scope => :category_id, :case_sensitive => false
   validates_format_of     :name, :with => /^[a-zäöüß][\w+-]+[ ]?([\w+-]+[ ]?)*$/i
@@ -20,6 +21,14 @@ class Skill < Model
       write_attribute(:url, value.gsub(/\W/, "_").downcase)
     end
     super(value)
+  end
+
+  def users_count
+    UserSkill.where(:skill_id => self.id).count
+  end
+
+  def projects_count
+    ProjectSkill.where(:skill_id => self.id).count
   end
 
 end
