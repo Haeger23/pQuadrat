@@ -71,7 +71,7 @@ optional
                     .typeahead(autoCompleteOptions);
 
         $("#<%= id %>").click(function() {
-            var $input = $(" <input type='hidden' class='input-large' value='0'/>");
+            var $input = $(" <input type='hidden' class='input-large' value='50'/>");
             $("<li></li>")
                 .append("<%= view("template", "units/select", {items: categories, select_tags: {class: "input-medium"}, title: "", name: "skills[]"}).gsub(/\r\n/, " ").gsub(/"/, '\\"') %>")
                 .append($("<input type='text' placeholder='Skill' name='skills[]' class='skill-name' autocomplete='off' /> ").typeahead(autoCompleteOptions))
@@ -79,15 +79,15 @@ optional
                 .append(" <span class='ui-slider-text'></span>")
                 .append($input)
                 .append($(" <button type='button' class='btn btn-danger btn-mini'>remove</button>").click(fadeOut))
-                .appendTo($list);
+                .prependTo($list);
 
-            var $span = $input.prev().text(<%= value(:current, 0) %>),
+            var $span = $input.prev().text("50"),
                 $slider = $span.prev(),
                 options = $.extend({
                     range: 'min',
                     min: 0,
                     max: 100,
-                    value: <%= value(:current, 0) %>,
+                    value: 50,
                     slide: function(event, ui) {
                         $input.val(ui.value);
                         $span.text(ui.value);

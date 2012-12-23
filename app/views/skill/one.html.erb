@@ -1,7 +1,7 @@
 <p>Used by <b><%= users_count %> <%= users_count == 1 ? "User" : "Users" %></b> and <b><%= projects_count %> <%= projects_count == 1 ? "Project" : "Projects" %></b></p>
 <div class="row">
   <% unless users.empty? %>
-      <div class="span5">
+      <div class="span4">
         <h3>Users</h3>
         <ul class="media-list">
           <% users.each do |user| %>
@@ -17,7 +17,7 @@
       </div>
   <% end %>
   <% unless projects.empty? %>
-      <div class="span5">
+      <div class="span4">
         <h3>Projects</h3>
         <ul class="media-list">
           <% projects.each do |project| %>
@@ -31,6 +31,12 @@
           <% end %>
         </ul>
       </div>
+  <% end %>
+  <% unless similar.empty? %>
+    <div class="span2 pull-right">
+      <h3>Similar Skills</h3>
+      <p><%= similar.map {|skill| link("skill/#{skill.category.url}/#{skill.url}", "#{skill.name} (#{skill.category.name})")}.join(", ") %></p>
+    </div>
   <% end %>
 </div>
 

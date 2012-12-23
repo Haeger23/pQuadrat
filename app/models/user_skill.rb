@@ -3,7 +3,7 @@
 class UserSkill < Model
 
   belongs_to :skill
-  belongs_to :user
+  belongs_to :user, :touch => true
 
   has_one :category, :through => :skill
 

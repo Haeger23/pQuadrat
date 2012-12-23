@@ -14,7 +14,8 @@ class SkillPresenter < Presenter
     stop(404, "There is no skill list ##{pageNumber}, last skill is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
     data[:skills] = Skill.all(
-        :order => "updated_at desc",
+        :joins => :category,
+        :order => "skills.name asc, categories.name asc",
         :offset => @step*(pageNumber-1),
         :limit => @step
     )
@@ -85,8 +86,9 @@ class SkillPresenter < Presenter
        when 172001..518400 then ((diff+800)/(60*60*24)).to_i.to_s+' days ago'
        when 518400..1036800 then 'a week ago'
        else ((diff+180000)/(60*60*24*7)).to_i.to_s+' weeks ago'
-      end
+     end
     end
+    data["similar"] = skill.similar
 
     data_add(skill.attributes, "name", "url", "created_at")
   end

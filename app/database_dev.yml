@@ -1,7 +1,7 @@
 adapter:  mysql
-database: db157140x1786345
-username: s157140_1786345
-password: psquared1213
-host:     mysql.webhosting62.1blu.de
+database: p_squared
+username: p_squared
+password: kSUm5DCJ
+host:     sql133.your-server.de
 encoding: utf8
 timeout:  100000

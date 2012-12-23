@@ -2,7 +2,7 @@
 
 class ProjectSkill < Model
   belongs_to :project
-  belongs_to :skill
+  belongs_to :skill, :touch => true
 
   has_many :request_skills
   has_many :requests, :through => :request_skills

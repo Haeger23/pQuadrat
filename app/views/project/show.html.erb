@@ -3,13 +3,15 @@
     <div class="pull-left thumbnail">
       <img src="<%= image %>"/>
     </div>
-    <% if hasProject %>
-        <% if isAdmin %>
-            <%= link("project/#{url}/edit", "Edit Project", "btn btn-primary") %>
+    <% if user %>
+        <% if hasProject %>
+            <% if isAdmin %>
+                <%= link("project/#{url}/edit", "Edit Project", "btn btn-primary") %>
+            <% end %>
+            <%= link("user/#{user.url}/leave/#{url}", "Leave Project", "btn btn-danger") %>
+        <% else %>
+            <%= link("user/#{user.url}/join/#{url}", "Join Project", "btn btn-success") %>
         <% end %>
-        <%= link("user/#{user.url}/leave/#{url}", "Leave Project", "btn btn-danger") %>
-    <% else %>
-        <%= link("user/#{user.url}/join/#{url}", "Join Project", "btn btn-success") %>
     <% end %>
   </div>
   <div class="span7">
