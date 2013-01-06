@@ -1,0 +1,8 @@
+<ul class='media-list skills-list'>
+<% skills.each do |skill| %>
+  <li>
+    <%= view("skill", "list_item", skill.attributes.merge(category: skill.category, users_count: skill.users_count, projects_count: skill.projects_count)) %>
+  </li>
+<% end %>
+</ul>
+<%= view("template", "pager", {current: page, count: page_count, url: "skills"}) %>

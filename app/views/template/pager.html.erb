@@ -1,22 +1,34 @@
 <%#
 required
- count   (int)    The count of pages
- current (int)    The current page
- url     (string) The url of the page
+ count      (int)    The count of pages
+ current    (int)    The current page
+ url        (string) The url of the page
+ parameters (Hash)   Parameters of the url
  %>
 <%
+   if count <= 1 then return end
+
     start = current - 5
     start = 1 if start < 1
     stop = start + 10
     stop = count if stop > count
     pages = (start..stop)
+
+   para = ""
+   parameters = value(:parameters, {})
+   unless parameters.empty?
+     require 'uri'
+     arr = []
+     parameters.each {|k,v| arr.push("#{k}=#{URI.escape(v)}")}
+     para = "?" + arr.join("&")
+   end
 %>
 <div class="pagination pagination-centered">
   <ul>
-    <li class="<%= "disabled" if current == 1 %>"><%= link(current == 1 ? "#" : "#{url}/#{current-1}", "Prev") %></li>
+    <li class="<%= "disabled" if current == 1 %>"><%= link(current == 1 ? "#" : "#{url}/#{current-1}#{para}", "Prev") %></li>
     <% pages.each do |page| %>
-        <li class="<%= "active" if current == page %>"><%= link("#{url}/#{page}", page) %></li>
+        <li class="<%= "active" if current == page %>"><%= link("#{url}/#{page}#{para}", page) %></li>
     <% end %>
-    <li class="<%= "disabled" if current == count %>"><%= link(current == count ? "#" : "#{url}/#{current+1}", "Next") %></li>
+    <li class="<%= "disabled" if current == count %>"><%= link(current == count ? "#" : "#{url}/#{current+1}#{para}", "Next") %></li>
   </ul>
 </div>

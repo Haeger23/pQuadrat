@@ -4,4 +4,4 @@ username: root
 password:
 host:     localhost
 encoding: utf8
-timeout:  100
+timeout:  100000

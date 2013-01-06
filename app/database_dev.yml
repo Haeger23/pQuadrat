@@ -1,0 +1,7 @@
+adapter:  mysql
+database: p_squared
+username: p_squared
+password: kSUm5DCJ
+host:     sql133.your-server.de
+encoding: utf8
+timeout:  100000

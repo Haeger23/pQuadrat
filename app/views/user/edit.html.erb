@@ -26,17 +26,17 @@
   <%# PERSONAL DATA %>
   <fieldset>
     <legend><i class="icon-pencil"></i> Personal Dates</legend>
-    <%= view("template", "textbox", {title: "Forename", current: value(:forename, ""), input_tags: {class: "input-xlarge"}}) %>
-    <%= view("template", "textbox", {title: "Surname", current: value(:forename, ""), input_tags: {class: "input-xlarge"}}) %>
-    <%= view("template", "textbox", {title: "Birthday", current: value(:birthday, ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-calendar"></i>', wrap_tags: {class: "input-append date", "data-date-viewmode" => "years", "data-date" => "#{value(:birthday, "")}", "data-date-format" => "yyyy-mm-dd"}}) %>
-    <%= view("template", "textbox", {title: "Website", current: value(:website, ""), input_tags: {class: "input-xlarge"}}) %>
-    <%= view("template", "textarea", {title: "About", current: value(:about, ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Forename", current: value("forename", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Surname", current: value("surname", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Birthday", current: value("birthday", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-calendar"></i>', wrap_tags: {class: "input-append date", "data-date-viewmode" => "years", "data-date" => "#{value(:birthday, "")}", "data-date-format" => "yyyy-mm-dd"}}) %>
+    <%= view("template", "textbox", {title: "Website", current: value("website", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textarea",{title: "About", current: value("about", ""), input_tags: {class: "input-xlarge"}}) %>
   </fieldset>
 
   <%# SKILLS %>
   <fieldset>
     <legend><i class="icon-tasks"></i> Skills</legend>
-    <%= view("template", "skills", {categories: {"design" => "Design", "programming" => "Programming", "communication" => "Communication", "planning" => "Planning"}, items: [{category: "programming", skill: "PHP", weight: 23}, {category: "planning", skill: "Project Management", weight: 75}]}) %>
+    <%= view("template", "skills", {categories: categories, items: skills}) %>
   </fieldset>
 
   <%# PROJECTS %>

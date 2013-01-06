@@ -2,5 +2,5 @@
 
 require_relative 'core/p_squared'
 PSquared
-  .initializeDatabase("database.yml")
+  .initializeDatabase("database_dev.yml")
   .debug!

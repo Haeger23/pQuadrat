@@ -1,6 +1,12 @@
 @backgroundColor: #f5f5f5;
 @blue: #007DEB;
 
+.roundedCorners(@radius: 3px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
 html, body {
   height: 100%;
 }
@@ -49,7 +55,7 @@ label abbr[title=required] {
 }
 
 #wrapperTop {
-  height: 130px;
+  height: 110px;
 }
 
 .wrapper {
@@ -177,12 +183,16 @@ label abbr[title=required] {
 
 .skillName{
     text-align: right;
+
 }
 
 .skill-bar{
   padding-top: 10px;
 
 }
+
+
+
 
 
 @import "friedi";

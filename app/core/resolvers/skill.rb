@@ -4,19 +4,19 @@ class SkillResolver < PSquaredResolver
 
   # ALL SKILLS
   get %r{^/skills/?$}i do
-    resolve("skill", "all", 1, request.params)
+    resolve("skill", "list", request.params, 1)
   end
 
   get %r{^/skills/(\d+)/?$}i do |page|
-    resolve("skill", "all", page.to_i, request.params)
+    resolve("skill", "list", params, page.to_i)
   end
 
   get %r{^/skills/(\w+)/?$}i do |category|
-    resolve("skill", "all_of_category", category, 1, request.params)
+    resolve("skill", "all_of_category", category, params, 1)
   end
 
   get %r{^/skills/(\w+)/(\d+)/?$}i do |category, page|
-    resolve("skill", "all_of_category", category, page.to_i, request.params)
+    resolve("skill", "all_of_category", category, request.params, page.to_i)
   end
 
   get %r{^/skill/(\w+)/(\w+)/?$}i do |category, skill|

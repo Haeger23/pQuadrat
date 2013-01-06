@@ -2,16 +2,21 @@
 
 class ProjectPresenter < Presenter
 
+  def initialize
+    super
+    @step = 10
+  end
+
   def list pageNumber
-    step = 10
-    data[:page_count] = 1 + Project.count/step
+    data[:count] = Project.count
+    data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
-    stop(404, "There is no project list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
+    stop(404, "There is no project list ##{pageNumber}, last project list is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
     data[:projects] = Project.all(
         :order => "updated_at desc",
-        :offset => step*(pageNumber-1),
-        :limit => step
+        :offset => @step*(pageNumber-1),
+        :limit => @step
     )
 
     page[:title] = "Projects"
@@ -29,20 +34,43 @@ class ProjectPresenter < Presenter
     feedback(project)
   end
 
-  def show title, params
+  def show user, title, params
     project = Project.find_by_url(title)
     stop(404, "There is no project with the title '#{title}'") unless project
 
     page[:title] = project.title
-    data[:image] = project.image.url
-    data_add(params, "about", "progress")
+    page[:breadcrumb] = [{url: "projects", title: "Projects"}]
+
+    data["image"] = project.image.url
+    data["hasProject"] = false
+    if user
+      userProject = UserProject.find_by_user_id_and_project_id(user && user.id, project.id)
+
+      if userProject
+        data["hasProject"] = true
+        data["isAdmin"] = userProject.is_admin
+      end
+    end
+
+    data_add(project.attributes, "title", "url", "about", "progress")
   end
 
   def add params
     page[:title] = "Add project"
   end
 
-  def edit title
+  def edit user, url
+    stop(403, "Only a logged in user can edit the project") unless user
+    project = Project.find_by_url(url)
+    stop(404, "There is no project with the url '#{url}'.") unless project
+
+    projectUser = UserProject.find_by_user_id_and_project_id(user.id, project.id)
+    stop(403, "Only a project-member can edit this project") unless projectUser
+    stop(403, "Only a project-administrator can edit this project") unless projectUser.is_admin
+
+    page[:title] = "Edit Project"
+    page[:breadcrumb] = [{url: "projects", title: "Projects"}, {url: "project/#{project.url}", title: project.title}]
+
     data[:test] = "add project #{title}"
   end
 

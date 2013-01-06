@@ -15,14 +15,14 @@ optional
 %>
 <div <%= value(:input_tags, {})["class"] ? input_tags["class"] : "class='input-large'" %>></div>
 <span class="ui-slider-text"></span>
-<input type='text'
+<input type='hidden'
      name='<%= value(:name, title.downcase) %>'
-     <%= value(:current) ? "value='current'" : "" %>
+     value='<%= value(:current, 0) %>'
      <%= o=[]; value(:input_tags, {}).each {|k, v| o << "#{k}='#{v}'"}; o.join(" ") %>/>
 
 <script>
     (function($) {
-        var $input = $('#<%= value(:input_tags)[:id] %>').hide(),
+        var $input = $('#<%= value(:input_tags)[:id] %>'),
             $span = $input.prev().text(<%= value(:current, 0) %>),
             $slider = $span.prev(),
             options = $.extend({

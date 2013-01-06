@@ -31,3 +31,36 @@
 form legend i[class^="icon-"], [class*=" icon-"] {
   margin-top: 9px;
 }
+
+span.queryPart {
+  background: #007DEB;
+  color: #F5F5F5;
+  .roundedCorners;
+}
+#headline span.queryPart {
+  .roundedCorners(5px);
+  padding: 0 5px;
+}
+
+.breadcrumb span.queryPart {
+  background: none;
+  color: inherit;
+  &:before, &:after {
+    content: "\""
+  }
+}
+
+.user-list-item {
+  background: #fbffbb;
+}
+
+.project-list-item {
+  background: #cfccff;
+}
+
+.skills-list li {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

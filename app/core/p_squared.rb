@@ -22,6 +22,7 @@ module PSquared
     require 'paperclip' # paperclip is for file attachments
     require 'json'
     require 'builder' # for creating XML markup and data structures
+    require 'active_support/time'
 
     # initialize database
     dbConfig = YAML::load(File.open(PSquared.path+"/"+file))

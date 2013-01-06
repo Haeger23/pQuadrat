@@ -42,7 +42,7 @@ class Project < Model
     if value
       # trim
       value = value.strip.gsub(/\s/, " ")
-      write_attribute(:url, value.gsub(/\W/, "_"))
+      write_attribute(:url, value.gsub(/\W/, "_").downcase)
     end
     super(value)
   end
