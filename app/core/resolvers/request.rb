@@ -15,7 +15,12 @@ class RequestResolver < PSquaredResolver
 
   # invite to project
   get %r{^/project/(\w+)/invite/(\w+)/?$}i do |projectname, username|
-    resolve("request", "invite", username, projectname)
+    resolve("request", "invite", username, projectname, params)
+  end
+
+  # action to invite to project
+  post %r{^/project/(\w+)/invite/(\w+)/?$}i do |projectname, username|
+    resolve("request", "invite_action", username, projectname, params)
   end
 
 end
