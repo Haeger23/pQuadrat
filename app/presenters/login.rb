@@ -8,6 +8,7 @@ class LoginPresenter < Presenter
   end
 
   def logout
+    page[:title] = "Logout"
     # todo show logout
   end
 
