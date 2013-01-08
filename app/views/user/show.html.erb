@@ -1,5 +1,3 @@
-
-
 <div class="row">
   <div class="span3">
     <div class="pull-left thumbnail">
@@ -38,6 +36,7 @@
   <div class="span7">
     <% if value("forename") or value("surname") or value("birthday") or value("website") or value("about") %>
         <h4 class="gap50">Personal Dates</h4>
+
         <div class="form-horizontal form-only-text">
           <%= if value("forename") then
                 view("template", "control_group", {label: {title: "forename"}, controls: ["<div class='gap50-left'>#{forename}</div>"]})
@@ -53,7 +52,7 @@
               end %>
           <%= if value("about") then
                 view("template", "control_group", {label: {title: "about"}, controls: ["<div class='gap50-left'>#{about}</div>"]})
-          end %>
+              end %>
         </div>
     <% end %>
 
@@ -66,23 +65,39 @@
 <div class="row">
   <div class="span10" id="user-skills-header">
     <h4><%= username %>'s Skills</h4>
+    <% if  skills.empty? %>
+        <i> <%= "#{username} has no skills" %></i>
+    <% else %>
+
     <%= view("template", "skills_show", {items: skills}) %>
+
+    <%end%>
+
   </div>
 </div>
 
+
+
 <div class="row">
   <div class="span10" id="user-projects-header">
+
     <h4><%= username %>'s Projects</h4>
-    <ul class="media-list projects">
-    <% projects.each do |project| %>
-      <li class="media">
-        <%= link("project/#{project.url}", "<img class='media-object' src='#{project.image.url(:medium)}'/>", "pull-left thumbnail") %>
-        <div class="media-body">
-          <h4 class="media-heading"><%= link("project/#{project.url}", project.title) %></h4>
-          <%= project.about %>
-        </div>
-      </li>
+    <% if  projects.empty? %>
+        <i> <%= "#{username} has no projects" %></i>
+    <% else %>
+        <ul class="media-list projects">
+          <% projects.each do |project| %>
+              <li class="media">
+                <%= link("project/#{project.url}", "<img class='media-object' src='#{project.image.url(:small)}'/>", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h5 class="media-heading"><%= link("project/#{project.url}", project.title) %></h5>
+                  <%= project.about %>
+                </div>
+              </li>
+          <% end %>
+
+        </ul>
     <% end %>
-    </ul>
+
   </div>
 </div>
