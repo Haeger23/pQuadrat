@@ -1,98 +1,76 @@
 # encoding: UTF-8
 
-class PresenterPassedError < StandardError
+class PresenterError < StandardError
   attr_reader :data
   attr_reader :page
 
-  def initialize(data, page, msg = "Presenter passed")
+  def initialize(data, page, msg = "An error on the server occured...")
     super msg
     @data, @page = data, page
   end
 end
 
+class PresenterPassedError < StandardError
+end
+
 class PresenterStoppedError < StandardError
   attr_reader :status
-  attr_reader :data
-  attr_reader :page
 
   def initialize(status, data, page, msg = "An error on the server occured...")
-    super msg
-    @status, @data, @page = status, data, page
+    super data, page, msg
+    @status = status
   end
 end
 
-class Presenter
-  include Enumerable
+class Presenter < Service
 
   #include MailSender
   require PSquared.path+"/core/mail_sender.rb"
 
   attr_reader :current_status
-  attr_reader :data
   attr_reader :page
 
   def initialize
-    @data = {}
+    super
     @page = {}
-
-  end
-
-  def init *args
   end
 
   def self.do!(presenter, action, format, *args)
-    presenter.downcase!
     action.downcase!
 
-    begin
-      require PSquared.path+"/presenters/#{presenter}"
-      instance = Object.const_get(presenter.capitalize+"Presenter").new
-      locals = instance.data
-    rescue LoadError
-      return nil
-    end
+    instance = self.get(presenter)
+    locals = instance.data
 
-    instance.init *args
-
-    if instance.respond_to?(action.to_sym)
-      method = instance.method(action.to_sym)
-      method.call(*args)
-    end
+    instance.serve(action, *args)
 
     if format
-      actionSym = (action+"_"+format).to_sym
-      if instance.respond_to?(actionSym)
-        method = instance.method(actionSym)
-        method.call(*args)
-      end
+      instance.serve(action+"_"+format, *args)
     end
 
-    return instance
+    instance
   end
 
-  def self.do(presenter, action, format, *args)
+  def self.do(service, action, format, *args)
     begin
       self.do!(presenter, action, format, *args)
     rescue StandardError => error
       p error
-      nil
+      NilPresenter.new
     end
   end
 
-  def self.collect(presenter, action, *args, &block)
-    if instance = self.do(presenter, action, nil, *args)
-      instance.each &block
-    else
-      {}
-    end
-  end
+  def self.get(presenter)
+    presenter.downcase!
 
-  def each(&block)
-    if block_given?
-      @data.each &block
-    else
-      @data
+    begin
+      require PSquared.path+"/presenters/#{presenter}"
+      clazz = Object.const_get(presenter.capitalize+"Presenter")
+    rescue LoadError
+      clazz = NilPresenter
     end
+    instance = clazz.new
+    instance.init
+    instance
   end
 
   def data_add(hash, *args)
@@ -138,4 +116,7 @@ protected
     end
   end
 
+end
+
+class NilPresenter < Presenter
 end

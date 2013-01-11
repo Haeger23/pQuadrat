@@ -1,11 +1,12 @@
 # encoding: UTF-8
 
+require_relative 'service'
 require_relative 'presenter'
 require_relative 'resolver'
 
 
 
-class PSquaredResolver < Resolver
+class Application < Resolver
 
   # require resolvers
   [

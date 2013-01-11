@@ -122,12 +122,10 @@ protected
     @presenter = presenter
     begin
       instance = Presenter.do!(presenter, action, @format, *args)
-      if instance
-        @locals.merge!(instance.data)
-        @page.merge!(instance.page)
-        if instance.current_status
-          status instance.current_status
-        end
+      @locals.merge!(instance.data)
+      @page.merge!(instance.page)
+      if instance.current_status
+        status instance.current_status
       end
     rescue PresenterPassedError => e
       @locals.merge!(e.data)

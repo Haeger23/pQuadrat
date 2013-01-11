@@ -38,8 +38,8 @@ module PSquared
   end
 
   def self.run!
-    require_relative 'p_squared_resolver'
-    PSquaredResolver.run!
+    require_relative 'application'
+    Application.run!
   end
 
   def self.debug!
