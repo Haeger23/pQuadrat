@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class DebugResolver < PSquaredResolver
+class DebugResolver < Resolver
 
   get "/debug/:action/*" do |action, splat|
     resolve("debug", action, request.params)

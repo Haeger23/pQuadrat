@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class LoginResolver < PSquaredResolver
+class LoginResolver < Resolver
 
   before do
     env["user"] = nil

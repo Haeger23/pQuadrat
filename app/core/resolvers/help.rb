@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class HelpResolver < PSquaredResolver
+class HelpResolver < Resolver
 
   get %r{^/help/?$}i do
     resolve("help", "overview", request.params)

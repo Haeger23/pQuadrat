@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class ContactResolver < PSquaredResolver
+class ContactResolver < Resolver
 
   get "/contact" do
     resolve("contact", "contact")

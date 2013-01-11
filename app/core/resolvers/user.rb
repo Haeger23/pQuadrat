@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class UserResolver < PSquaredResolver
+class UserResolver < Resolver
 
   # show dashboard
   get '/' do

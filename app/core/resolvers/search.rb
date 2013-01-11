@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class SearchResolver < PSquaredResolver
+class SearchResolver < Resolver
 
   get %r{^/search/all/?$}i do
     resolve("search", "all", params, 1)

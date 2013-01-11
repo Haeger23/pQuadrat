@@ -2,7 +2,8 @@
 
 require 'sinatra/base'
 
-class PSquaredResolver < Sinatra::Base
+class Resolver < Sinatra::Base
+
 
   @@id_counter = 0
 
