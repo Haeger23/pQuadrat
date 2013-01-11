@@ -19,7 +19,7 @@ class Service
   end
 
   def self.get(service)
-    service.downcase!
+    service.to_s.downcase!
 
     begin
       require PSquared.path+"/services/#{service}"
@@ -41,19 +41,22 @@ class Service
   end
 
   def self.do(service, action, *args, &block)
-    service = self.get(service)
-    service.serve(action, *args, &block)
-    service
+    self.get(service).do(action, *args, &block)
   end
 
   def serve(action, *args, &block)
-    action = action.downcase.to_sym
+    action = action.to_s.downcase.to_sym
 
     if self.respond_to?(action)
       method = self.method(action)
       method.call(*args)
     end
     @data.each &block
+  end
+
+  def do(action, *args, &block)
+    self.serve(action, *args, &block)
+    self
   end
 
 end

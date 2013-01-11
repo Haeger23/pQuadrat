@@ -1,0 +1,2 @@
+class ProjectService < Service
+end

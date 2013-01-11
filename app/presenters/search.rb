@@ -2,8 +2,7 @@
 
 class SearchPresenter < Presenter
 
-  def initialize
-    super
+  def init
     @step = 10
   end
 

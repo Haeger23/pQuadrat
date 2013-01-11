@@ -30,36 +30,28 @@ class Presenter < Service
   attr_reader :current_status
   attr_reader :page
 
-  def initialize
-    super
+  def initialize(format = nil)
+    super()
     @page = {}
+    @format = format
   end
 
-  def self.do!(presenter, action, format, *args)
-    action.downcase!
+  def serve(action, *args, &block)
+    action = action.downcase.to_sym
 
-    instance = self.get(presenter)
-    locals = instance.data
-
-    instance.serve(action, *args)
-
-    if format
-      instance.serve(action+"_"+format, *args)
+    if self.respond_to?(action)
+      method = self.method(action)
+      method.call(*args)
     end
-
-    instance
-  end
-
-  def self.do(service, action, format, *args)
-    begin
-      self.do!(presenter, action, format, *args)
-    rescue StandardError => error
-      p error
-      NilPresenter.new
+    if @format
+      super(action.to_s+"_"+@format.to_s, *args)
     end
+    @data.each &block
+
+    self
   end
 
-  def self.get(presenter)
+  def self.get(presenter, format=nil)
     presenter.downcase!
 
     begin
@@ -68,7 +60,7 @@ class Presenter < Service
     rescue LoadError
       clazz = NilPresenter
     end
-    instance = clazz.new
+    instance = clazz.new(format)
     instance.init
     instance
   end

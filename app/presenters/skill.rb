@@ -2,8 +2,7 @@
 
 class SkillPresenter < Presenter
 
-  def initialize
-    super
+  def init
     @step = 10
   end
 
