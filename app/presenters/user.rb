@@ -8,9 +8,12 @@ class UserPresenter < Presenter
 
   def dashboard user
     page[:title] = "Home"
+
+    data[:users] = get("user").serve("list")
+    data[:projects] = get("project").serve("list")
   end
 
-  def list(pageNumber)
+  def list(pageNumber = 1)
     data[:count] = User.count
     data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
@@ -24,6 +27,14 @@ class UserPresenter < Presenter
 
     page[:title] = "Users"
     page[:search] = "Users"
+  end
+
+  def list_json(pageNumber = 1)
+    data[:users] = data[:users].collect {|user| user.attributes.delete_if {|k,v| k == "password"} }
+  end
+
+  def list_xml(pageNumber = 1)
+    list_json(pageNumber)
   end
 
   def show user, username

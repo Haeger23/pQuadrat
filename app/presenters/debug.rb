@@ -12,7 +12,7 @@ class DebugPresenter < Presenter
 
   def api
     page[:title] = "API"
-    data_add(Presenter.collect("help", "api"))
+    data_add(Presenter["help"].serve("api"))
     data[:urls] = data[:api].map { |help| help[0] }.uniq
   end
 

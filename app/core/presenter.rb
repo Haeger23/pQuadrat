@@ -10,10 +10,10 @@ class PresenterError < StandardError
   end
 end
 
-class PresenterPassedError < StandardError
+class PresenterPassedError < PresenterError
 end
 
-class PresenterStoppedError < StandardError
+class PresenterStoppedError < PresenterError
   attr_reader :status
 
   def initialize(status, data, page, msg = "An error on the server occured...")
@@ -44,14 +44,16 @@ class Presenter < Service
       method.call(*args)
     end
     if @format
-      super(action.to_s+"_"+@format.to_s, *args)
+      action = (action.to_s+"_"+@format.to_s).to_sym
+      if self.respond_to?(action)
+        method = self.method(action)
+        method.call(*args)
+      end
     end
-    @data.each &block
-
-    self
+    self.each &block
   end
 
-  def self.get(presenter, format=nil)
+  def self.[](presenter, format=nil)
     presenter.downcase!
 
     begin
@@ -63,6 +65,10 @@ class Presenter < Service
     instance = clazz.new(format)
     instance.init
     instance
+  end
+
+  def get(presenter)
+    self.class[presenter, @format]
   end
 
   def data_add(hash, *args)

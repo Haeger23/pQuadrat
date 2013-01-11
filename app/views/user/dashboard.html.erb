@@ -1,1 +1,11 @@
-Here is the dashboard
+<div class="row">
+  <div class="span5">
+    <h3>Active User</h3>
+    <%= view("user", "list_raw", users) %>
+  </div>
+  <div class="span5">
+    <h3>Active Projects</h3>
+    <%= view("project", "list_raw", projects) %>
+  </div>
+</div>
+

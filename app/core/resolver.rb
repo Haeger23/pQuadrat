@@ -121,7 +121,7 @@ protected
     }
     @presenter = presenter
     begin
-      instance = Presenter.get(presenter, @format).do(action, *args)
+      instance = Presenter[presenter, @format].do(action, *args)
       @locals.merge!(instance.data)
       @page.merge!(instance.page)
       if instance.current_status
@@ -144,6 +144,7 @@ protected
       if @format == "html"
         return resolve("error", "no_view", @locals)
       elsif @format == "json"
+        p @locals
         JSON.generate @locals
       elsif @format == "xml"
         @locals.to_xml(:root => "data")

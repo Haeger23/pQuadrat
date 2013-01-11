@@ -18,7 +18,7 @@ class Service
     end
   end
 
-  def self.get(service)
+  def self.[](service)
     service.to_s.downcase!
 
     begin
@@ -32,26 +32,17 @@ class Service
     instance
   end
 
-  def self.serve(service, action, *args, &block)
-    self.get(service).serve(action, *args, &block)
-  end
-
-  def self.collect(presenter, action, *args, &block)
-    self.serve(presenter, action, *args, &block)
-  end
-
-  def self.do(service, action, *args, &block)
-    self.get(service).do(action, *args, &block)
-  end
-
   def serve(action, *args, &block)
     action = action.to_s.downcase.to_sym
 
     if self.respond_to?(action)
       method = self.method(action)
-      method.call(*args)
+      @data = method.call(*args)
+      self.each &block
+    else
+      @data
     end
-    @data.each &block
+
   end
 
   def do(action, *args, &block)

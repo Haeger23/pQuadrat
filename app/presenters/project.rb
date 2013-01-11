@@ -6,20 +6,24 @@ class ProjectPresenter < Presenter
     @step = 10
   end
 
-  def list pageNumber
+  def list(pageNumber = 1)
     data[:count] = Project.count
     data[:page_count] = data[:count] > 0 ? 1+(data[:count]-1)/@step : 1
     data[:page] = pageNumber
     stop(404, "There is no project list ##{pageNumber}, last project list is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
-    data[:projects] = Project.all(
-        :order => "updated_at desc",
-        :offset => @step*(pageNumber-1),
-        :limit => @step
-    )
+    data[:projects] = Service["project"].serve("all", pageNumber, @step)
 
     page[:title] = "Projects"
     page[:search] = "Projects"
+  end
+
+  def list_json(pageNumber = 1)
+    data[:projects] = data[:projects].collect {|project| project.attributes}
+  end
+
+  def list_xml(pageNumber = 1)
+    list_json(pageNumber)
   end
 
   def validate params

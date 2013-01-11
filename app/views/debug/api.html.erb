@@ -1,5 +1,5 @@
 <div class="row">
-    <form id="debugForm" method="post" class="form-horizontal span10">
+    <form id="debugForm" method="post" class="form-horizontal span10 noAjax">
 
         <%= view("template", "textbox", {title: "Url", input_tags: {id: "url", class: "span4", autocomplete: "off", }}) %>
         <%= view("template", "select", {title: "Type", select_tags: {id: "type", class: "span4"}, items: {
