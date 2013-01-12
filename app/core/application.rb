@@ -3,26 +3,19 @@
 require_relative 'service'
 require_relative 'presenter'
 require_relative 'resolver'
+require_relative '../view_resolver'
 
 
 
-class Application < Resolver
+class Application < ViewResolver
 
   # require resolvers
-  [
-      "login",
-      "user",
-      "project",
-      "request",
-      "skill",
-      "search",
-      "debug",
-      "contact",
-      "help",
-      "admin"
-  ].each do |resolver|
-    require PSquared.path+"/core/resolvers/#{resolver}.rb"
-    use Object.const_get(resolver.capitalize+"Resolver")
+  YAML.load(File.open(PSquared.path+"/resolvers.yml")).each do |resolver|
+    filename = PSquared.path+"/resolvers/#{resolver}.rb"
+    if File.exist?(filename)
+      require filename
+      use Object.const_get(resolver.capitalize+"Resolver")
+    end
   end
 
   not_found do

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class ContactResolver < Resolver
+class ContactResolver < ViewResolver
 
   get "/contact" do
     resolve("contact", "contact")

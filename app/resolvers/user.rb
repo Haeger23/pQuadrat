@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class UserResolver < Resolver
+class UserResolver < ViewResolver
 
   # show dashboard
   get '/' do

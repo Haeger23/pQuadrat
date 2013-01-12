@@ -98,9 +98,6 @@ class Resolver < Sinatra::Base
         @locals[key] || default
       end
     end
-    def user
-      request.env['user']
-    end
     def _id
       @@id_counter += 1
       "template_"+@@id_counter.to_s

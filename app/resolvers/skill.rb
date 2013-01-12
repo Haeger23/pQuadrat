@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class SkillResolver < Resolver
+class SkillResolver < ViewResolver
 
   # ALL SKILLS
   get %r{^/skills/?$}i do

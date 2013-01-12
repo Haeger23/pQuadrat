@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class LoginResolver < Resolver
+class LoginResolver < ViewResolver
 
   before do
     env["user"] = nil

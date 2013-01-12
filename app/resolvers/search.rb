@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class SearchResolver < Resolver
+class SearchResolver < ViewResolver
 
   get %r{^/search/all/?$}i do
     resolve("search", "all", params, 1)

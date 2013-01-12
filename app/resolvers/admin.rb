@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class AdminResolver < Resolver
+class AdminResolver < ViewResolver
 
   post %r{^/admin/category/?$}i do
     resolve("admin", "add_category", params)

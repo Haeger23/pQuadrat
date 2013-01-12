@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class RequestResolver < Resolver
+class RequestResolver < ViewResolver
 
   # join project
   get %r{^/user/(\w+)/join/(\w+)/?$}i do |username, projectname|

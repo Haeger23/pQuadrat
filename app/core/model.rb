@@ -7,6 +7,11 @@ class Model < ActiveRecord::Base
     self.id
   end
 
+  def self.establish_connection(file)
+    dbConfig = YAML::load(File.open(file))
+    self.superclass.establish_connection(dbConfig)
+  end
+
   def self.create_with_hash!(hash, *filter)
     model = self.new
     model.update_with_hash!(hash, *filter)

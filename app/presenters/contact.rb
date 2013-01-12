@@ -6,17 +6,15 @@ class ContactPresenter < Presenter
     page[:title] = "Contact"
     data[:developer] = [
         {username: "friedolin"},
-        {username: "willi"},
+        {username: "WKampe"},
         {username: "simone"},
         {username: "lukas"},
         {username: "alex"}
     ].each do |developer|
-      vars = Presenter.collect("user", "show", developer[:username])
-      ["forename", "surname"].each do |key|
-        developer[key] = vars[key]
+      Presenter["user"].serve("show", nil, developer[:username]) do |k,v|
+        developer[k] = v
       end
     end
-
 
     data[:mail] = "info@p-squared.org"
   end

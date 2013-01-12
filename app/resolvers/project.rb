@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class ProjectResolver < Resolver
+class ProjectResolver < ViewResolver
 
   # show projects
   get %r{^/projects/?$}i do
