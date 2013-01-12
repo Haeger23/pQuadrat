@@ -34,24 +34,24 @@
     <% end %>
   </div>
   <div class="span7">
-    <% if value("forename") or value("surname") or value("birthday") or value("website") or value("about") %>
+    <% if value("forename") or value("surname") or value("birthday :") or value("website :") or value("about :") %>
         <h4 class="gap50">Personal Dates</h4>
 
         <div class="form-horizontal form-only-text">
           <%= if value("forename") then
-                view("template", "control_group", {label: {title: "forename"}, controls: ["<div class='gap50-left'>#{forename}</div>"]})
+                view("template", "control_group", {label: {title: "forename :"}, controls: ["<div class='gap5-top'>#{forename}</div>"]})
               end %>
           <%= if value("surname") then
-                view("template", "control_group", {label: {title: "surname"}, controls: ["<div class='gap50-left'>#{surname}</div>"]})
+                view("template", "control_group", {label: {title: "surname :"}, controls: ["<div class='gap5-top'>#{surname}</div>"]})
               end %>
           <%= if value("birthday") then
-                view("template", "control_group", {label: {title: "birthday"}, controls: ["<div class='gap50-left'>#{birthday}</div>"]})
+                view("template", "control_group", {label: {title: "birthday :"}, controls: ["<div class='gap5-top'>#{birthday}</div>"]})
               end %>
           <%= if value("website") then
-                view("template", "control_group", {label: {title: "website"}, controls: ["<div class='gap50-left'>#{website}</div>"]})
+                view("template", "control_group", {label: {title: "website :"}, controls: ["<div class='gap5-top'>#{website}</div>"]})
               end %>
           <%= if value("about") then
-                view("template", "control_group", {label: {title: "about"}, controls: ["<div class='gap50-left'>#{about}</div>"]})
+                view("template", "control_group", {label: {title: "about :"}, controls: ["<div class='gap5-top'>#{about}</div>"]})
               end %>
         </div>
     <% end %>

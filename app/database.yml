@@ -5,3 +5,4 @@ password:
 host:     localhost
 encoding: utf8
 timeout:  100000
+pool:     20

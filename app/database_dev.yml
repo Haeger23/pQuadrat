@@ -5,3 +5,4 @@ password: kSUm5DCJ
 host:     sql133.your-server.de
 encoding: utf8
 timeout:  100000
+pool:     20
