@@ -20,31 +20,33 @@
 <script>
     $().ready(function(){
 
-        $.validator.addMethod("validateUsername", function()
+        $.validator.addMethod("validateUsername", function(value, element)
         {
             var inputElem = $('#user-add-form :input[name="username"]'),
-                    data = { "username" : inputElem.val() }
+                    data = { "username" : inputElem.val() },
+                    isSuccess = true;
 
             $.ajax(
-                    {
-                        type: "GET",
-                        url: "users/validate",
-                        dataType: "json",
-                        data: data,
-                        async: false,
-                        success: function(data)
-                        {
-                            if(data["errors"]["url"] != null){
-                               return false;
-                            }else{
-                                return true;
-                            }
-                        },
-                        error: function(xhr, textStatus, errorThrown)
-                        {
-                            return false;
-                        }
-                    });
+            {
+                type: "GET",
+                url: "users/validate",
+                dataType: "json",
+                data: data,
+                async: false,
+                success: function(data)
+                {
+                    if(data["errors"]["url"] === undefined){
+                        isSuccess = true;
+                    }else{
+                        isSuccess = false;
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown)
+                {
+                    isSuccess = false;
+                }
+            });
+            return isSuccess;
         }, 'Username has already been taken.');
 
         $("#user-add-form").validate({
