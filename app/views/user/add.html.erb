@@ -19,11 +19,40 @@
 </form>
 <script>
     $().ready(function(){
+
+        $.validator.addMethod("validateUsername", function()
+        {
+            var inputElem = $('#user-add-form :input[name="username"]'),
+                    data = { "username" : inputElem.val() }
+
+            $.ajax(
+                    {
+                        type: "GET",
+                        url: "users/validate",
+                        dataType: "json",
+                        data: data,
+                        async: false,
+                        success: function(data)
+                        {
+                            if(data["errors"]["url"] != null){
+                               return false;
+                            }else{
+                                return true;
+                            }
+                        },
+                        error: function(xhr, textStatus, errorThrown)
+                        {
+                            return false;
+                        }
+                    });
+        }, 'Username has already been taken.');
+
         $("#user-add-form").validate({
             rules: {
                 username: {
                     required: true,
-                    minlength: 2
+                    minlength: 4,
+                    validateUsername: true
                 },
                 mail:{
                     required: true,
@@ -41,21 +70,21 @@
             },
             messages: {
                 username:{
-                    required: "Username wird benötigt",
-                    minlength: "Username muss mindestens 4 Zeichen lang sein"
+                    required: "Username is required",
+                    minlength: "Username must be at least 4 characters long"
                 },
                 mail:{
-                    required: "Mail wird benötigt",
-                    email: "Bitte korrekte E-Mail Adresse angeben"
+                    required: "Email is required",
+                    email: "Please enter a valid Email"
                 },
                 password:{
-                    required: "Passwort wird benötigt",
-                    minlength: "Passwort muss mindestens 6 Zeichen lang sein"
+                    required: "Password is required",
+                    minlength: "Password must be at least 6 characters long"
                 },
                 confirm_password:{
-                    required: "Passwort bitte erneut eingeben",
-                    minlength: "Passwort muss mindestens 6 Zeichen lang sein",
-                    equalTo: "Passwörter müssen gleich sein"
+                    required: "Confirm your password",
+                    minlength: "Password must be at least 6 characters long",
+                    equalTo: "Passwords must be the same"
                 }
             }
         });
