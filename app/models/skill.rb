@@ -5,9 +5,9 @@ class Skill < Model
   belongs_to :category
 
   has_many :user_skills
-  has_many :users, :through => :user_skills, :select => "*, user_skills.weight as weight, user_skills.updated_at as changed_at, CASE WHEN user_skills.updated_at = user_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "user_skills.updated_at DESC, user_skills.weight DESC", :limit => 50
+  has_many :users, :through => :user_skills, :select => "*, users.id as id, user_skills.weight as weight, user_skills.updated_at as changed_at, CASE WHEN user_skills.updated_at = user_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "user_skills.updated_at DESC, user_skills.weight DESC", :limit => 50
   has_many :project_skills
-  has_many :projects, :through => :project_skills, :select => "*, project_skills.weight as weight, project_skills.updated_at as changed_at, CASE WHEN project_skills.updated_at = project_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "project_skills.updated_at DESC, project_skills.weight DESC", :limit => 50
+  has_many :projects, :through => :project_skills, :select => "*, projects.id as id, project_skills.weight as weight, project_skills.updated_at as changed_at, CASE WHEN project_skills.updated_at = project_skills.created_at THEN 'added' ELSE 'updated' END as action", :order => "project_skills.updated_at DESC, project_skills.weight DESC", :limit => 50
 
   validates_uniqueness_of :url, :scope => :category_id, :case_sensitive => false
   validates_format_of     :name, :with => /^[a-zäöüß][\w+#-]+[ ]?([\w+#-]+[ ]?)*$/i

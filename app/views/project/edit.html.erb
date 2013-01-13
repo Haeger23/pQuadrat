@@ -1,0 +1,62 @@
+<!--%= keys %-->
+
+<form id="user-edit-form" class="form-horizontal" method="put" action="/user" data-href="/user/<%= user.url %>">
+
+  <%# GENERAL SETTINGS %>
+  <fieldset>
+    <legend><i class="icon-user"></i> General Account Settings</legend>
+    <%= view("template", "textbox", {title: "Username", current: username, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-user"></i>'}) %>
+    <%= view("template", "textbox", {title: "Email", name: "mail", current: mail, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-envelope"></i>'}) %>
+    <%= view("template", "control_group", {label: {title: "Image"}, controls: [
+            {view: :textbox, title: "Image", current: value("image_file_name", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"},
+            "<div class='pull-left thumbnail'><img src='#{image}' alt='user' /></div>"]
+    }) %>
+
+    <%# CHANGE PASSWORD %>
+    <%= view("template", "control_group", {controls: ['<a data-toggle="collapse" href="#changePassword">Change Password</a>']}) %>
+    <div id="changePassword" class="collapse">
+      <div class="accordion-inner">
+        <%= view("template", "textbox", {title: "Old password", name: "old_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
+        <%= view("template", "textbox", {title: "New password", name: "new_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
+        <%= view("template", "textbox", {title: "Confirm new password", name: "confirm_new_password", input_tags: {class: "input-xlarge"}, type: "password"}) %>
+      </div>
+    </div>
+  </fieldset>
+
+  <%# PERSONAL DATA %>
+  <fieldset>
+    <legend><i class="icon-pencil"></i> Personal Dates</legend>
+    <%= view("template", "textbox", {title: "Forename", current: value("forename", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Surname", current: value("surname", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textbox", {title: "Birthday", current: value("birthday", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-calendar"></i>', wrap_tags: {class: "input-append date", "data-date-viewmode" => "years", "data-date" => "#{value(:birthday, "")}", "data-date-format" => "yyyy-mm-dd"}}) %>
+    <%= view("template", "textbox", {title: "Website", current: value("website", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textarea",{title: "About", current: value("about", ""), input_tags: {class: "input-xlarge"}}) %>
+  </fieldset>
+
+  <%# SKILLS %>
+  <fieldset>
+    <legend><i class="icon-tasks"></i> Skills</legend>
+    <%= view("template", "skills", {categories: categories, items: skills}) %>
+  </fieldset>
+
+  <%# PROJECTS %>
+  <fieldset>
+    <legend><i class="icon-briefcase"></i> Projects</legend>
+  </fieldset>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">Change profile</button>
+    <%= link("user/#{user.url}", "Cancel", "btn btn-link") %>
+  </div>
+</form>
+<script>
+    pSquared.success = function (data) {
+        if (data.new_url) {
+            $("#user-edit-form").attr("data-href", "/user/" + data.new_url);
+        }
+    }
+</script>
+
+<% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
+      "user/add"
+%>

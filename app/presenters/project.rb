@@ -74,7 +74,7 @@ class ProjectPresenter < Presenter
     page[:title] = "Edit Project"
     page[:breadcrumb] = [{url: "projects", title: "Projects"}, {url: "project/#{project.url}", title: project.title}]
 
-    data[:test] = "add project #{title}"
+    data[:test] = "Edit project #{project.title}"
   end
 
   def create params
