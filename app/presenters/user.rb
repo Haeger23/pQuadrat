@@ -109,12 +109,10 @@ class UserPresenter < Presenter
     feedback!(User.create_with_hash(params, "username", "password", "mail"))
   end
 
-  def validate params
-    if params[:id].nil?
+  def validate user, params
+    unless user
       user = User.new_with_hash(params, "username", "password", "mail")
     else
-      user = User.find_by_id(params[:id])
-      stop(404, "There is no user with the id #{params[:id]}") until user
       user.fill_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website")
     end
     feedback(user)
@@ -124,8 +122,6 @@ class UserPresenter < Presenter
     stop(403, "Only a logged in user can update the account") until user
 
     empty_to_nil(params)
-
-    old_url = user.url
 
     if params["image"].blank?
       params["image"] = nil
@@ -152,13 +148,8 @@ class UserPresenter < Presenter
     end
     params["user_skills"] = skills
 
-    p params
-    feedback!(user.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website", "about", "user_skills"))
-
-    if old_url != user.url
-      data[:old_url] = old_url
-      data[:new_url] = user.url
-    end
+    feedback!(user.update_with_hash(params, "password", "mail", "image", "forename", "surname", "birthday", "website", "about", "user_skills"))
+    status(201)
   end
 
   def delete user, username

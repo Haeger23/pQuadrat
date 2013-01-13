@@ -1,2 +1,3 @@
+<%= link("projects/add", "Add new project", "add-project-button btn btn-success") if user %>
 <%= view("project", "list_raw") %>
 <%= view("template", "pager", {current: page, count: page_count, url: "projects"}) %>

@@ -32,11 +32,6 @@ class UserResolver < ViewResolver
     resolve("user", "create", params)
   end
 
-  # validate user
-  post %r{^/user/validate/?$}i do
-    resolve("user", "validate", params)
-  end
-
   # update user
   put %r{^/user/?$}i do
     resolve("user", "update", user, params)
@@ -50,6 +45,11 @@ class UserResolver < ViewResolver
   # update user, delete user (workaround for HTML5 forms)
   post %r{^/user/(update|delete)/?$}i do |action|
     resolve("user", action, params)
+  end
+
+  # validate new user
+  get %r{^/users/validate/?$}i do
+    resolve("user", "validate", user, params)
   end
 
   # get all validators

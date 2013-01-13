@@ -15,6 +15,49 @@
     <% end %>
   </div>
   <div class="span7">
-    <%= about %>
+        <h4 class="gap50">Information</h4>
+
+        <div class="form-horizontal form-only-text">
+          <%= view("template", "control_group", {label: {title: "progress :"}, controls: ["<div class='gap5-top'>#{progress ? "#{progress}%" : "in planning"}</div>"]}) %>
+          <%= view("template", "control_group", {label: {title: "created :"}, controls: ["<div class='gap5-top'>#{created_at.strftime("%Y-%m-%d")}</div>"]}) %>
+          <%= if value("about") then
+            view("template", "control_group", {label: {title: "about :"}, controls: ["<div class='gap5-top'>#{about}</div>"]})
+          end %>
+        </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span10" id="user-skills-header">
+    <h4>Skills of <%= title %></h4>
+    <% if  skills.empty? %>
+        <i> <%= "#{title} has no skills" %></i>
+    <% else %>
+        <%= view("template", "skills_show", {items: skills}) %>
+    <%end%>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="span10" id="user-projects-header">
+    <h4>Members of <%= title %></h4>
+    <% if  users.empty? %>
+        <i> <%= "#{title} has no members" %></i>
+    <% else %>
+        <ul class="media-list users">
+          <% users.each do |user| %>
+              <li class="media">
+                <%= link("user/#{user.url}", "<img class='media-object' src='#{user.image.url(:small)}'/>", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h5 class="media-heading"><%= link("user/#{user.url}", user.username) %></h5>
+                  <%= user.about %>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
   </div>
 </div>

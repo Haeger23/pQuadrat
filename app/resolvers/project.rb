@@ -29,27 +29,32 @@ class ProjectResolver < ViewResolver
 
   # create project
   post %r{^/project/?$}i do
-    resolve("project", "create", params)
-  end
-
-  # create project
-  post %r{^/project/validate/?$}i do
-    resolve("project", "validate", params)
+    resolve("project", "create", user, params)
   end
 
   # update project
-  put %r{^/project/?$}i do |title|
-    resolve("project", "update", title)
+  put %r{^/project/(\w+)/?$}i do |url|
+    resolve("project", "update", user, url, params)
   end
 
   # delete user
-  delete %r{^/project/?$}i do |title|
-    resolve("project", "delete", title)
+  delete %r{^/project/(\w+)/?$}i do |url|
+    resolve("project", "delete", user, url)
   end
 
   # update user, delete user (workaround for HTML5 forms)
   post %r{^/project/(update|delete)/?$}i do |action|
     resolve("project", action, params)
+  end
+
+  # validate project
+  get %r{^/projects/validate/?$}i do
+    resolve("project", "validate", user, params)
+  end
+
+  # validate project
+  get %r{^/project/(\w+)/validate/?$}i do |url|
+    resolve("project", "validate_existing", user, url, params)
   end
 
   # get all validators

@@ -1,9 +1,5 @@
-<%= "add project" %>
-<!-- <form class="form-horizontal">-->
-<form id="project-add-form" class="form-horizontal" method="post" action="/projects" data-href="/login">
+<form id="project-add-form" class="form-horizontal" method="post" action="/project" data-href="/projects">
 
-
-  <fieldset>
     <%= view("template", "textbox", {title: "Title", input_tags: {class: "input-xlarge"}, required: true}) %>
     <%= view("template", "textarea", {title: "About", name: "about", input_tags: {class: "input-xlarge"}, required: true}) %>
 
@@ -12,53 +8,7 @@
 
     <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}}) %>
 
-    <%= view("template", "button", {title: "Add"}) %>
-
-  </fieldset>
-
-
-
-  <!--
-  <div class="control-group">
-    <label class="control-label" for="title">Title</label>
-    <div class="controls">
-      <input type="text" placeholder="Title" name="title">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="about">About</label>
-    <div class="controls">
-      <input type="text" placeholder="About" name="about">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="progress">Progress</label>
-    <div class="controls">
-      <input type="text" placeholder="in planning" name="progress">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="progress">Skill</label>
-    <div class="controls">
-      <input type="text" placeholder="skill" name="skill">
-    </div>
-  </div>
-  -->
-  <!--
-  <div class="control-group">
-    <label class="control-label" for="inputPassword">Password</label>
-    <div class="controls">
-      <input type="password" placeholder="Password" name="Password">
-    </div>
-  </div>
-  -->
-  <!--
-  <div class="control-group">
-    <div class="controls">
-      <button type="submit" class="btn">register</button>
-    </div>
-  </div>
-  -->
+    <%= view("template", "button", {title: "Add Project", attributes: ["success"]}) %>
 
 
 </form>
