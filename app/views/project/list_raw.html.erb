@@ -1,5 +1,5 @@
 <ul class="media-list">
   <% projects.each do |project| %>
-      <li class="media"><%= view("project", "list_item", project.attributes.merge({users: project.users, imageUrl: project.image.url(:medium)})) %></li>
+      <li class="media"><%= view("project", "list_item", project.attributes.merge({imageUrl: project.image.url(:medium)})) %></li>
   <% end %>
 </ul>

@@ -3,15 +3,13 @@
 class Project < Model
   include Paperclip::Glue
 
-  has_many :user_projects
+  has_many :user_projects, :dependent => :delete_all
   has_many :users, :through => :user_projects
-  has_many :project_skills
-  has_many :skills, :through => :project_skills
+  has_many :project_skills, :dependent => :delete_all
+  has_many :skills, :through => :project_skills, :order => 'project_skills.weight DESC, skills.name ASC', :select => "*, project_skills.weight as weight"
   has_many :categories, :through => :skills
   has_many :requests
   has_many :request_skills, :through => :requests
-  has_many :project_skills, :through => :request_skills, :as => :p_skills
-  has_many :skills, :through => :project_skills, :as => :requested_skills
   has_attached_file :image,
                     :default_url => '/images/projects/default/:style.png',
                     :default_style => :big,

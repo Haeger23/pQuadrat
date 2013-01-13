@@ -11,6 +11,34 @@ class UserPresenter < Presenter
 
     data[:users] = get("user").serve("list")
     data[:projects] = get("project").serve("list")
+
+    data[:invitations] = []
+    data[:requests] = Hash.new {|h,k| h[k] = {projects: []}}
+    data[:openInvitations] = Hash.new {|h,k| h[k] = {projects: []}}
+    data[:openRequests] = []
+    if user
+      user.projects.each do |project|
+        if project.is_admin
+          project.requests.each do |request|
+            unless request.is_invitation
+              data[:requests][request.user_id][:user] = request.user
+              data[:requests][request.user_id][:projects].push({message: request.message, project: request.project})
+            else
+              data[:openInvitations][request.user_id][:user] = request.user
+              data[:openInvitations][request.user_id][:projects].push({message: request.message, project: request.project})
+            end
+          end
+        end
+      end
+      user.requests.each do |request|
+        if request.is_invitation
+          data[:invitations].push(request)
+        else
+          data[:openRequests].push(request)
+        end
+      end
+    end
+
   end
 
   def list(pageNumber = 1)
@@ -53,6 +81,8 @@ class UserPresenter < Presenter
     end
 
     data[:projects] = _user.projects
+    data[:requests] = {}
+    _user.requests.each {|request| data[:requests][request.project_id] = request}
 
     data_add(_user.attributes, "id", "username", "mail", "birthday", "forename", "surname", "website", "image_file_name", "about", "url")
 
@@ -67,7 +97,8 @@ class UserPresenter < Presenter
 
       user.projects.each do |project|
         if project.is_admin
-          if not projects.has_key?(project.id)
+          next if data[:requests].has_key?(project.id)
+          unless projects.has_key?(project.id)
             data[:invitations].push(project)
           else
             data[:same_projects][project.id] = projects[project.id]

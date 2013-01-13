@@ -19,7 +19,7 @@ class User < Model
   before_save :changePassword
 
   has_many :user_projects, :dependent => :delete_all
-  has_many :projects, :through => :user_projects
+  has_many :projects, :through => :user_projects, :select => "*, projects.id as id, user_projects.is_admin as is_admin"
   has_many :user_skills, :dependent => :delete_all
   has_many :skills, :through => :user_skills, :order => 'user_skills.weight DESC, skills.name ASC', :select => "*, user_skills.weight as weight"
   has_many :categories, :through => :skills

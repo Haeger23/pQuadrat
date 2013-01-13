@@ -1,5 +1,5 @@
 <div class="join-project">
-  <form action="/user/<%= sender_username %>/join/<%= projecturl %>" method=POST data-href="/project/<%= projecturl %>">
+  <form action="/project/<%= projecturl %>/invite/<%= sender_username %>" method="post" data-href="/user/<%= sender_username %>">
     <div class="row-fluid">
       <div class="span4">
         <h3>Projekt</h3>
@@ -9,17 +9,17 @@
         </div>
       </div>
       <div class="middle invite span2">
-        <input type="submit" class="btn btn-primary btn-join" value="einladen">
+        <input type="submit" class="btn btn-success btn-join" value="invite">
       </div>
       <div class="span4">
         <h3>User</h3>
         <div class="well well-large">
-          <img src="<%= user.image.url(:medium) %>" width="206.75px" height="350px">
+          <img src="<%= userImage %>" width="206.75px" height="350px">
           <p class="lead"><%= value("forename") %> <%= value("surname") %> (<%= sender_username %>)</p>
         </div>
       </div>
     </div>
     <%= view("template", "skills", {categories: categories, items: skills}) %>
-    <%= view("template", "textarea",{title: "something to say?", current: value("do it here.", ""), input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "textarea",{title: "Message", current: "Do you want to join our project?", input_tags: {class: "input-xlarge"}}) %>
   </form>
 </div>

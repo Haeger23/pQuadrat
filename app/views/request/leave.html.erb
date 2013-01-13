@@ -1,0 +1,23 @@
+<div class="join-project">
+  <form action="/project/<%= projecturl %>/leave" method="post" data-href="/project/<%= projecturl %>">
+    <div class="row-fluid">
+      <div class="span4">
+        <h3>User</h3>
+        <div class="well well-large">
+          <img src="<%= user.image.url(:medium) %>" width="206.75px" height="350px">
+          <p class="lead"><%= value("forename") %> <%= value("surname") %> (<%= sender_username %>)</p>
+        </div>
+      </div>
+      <div class="middle span2">
+        <input type="submit" class="btn btn-danger btn-join" value="leave">
+      </div>
+      <div class="span4">
+        <h3>Projekt</h3>
+        <div class="well well-large">
+          <img src='<%= project.image.url(:medium) %>' width="206.75px" height="350px">
+          <p class="lead"><%= project.title %></p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

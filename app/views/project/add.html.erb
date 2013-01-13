@@ -1,13 +1,9 @@
 <form id="project-add-form" class="form-horizontal" method="post" action="/project" data-href="/projects">
 
-    <%= view("template", "textbox", {title: "Title", input_tags: {class: "input-xlarge"}, required: true}) %>
     <%= view("template", "textarea", {title: "About", name: "about", input_tags: {class: "input-xlarge"}, required: true}) %>
-
     <%= view("template", "slider", {title: "Progress"}) %>
     <%= view("template", "button", {title: "in planning", type: "button"}) %>
-
-    <%= view("template", "skills", {categories: {1 => "Design", 2 => "Programming", 3 => "Communication", 4 => "Planning"}}) %>
-
+    <%= view("template", "skills", {categories: categories}) %>
     <%= view("template", "button", {title: "Add Project", attributes: ["success"]}) %>
 
 

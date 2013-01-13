@@ -1,5 +1,5 @@
 <div class="join-project">
-    <form action="/user/<%= sender_username %>/join/<%= projecturl %>" method=POST data-href="/project/<%= projecturl %>">
+    <form action="/project/<%= projecturl %>/join" method="post" data-href="/project/<%= projecturl %>">
         <div class="row-fluid">
           <div class="span4">
             <h3>User</h3>
@@ -9,7 +9,7 @@
             </div>
           </div>
           <div class="middle span2">
-              <input type="submit" class="btn btn-primary btn-join" value="beitreten">
+              <input type="submit" class="btn btn-success btn-join" value="join">
           </div>
           <div class="span4">
             <h3>Projekt</h3>
@@ -20,6 +20,6 @@
           </div>
         </div>
         <%= view("template", "skills", {categories: categories, items: skills}) %>
-        <%= view("template", "textarea",{title: "something to say?", current: value("do it here.", ""), input_tags: {class: "input-xlarge"}}) %>
+        <%= view("template", "textarea",{title: "Message", current: "I want to become a member of your project!", input_tags: {class: "input-xlarge"}}) %>
     </form>
 </div>

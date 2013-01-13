@@ -1,17 +1,17 @@
 <!--%= keys %-->
 
-<form id="project-edit-form" class="form-horizontal" method="put" action="/user" data-href="/project/<%= url %>">
+<form id="project-edit-form" class="form-horizontal" method="put" action="/project/<%= url %>" data-href="/project/<%= url %>">
 
   <%# GENERAL SETTINGS %>
   <fieldset>
     <legend><i class="icon-briefcase"></i> General Project Settings</legend>
     <%#= view("template", "textbox", {title: "Title", current: title, input_tags: {class: "input-xlarge"}, required: true, add_after: '<i class="icon-briefcase"></i>'}) %>
-    <%= view("template", "slider", {title: "Progress", name: "progress", input_tags: {class: "input-xlarge"}}) %>
+    <%= view("template", "slider", {title: "Progress", input_tags: {class: "input-xlarge"}, current: value("progress", 0)}) %>
     <%= view("template", "control_group", {label: {title: "Image"}, controls: [
             {view: :textbox, title: "Image", current: value("image_file_name", ""), input_tags: {class: "input-xlarge"}, add_after: '<i class="icon-camera"></i>', type: "file"},
             "<div class='pull-left thumbnail'><img src='#{image}' alt='user' /></div>"]
     }) %>
-    <%= view("template", "textarea", {title: "About", name: "about", input_tags: {class: "input-xlarge"}, required: true}) %>
+    <%= view("template", "textarea", {title: "About", input_tags: {class: "input-xlarge"}, required: true, current: value("about")}) %>
   </fieldset>
 
   <%# SKILLS %>
@@ -26,14 +26,7 @@
   </fieldset>
 
   <div class="form-actions">
-    <button class="btn btn-primary" type="submit">Change profile</button>
+    <button class="btn btn-primary" type="submit">Change project</button>
     <%= link("user/#{user.url}", "Cancel", "btn btn-link") %>
   </div>
 </form>
-<script>
-    pSquared.success = function (data) {
-        if (data.new_url) {
-            $("#project-edit-form").attr("data-href", "/project/" + data.new_url);
-        }
-    }
-</script>

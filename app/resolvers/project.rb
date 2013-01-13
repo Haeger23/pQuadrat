@@ -19,7 +19,7 @@ class ProjectResolver < ViewResolver
 
   # add project to projects
   get %r{^/projects/add/?$}i do
-    resolve("project", "add", params)
+    resolve("project", "add", user, params)
   end
 
   # edit project, show project

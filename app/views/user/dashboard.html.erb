@@ -1,3 +1,115 @@
+<% unless requests.empty? %>
+    <div class="row">
+      <div class="span10">
+        <h3>Requests</h3>
+        <ul class="media-list">
+          <% requests.each do |k, request| %>
+              <li class="media">
+                <%= link("user/#{request[:user].url}", "<img src='#{request[:user].image.url(:medium)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h3><%= link("user/#{request[:user].url}", request[:user].username, "media-heading") %></h3>
+                  <ul class="media-list">
+                    <% request[:projects].each do |item| %>
+                        <li class="media">
+                          <%= link("project/#{item[:project].url}", "<img src='#{item[:project].image.url(:small)}' />", "pull-left thumbnail") %>
+                          <div class="media-body">
+                            <h4><%= link("project/#{item[:project].url}", item[:project].title, "media-heading") %></h4>
+
+                            <div><b><%= item[:message] %></b></div>
+                            <form action="project/<%= item[:project].url %>/invite/<%= request[:user].url %>" method="post" data-href="/" style="display: inline">
+                              <button type="submit" class="btn btn-success">Confirm</button>
+                            </form>
+                            <form action="project/<%= item[:project].url %>/decline/<%= request[:user].url %>" method="post" data-href="/" style="display: inline">
+                              <button type="submit" class="btn btn-danger">Decline</button>
+                            </form>
+                          </div>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+<% end %>
+<% unless openInvitations.empty? %>
+    <div class="row">
+      <div class="span10">
+        <h3>Open Invitations</h3>
+        <ul class="media-list">
+          <% openInvitations.each do |k, request| %>
+              <li class="media">
+                <%= link("user/#{request[:user].url}", "<img src='#{request[:user].image.url(:medium)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h3><%= link("user/#{request[:user].url}", request[:user].username, "media-heading") %></h3>
+                  <ul class="media-list">
+                    <% request[:projects].each do |item| %>
+                        <li class="media">
+                          <%= link("project/#{item[:project].url}", "<img src='#{item[:project].image.url(:small)}' />", "pull-left thumbnail") %>
+                          <div class="media-body">
+                            <h4><%= link("project/#{item[:project].url}", item[:project].title, "media-heading") %></h4>
+                            <div><b><%= item[:message] %></b></div>
+                            <form action="project/<%= item[:project].url %>/decline/<%= request[:user].url %>" method="post" data-href="/" style="display: inline">
+                              <button type="submit" class="btn btn-danger">Cancel</button>
+                            </form>
+                          </div>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+<% end %>
+<% unless invitations.empty? %>
+    <div class="row">
+      <div class="span10">
+        <h3>Invitations</h3>
+        <ul class="media-list">
+          <% invitations.each do |invitation| %>
+              <li class="media">
+                <%= link("project/#{invitation.project.url}", "<img src='#{invitation.project.image.url(:medium)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h3><%= link("project/#{invitation.project.url}", invitation.project.title, "media-heading") %></h3>
+
+                  <div><b><%= invitation.message %></b></div>
+                  <form action="project/<%= invitation.project.url %>/join" method="post" data-href="/" style="display: inline">
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                  </form>
+                  <form action="project/<%= invitation.project.url %>/leave" method="post" data-href="/" style="display: inline">
+                    <button type="submit" class="btn btn-danger">Decline</button>
+                  </form>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+<% end %>
+<% unless openRequests.empty? %>
+    <div class="row">
+      <div class="span10">
+        <h3>Open Requests</h3>
+        <ul class="media-list">
+          <% openRequests.each do |invitation| %>
+              <li class="media">
+                <%= link("project/#{invitation.project.url}", "<img src='#{invitation.project.image.url(:medium)}' />", "pull-left thumbnail") %>
+                <div class="media-body">
+                  <h3><%= link("project/#{invitation.project.url}", invitation.project.title, "media-heading") %></h3>
+                  <div><b><%= invitation.message %></b></div>
+                  <form action="project/<%= invitation.project.url %>/leave" method="post" data-href="/" style="display: inline">
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                  </form>
+                </div>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+<% end %>
 <div class="row">
   <div class="span5">
     <h3>Active User</h3>

@@ -3,35 +3,37 @@
     <div class="pull-left thumbnail">
       <img src="<%= image %>"/>
     </div>
-    <% if ownAccount %>
-        <%= link("user/#{url}/edit", "Edit profile", "btn btn-primary") %>
-    <% end %>
-    <% unless invitations.empty? %>
-        <div class="btn-group">
-          <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-            Invite to project
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <% invitations.each do |project| %>
-                <li><%= link("project/#{project.url}/invite/#{url}/", project.title) %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
-    <% unless excludes.empty? %>
-        <div class="btn-group">
-          <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-            Replace from project
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <% excludes.each do |project| %>
-                <li><%= link("project/#{project.url}/remove/#{url}/", project.title) %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+    <div class="pull-left buttons-below-image">
+        <% if ownAccount %>
+            <%= link("user/#{url}/edit", "Edit profile", "btn btn-primary") %>
+        <% end %>
+        <% unless invitations.empty? %>
+            <div class="btn-group">
+              <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                Invite to project
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <% invitations.each do |project| %>
+                    <li><%= link("project/#{project.url}/invite/#{url}/", project.title) %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <% unless excludes.empty? %>
+            <div class="btn-group">
+              <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                Replace from project
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <% excludes.each do |project| %>
+                    <li><%= link("project/#{project.url}/remove/#{url}/", project.title) %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+    </div>
   </div>
   <div class="span7">
     <% if value("forename") or value("surname") or value("birthday :") or value("website :") or value("about :") %>
@@ -55,16 +57,12 @@
           end %>
         </div>
     <% end %>
-
   </div>
-
 </div>
-
-
 
 <div class="row">
   <div class="span10" id="user-skills-header">
-    <h4><%= username %>'s Skills</h4>
+    <h4>Skills of <%= username %></h4>
     <% if  skills.empty? %>
         <i> <%= "#{username} has no skills" %></i>
     <% else %>
@@ -76,12 +74,10 @@
   </div>
 </div>
 
-
-
 <div class="row">
   <div class="span10" id="user-projects-header">
 
-    <h4><%= username %>'s Projects</h4>
+    <h4>Projects of <%= username %></h4>
     <% if  projects.empty? %>
         <i> <%= "#{username} has no projects" %></i>
     <% else %>

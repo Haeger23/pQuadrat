@@ -51,7 +51,7 @@
               <li><%= link("users", "<i class='icon-user icon-white'></i>Users") %></li>
               <% if user %>
                   <li class="user"><%= link("user/#{user.url}", user.username) %></li>
-                  <li><a id="logout" href="<%= request.base_url %>/logout"><i class='icon-off icon-white'></i>Logout</a></li>
+                  <li><a id="logout" href="<%= request.base_url %>"><i class='icon-off icon-white'></i>Logout</a></li>
               <% else %>
                   <li class="user"><%= link("registration", "Registration") %></li>
                   <li><%= link("login", "Login") %></li>

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Searchable
 
   @@sql = "SELECT id, 'user' as type, %s FROM users WHERE username LIKE ? or about LIKE ? UNION SELECT id, 'project' as type, %s FROM projects WHERE title LIKE ? OR about LIKE ?"

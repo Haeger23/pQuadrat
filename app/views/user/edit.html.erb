@@ -49,13 +49,6 @@
     <%= link("user/#{user.url}", "Cancel", "btn btn-link") %>
   </div>
 </form>
-<script>
-    pSquared.success = function (data) {
-        if (data.new_url) {
-            $("#user-edit-form").attr("data-href", "/user/" + data.new_url);
-        }
-    }
-</script>
 
 <% js "/bootstrap/plugins/datepicker/js/bootstrap-datepicker",
       "user/add"

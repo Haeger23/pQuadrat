@@ -53,14 +53,23 @@ class ProjectPresenter < Presenter
 
     data["image"] = project.image.url
     data["hasProject"] = false
+    data["hasJoinRequest"] = false
     data["users"] = project.users
-    data["skills"] = project.skills
+    data["skills"] = project.skills.collect do |skill|
+      category = skill.category
+      {name: skill.name, category: category.name, value: skill.weight, url: "skill/#{category.url}/#{skill.url}"}
+    end
     if user
-      userProject = UserProject.find_by_user_id_and_project_id(user && user.id, project.id)
+      userProject = UserProject.find_by_user_id_and_project_id(user.id, project.id)
 
       if userProject
         data["hasProject"] = true
         data["isAdmin"] = userProject.is_admin
+      else
+        userJoinRequest = Request.find_by_user_id_and_project_id_and_is_invitation(user.id, project.id, false)
+        if userJoinRequest
+          data["hasJoinRequest"] = false
+        end
       end
     end
 
@@ -94,7 +103,7 @@ class ProjectPresenter < Presenter
     end
 
     data["image"] = project.image.url
-    data_add(project.attributes, "title", "url", "about", "progress")
+    data_add(project.attributes, "title", "url", "about", "progress", "image_file_name")
     data["users"] = project.users
   end
 
@@ -146,7 +155,7 @@ class ProjectPresenter < Presenter
     end
     params["project_skills"] = skills
 
-    feedback!(project.update_with_hash(params, "username", "password", "mail", "image", "forename", "surname", "birthday", "website", "about", "user_skills"))
+    feedback!(project.update_with_hash(params, "progress", "about", "project_skills"))
     status(201)
   end
 
