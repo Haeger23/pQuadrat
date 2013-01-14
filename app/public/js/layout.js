@@ -30,7 +30,7 @@
             href = $this.attr("href");
 
         $.ajax({
-            url: href,
+            url: href+"/logout",
             type: "post",
             data: {session: pSquared.session},
             dataType: "json",

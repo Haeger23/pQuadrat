@@ -36,7 +36,7 @@ class Presenter < Service
     @format = format
   end
 
-  def serve(action, *args, &block)
+  def serve!(action, *args, &block)
     action = action.downcase.to_sym
 
     if self.respond_to?(action)

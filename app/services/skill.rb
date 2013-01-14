@@ -1,0 +1,2 @@
+class SkillService < Service
+end

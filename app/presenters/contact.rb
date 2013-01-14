@@ -11,7 +11,7 @@ class ContactPresenter < Presenter
         {username: "lukas"},
         {username: "alex"}
     ].each do |developer|
-      Presenter["user"].serve("show", nil, developer[:username]) do |k,v|
+      Presenter["user"].serve!("show", nil, developer[:username]) do |k,v|
         developer[k] = v
       end
     end

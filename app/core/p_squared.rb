@@ -10,14 +10,14 @@ module PSquared
   self.path = File.expand_path "../..", __FILE__
 
   gem 'activerecord'
-  gem 'mysql'
+  gem 'mysql2'
   gem 'sinatra'
   gem 'paperclip', :git => "git://github.com/thoughtbot/paperclip.git"
   gem 'pony'
 
   def self.initializeDatabase(file)
     require 'active_record'
-    require 'mysql'
+    require 'mysql2'
     require 'yaml'  # YAML is a human friendly data serialization standard
     require 'paperclip' # paperclip is for file attachments
     require 'json'

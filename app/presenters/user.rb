@@ -6,11 +6,11 @@ class UserPresenter < Presenter
     @step = 10
   end
 
-  def dashboard user
+  def dashboard(user)
     page[:title] = "Home"
 
-    data[:users] = get("user").serve("list")
-    data[:projects] = get("project").serve("list")
+    data[:users] = get("user").serve!("list")
+    data[:projects] = get("project").serve!("list")
 
     data[:invitations] = []
     data[:requests] = Hash.new {|h,k| h[k] = {projects: []}}
@@ -47,7 +47,7 @@ class UserPresenter < Presenter
     data[:page] = pageNumber
     stop(404, "There is no user list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
-    data[:users] = Service["user"].serve("users_for_page", pageNumber, @step)
+    data[:users] = Service["user"].serve!("users_for_page", pageNumber, @step)
 
     page[:title] = "Users"
     page[:search] = "Users"
@@ -61,7 +61,7 @@ class UserPresenter < Presenter
     list_json(pageNumber)
   end
 
-  def show user, username
+  def show(user, username)
     _user = User.find_by_url(username)
     stop(404, "There is no user with the username '#{username}'") until _user
 

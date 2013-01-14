@@ -32,7 +32,7 @@ class Service
     instance
   end
 
-  def serve(action, *args, &block)
+  def serve!(action, *args, &block)
     action = action.to_s.downcase.to_sym
 
     if self.respond_to?(action)
@@ -45,8 +45,8 @@ class Service
 
   end
 
-  def do(action, *args, &block)
-    self.serve(action, *args, &block)
+  def do!(action, *args, &block)
+    self.serve!(action, *args, &block)
     self
   end
 

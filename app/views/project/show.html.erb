@@ -10,7 +10,7 @@
                     <%= link("project/#{url}/edit", "Edit Project", "btn btn-primary") %>
                 <% end %>
                 <%= link("project/#{url}/leave", "Leave Project", "btn btn-danger") %>
-            <% elsif hasJoinRequest %>
+            <% elsif !hasJoinRequest %>
                 <%= link("project/#{url}/join", "Join Project", "btn btn-success") %>
             <% end %>
         <% end %>

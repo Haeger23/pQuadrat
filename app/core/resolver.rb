@@ -118,7 +118,7 @@ protected
     }
     @presenter = presenter
     begin
-      instance = Presenter[presenter, @format].do(action, *args)
+      instance = Presenter[presenter, @format].do!(action, *args)
       @locals.merge!(instance.data)
       @page.merge!(instance.page)
       if instance.current_status
