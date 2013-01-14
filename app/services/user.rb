@@ -1,7 +1,7 @@
-class ProjectService < Service
+class UserService < Service
 
-  def projects_for_page(page, count)
-    Project.all(
+  def users_for_page(page, count)
+    User.all(
         :order => "updated_at desc",
         :offset => count*(page-1),
         :limit => count

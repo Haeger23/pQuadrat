@@ -47,11 +47,7 @@ class UserPresenter < Presenter
     data[:page] = pageNumber
     stop(404, "There is no user list ##{pageNumber}, last user is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
-    data[:users] = User.all(
-        :order => "updated_at desc",
-        :offset => @step*(pageNumber-1),
-        :limit => @step
-    )
+    data[:users] = Service["user"].serve("users_for_page", pageNumber, @step)
 
     page[:title] = "Users"
     page[:search] = "Users"

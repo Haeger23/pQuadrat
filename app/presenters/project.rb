@@ -12,7 +12,7 @@ class ProjectPresenter < Presenter
     data[:page] = pageNumber
     stop(404, "There is no project list ##{pageNumber}, last project list is ##{data[:page_count]}") if data[:page] > data[:page_count]
 
-    data[:projects] = Service["project"].serve("all", pageNumber, @step)
+    data[:projects] = Service["project"].serve("projects_for_page", pageNumber, @step)
 
     page[:title] = "Projects"
     page[:search] = "Projects"
