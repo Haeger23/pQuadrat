@@ -23,8 +23,8 @@
         $.validator.addMethod("validateUsername", function(value, element)
         {
             var inputElem = $('#user-add-form :input[name="username"]'),
-                    data = { "username" : inputElem.val() },
-                    isSuccess = true;
+                data = { "username" : inputElem.val() },
+                isSuccess = true;
 
             $.ajax(
             {
@@ -35,7 +35,8 @@
                 async: false,
                 success: function(data)
                 {
-                    if(data["errors"]["url"] === undefined){
+                    var url = data.errors.url;
+                    if(url === undefined || url.indexOf("has already been taken") == -1){
                         isSuccess = true;
                     }else{
                         isSuccess = false;
