@@ -134,6 +134,7 @@ class UserPresenter < Presenter
 
   def create params
     feedback!(User.create_with_hash(params, "username", "password", "mail"))
+    status(201)
   end
 
   def validate user, params
